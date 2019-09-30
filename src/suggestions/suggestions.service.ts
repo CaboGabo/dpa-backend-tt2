@@ -6,6 +6,8 @@ import { SuggestionEntity } from './suggestion.entity';
 import { SuggestionRO, SuggestionDTO } from './suggestion.dto';
 import { DiagnosticEntity } from '../diagnostics/diagnostic.entity';
 
+import * as CryptoJS from 'crypto-js';
+
 @Injectable()
 export class SuggestionsService {
   constructor(
@@ -151,9 +153,10 @@ export class SuggestionsService {
       throw new HttpException('Diagnostic not found', HttpStatus.NOT_FOUND);
     }
 
-    const suggestionsEntities = await this.showByActivationScore(
-      diagnostic.score,
-    );
+    const bytes = CryptoJS.AES.decrypt(diagnostic.score, process.env.SECRET);
+    const score = parseInt(JSON.parse(bytes.toString(CryptoJS.enc.Utf8)));
+
+    const suggestionsEntities = await this.showByActivationScore(score);
 
     const suggestions = suggestionsEntities.map(suggestion =>
       this.suggestionToResponseObject(suggestion),

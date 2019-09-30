@@ -18,11 +18,11 @@ export class DiagnosticEntity {
   @CreateDateColumn()
   created: Date;
 
-  @Column('boolean')
-  result: boolean;
+  @Column()
+  result: string;
 
   @Column()
-  score: number;
+  score: string;
 
   @ManyToOne(type => StudentEntity, student => student.diagnostics)
   student: StudentEntity;
