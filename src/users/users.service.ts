@@ -123,17 +123,15 @@ export class UsersService {
     }
 
     sgMail.setApiKey(process.env.API_KEY);
-
-    const template = fs.readFileSync('src/email/forgot-password.html');
-
-    let html = template
+    const body = fs.readFileSync('src/email/forgot-password.html');
+    let html = body
       .toString()
       .replace(':username', user.username)
       .replace(':id', user.id);
     const msg = {
       to: user.email,
       from: 'gabo.alejandro.huitron@gmail.com',
-      subject: 'DPa - Reestablecer contraseña',
+      subject: 'DPa - Restablecer contraseña',
       html: html,
     };
     sgMail.send(msg);

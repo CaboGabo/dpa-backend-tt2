@@ -1,19 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-</head>
-
-<body>
-  <img src="" alt="Logo DPa" />
-  <h1>Buen día, :username</h1>
-  <h1>¡Gracias por registrarte en nuestra aplicación!</h1>
-  <p>Por favor, confirma tu email para poder comenzar a utlizar DPa</p>
-  <a href="http://localhost:3000/:id/confirmEmail"><button type="button">Confirmar email</button></a>
-  <!-- Cambiar por la liga a la vista de Trejo -->
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style type="text/css">
+      body {
+        margin: 0 !important;
+        font-family: Arial !important ;
+        background-color: white !important;
+      }
+      header {
+        height: 90px !important;
+        background-color: darkblue !important;
+        text-align: center !important;
+        width: 50% !important;
+      }
+      .logo {
+        margin-top: 7px !important;
+        height: 76px !important;
+        margin-bottom: 7px !important;
+      }
+      main {
+        padding: 5% 15% !important;
+        text-align: center !important;
+        width: 50% !important;
+      }
+      td h1 {
+        font-size: 18px !important;
+        margin-left: 0;
+        margin-top: 15px;
+      }
+      td h2 {
+        font-size: 20px !important;
+        font-weight: normal !important;
+        text-align: center !important;
+        padding-bottom: 10px !important;
+      }
+      main p {
+        text-align: justify !important;
+        font-size: 15px !important;
+      }
+      button {
+        border: none !important;
+        height: 60px !important;
+        width: 250px !important;
+        font-size: 20px !important;
+        color: white !important;
+        background-color: darkblue !important;
+        margin: 15px !important;
+      }
+      footer {
+        width: 50% !important;
+      }
+      footer h1 {
+        text-align: center !important;
+        margin: 0 !important;
+      }
+      .note {
+        font-size: 12px !important;
+        text-align: center !important;
+      }
+    </style>
+  </head>
+  <body>
+    <center>
+      <header>
+        <img
+          src="https://i.ibb.co/WKttvDf/logo-dpa.png"
+          alt="logo-dpa"
+          class="logo"
+        />
+      </header>
+      <main>
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <h1>Buen día, :username:</h1>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h2>
+                  ¡Gracias por registrarte en nuestra aplicación!
+                </h2>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Por favor, confirma tu email para poder comenzar a utilizar DPa.
+        </p>
+        <a href="http://localhost:3000/:id/confirmEmail"
+          ><button type="button">Confirmar email</button></a
+        >
+        <!-- Cambiar por la liga a la vista de Trejo -->
+      </main>
+      <footer>
+        <hr />
+        <h1>DPa.</h1>
+        <p class="note">
+          Este correo electrónico es auto-generado, por favor, no lo responda.
+        </p>
+      </footer>
+    </center>
+  </body>
 </html>
