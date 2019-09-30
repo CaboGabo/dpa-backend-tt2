@@ -153,4 +153,22 @@ export class UsersService {
 
     return user.toResponseObject();
   }
+
+  async validateUser(id: string) {
+    let user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+    }
+
+    await this.userRepository.update(
+      {
+        id: user.id,
+      },
+      { isValidated: true },
+    );
+
+    user = await this.userRepository.findOne({ where: { id } });
+
+    return user.toResponseObject();
+  }
 }

@@ -67,4 +67,10 @@ export class UsersController {
   updatePassword(@Param('id') id: string, @Body() data: Partial<UserDTO>) {
     return this.usersService.updatePassword(id, data);
   }
+
+  @Post('auth/validateEmail')
+  @UsePipes(new ValidationPipe())
+  validateEmail(@Param('id') id: string) {
+    return this.usersService.validateUser(id);
+  }
 }
