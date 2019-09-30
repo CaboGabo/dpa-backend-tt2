@@ -12,10 +12,10 @@ import {
   Delete,
 } from '@nestjs/common';
 import { GeneralDataService } from './general-data.service';
-import { AuthGuard } from '../shared/auth.guard';
 import { ValidationPipe } from '../shared/validation.pipe';
 import { User } from '../users/user.decorator';
 import { GeneralDataDTO } from './general-data.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('api/general-data')
 export class GeneralDataController {
@@ -41,7 +41,7 @@ export class GeneralDataController {
   }
 
   @Post()
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   createGeneralData(@User('id') user, @Body() body: GeneralDataDTO) {
     this.logData({ user, body });
@@ -49,7 +49,7 @@ export class GeneralDataController {
   }
 
   @Put(':id')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   updateGeneralData(
     @Param('id') id: string,
@@ -61,7 +61,7 @@ export class GeneralDataController {
   }
 
   @Delete(':id')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   destroyGeneralData(@Param('id') id: string, @User('id') user) {
     this.logData({ id, user });
     return this.generalDataService.destroy(id, user);

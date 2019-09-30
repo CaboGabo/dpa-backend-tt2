@@ -12,10 +12,10 @@ import {
 } from '@nestjs/common';
 import { DiagnosticsService } from './diagnostics.service';
 import { TwitterAuthDTO } from '../external-api/twitter/twitter-auth.dto';
-import { AuthGuard } from '../shared/auth.guard';
 import { ValidationPipe } from '../shared/validation.pipe';
 import { User } from '../users/user.decorator';
 import { RedditAuthDTO } from '../external-api/reddit/reddit-auth.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller()
 export class DiagnosticsController {
@@ -30,7 +30,7 @@ export class DiagnosticsController {
   }
 
   @Post('twitter')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   async fetchTwitterPosts(
     @User('id') user,
@@ -45,13 +45,13 @@ export class DiagnosticsController {
   }
 
   @Post('reddit/auth')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   redditAuthorization() {
     return this.diagnosticsService.redditAuth();
   }
 
   @Post('reddit')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   async fetchRedditPosts(
     @User('id') user,
@@ -66,34 +66,34 @@ export class DiagnosticsController {
   }
 
   @Get('api/posts')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   async getAnalyzedPosts(@User('id') user) {
     return this.diagnosticsService.getAllPosts(user);
   }
 
   @Post('diagnosticate')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   async makeDiagnostic(@User('id') user) {
     return this.diagnosticsService.diagnostic(user);
   }
 
   @Put('diagnostics/suggestions')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   async updateSuggestionsDiagnostics(@User('id') user) {
     return this.diagnosticsService.updateSuggestions(user);
   }
 
   @Get('api/diagnostics')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   async getAllDiagnostics(@User('id') user) {
     return this.diagnosticsService.getAll(user);
   }
 
   @Get('api/diagnostics/:id')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   async getDiagnostic(@User('id') user, @Param('id') id) {
     return this.diagnosticsService.read(user, id);
   }

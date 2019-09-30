@@ -12,10 +12,10 @@ import {
   Delete,
 } from '@nestjs/common';
 import { PsychologistsService } from './psychologists.service';
-import { AuthGuard } from 'src/shared/auth.guard';
 import { ValidationPipe } from 'src/shared/validation.pipe';
 import { User } from 'src/users/user.decorator';
 import { PsychologistDTO } from './psychologist.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('api/psychologists')
 export class PsychologistsController {
@@ -35,7 +35,7 @@ export class PsychologistsController {
   }
 
   @Post()
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   createPsychologist(@User('id') user, @Body() body: PsychologistDTO) {
     this.logData({ user, body });
@@ -43,14 +43,14 @@ export class PsychologistsController {
   }
 
   @Get(':id')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   readPsychologist(@Param('id') id: string) {
     this.logData({ id });
     return this.psychologistsService.read(id);
   }
 
   @Put(':id')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   updatePsychologist(
     @Param('id') id: string,
@@ -62,7 +62,7 @@ export class PsychologistsController {
   }
 
   @Delete(':id')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   destroyPsychologist(@Param('id') id: string, @User('id') user) {
     this.logData({ id, user });
     return this.psychologistsService.destroy(id, user);

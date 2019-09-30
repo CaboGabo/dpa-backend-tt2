@@ -13,9 +13,9 @@ import {
 } from '@nestjs/common';
 import { StudentsService } from './students.service';
 import { User } from 'src/users/user.decorator';
-import { AuthGuard } from 'src/shared/auth.guard';
 import { ValidationPipe } from '../shared/validation.pipe';
 import { StudentDTO } from './student.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('api/students')
 export class StudentsController {
@@ -35,7 +35,7 @@ export class StudentsController {
   }
 
   @Post()
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   createStudent(@User('id') user, @Body() body: StudentDTO) {
     this.logData({ user, body });
@@ -43,14 +43,14 @@ export class StudentsController {
   }
 
   @Get(':id')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   readStudent(@Param('id') id: string) {
     this.logData({ id });
     return this.studentsService.read(id);
   }
 
   @Put(':id')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   updateStudent(
     @Param('id') id: string,
@@ -62,7 +62,7 @@ export class StudentsController {
   }
 
   @Delete(':id')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   destroyStudent(@Param('id') id: string, @User('id') user) {
     this.logData({ id, user });
     return this.studentsService.destroy(id, user);

@@ -12,10 +12,10 @@ import {
   Delete,
 } from '@nestjs/common';
 import { SuggestionsService } from './suggestions.service';
-import { AuthGuard } from '../shared/auth.guard';
 import { ValidationPipe } from '../shared/validation.pipe';
 import { User } from 'src/users/user.decorator';
 import { SuggestionDTO } from './suggestion.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('api/suggestions')
 export class SuggestionsController {
@@ -41,7 +41,7 @@ export class SuggestionsController {
   } */
 
   @Post()
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   createSuggestion(@User('id') user, @Body() body: SuggestionDTO) {
     this.logData({ user, body });
@@ -49,7 +49,7 @@ export class SuggestionsController {
   }
 
   @Put(':id')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   updateSuggestion(
     @Param('id') id: string,
@@ -61,7 +61,7 @@ export class SuggestionsController {
   }
 
   @Delete(':id')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   destroySuggestion(@Param('id') id: string, @User('id') user) {
     this.logData({ id, user });
     return this.suggestionsService.destroy(id, user);

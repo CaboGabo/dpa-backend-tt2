@@ -12,10 +12,10 @@ import {
   Delete,
 } from '@nestjs/common';
 import { SpecialistsService } from './specialists.service';
-import { AuthGuard } from '../shared/auth.guard';
 import { ValidationPipe } from '../shared/validation.pipe';
 import { User } from 'src/users/user.decorator';
 import { SpecialistDTO } from './specialist.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('api/specialists')
 export class SpecialistsController {
@@ -41,7 +41,7 @@ export class SpecialistsController {
   }
 
   @Post()
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   createSpecialist(@User('id') user, @Body() body: SpecialistDTO) {
     this.logData({ user, body });
@@ -49,7 +49,7 @@ export class SpecialistsController {
   }
 
   @Put(':id')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   updateSpecialist(
     @Param('id') id: string,
@@ -61,7 +61,7 @@ export class SpecialistsController {
   }
 
   @Delete(':id')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   destroySpecialist(@Param('id') id: string, @User('id') user) {
     this.logData({ id, user });
     return this.specialistsService.destroy(id, user);

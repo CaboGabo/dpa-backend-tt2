@@ -1,7 +1,7 @@
-import { Controller, Logger, Get, UseGuards, UsePipes } from '@nestjs/common';
+import { Controller, Logger, Get, UseGuards } from '@nestjs/common';
 import { PostsService } from './posts.service';
-import { AuthGuard } from '../shared/auth.guard';
 import { User } from 'src/users/user.decorator';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller()
 export class PostsController {
@@ -16,7 +16,7 @@ export class PostsController {
   }
 
   @Get('api/posts')
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   showPostsByUser(@User('id') user) {
     this.logData({ user });
     return this.postsService.showByUser(user);
