@@ -114,7 +114,7 @@ export class DiagnosticsService {
     });
 
     if (!student) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
     }
 
     let diagnostics = await this.diagnosticRepository.find({
@@ -123,7 +123,10 @@ export class DiagnosticsService {
     });
 
     if (!diagnostics) {
-      throw new HttpException('No diagnostics found', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'No diagnostics were found',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     for (const diagnostic of diagnostics) {
@@ -147,7 +150,7 @@ export class DiagnosticsService {
     });
 
     if (!student) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
     }
 
     let diagnostics = await this.diagnosticRepository.find({
@@ -167,7 +170,7 @@ export class DiagnosticsService {
     });
 
     if (!student) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
     }
 
     let diagnostics = await this.diagnosticRepository.find({
@@ -177,7 +180,7 @@ export class DiagnosticsService {
     const diagnostic = diagnostics.filter(diagnostic => diagnostic.id === id);
 
     if (diagnostic.length === 0) {
-      throw new HttpException('Diagnostic Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Diagnostic not found', HttpStatus.NOT_FOUND);
     }
 
     return this.diagnosticToResponseObject(diagnostic[0]);

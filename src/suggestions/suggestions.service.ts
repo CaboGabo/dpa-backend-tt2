@@ -71,7 +71,7 @@ export class SuggestionsService {
       relations: ['user'],
     });
     if (!psychologist) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
     }
 
     const suggestion = await this.suggestionRepository.create({
@@ -94,23 +94,23 @@ export class SuggestionsService {
     });
 
     if (!psychologist) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
     }
 
     let suggestion = await this.suggestionRepository.findOne({
-      where: { savedBy: { id: psychologist.id } },
+      where: { savedBy: { id: psychologist.id }, id },
       relations: ['savedBy'],
     });
 
     if (!suggestion) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Suggestion not found', HttpStatus.NOT_FOUND);
     }
 
     this.ensureOwnership(suggestion, psychologist.id);
 
     await this.suggestionRepository.update({ id }, data);
     suggestion = await this.suggestionRepository.findOne({
-      where: { savedBy: { id: psychologist.id } },
+      where: { savedBy: { id: psychologist.id }, id },
       relations: ['savedBy'],
     });
 
@@ -124,7 +124,7 @@ export class SuggestionsService {
     });
 
     if (!psychologist) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
     }
 
     let suggestion = await this.suggestionRepository.findOne({
@@ -133,7 +133,7 @@ export class SuggestionsService {
     });
 
     if (!suggestion) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Suggestion not found', HttpStatus.NOT_FOUND);
     }
 
     this.ensureOwnership(suggestion, psychologist.id);
@@ -148,7 +148,7 @@ export class SuggestionsService {
       relations: ['student', 'suggestions'],
     });
     if (!diagnostic) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Diagnostic not found', HttpStatus.NOT_FOUND);
     }
 
     const suggestionsEntities = await this.showByActivationScore(

@@ -48,7 +48,7 @@ export class StudentsService {
     });
 
     if (!student) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
     }
 
     return this.studentToResponseObject(student);
@@ -92,7 +92,7 @@ export class StudentsService {
     });
 
     if (!student) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
     }
 
     if (data.enrollment) {

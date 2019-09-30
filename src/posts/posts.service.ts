@@ -48,7 +48,7 @@ export class PostsService {
     });
 
     if (!student) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Incorrect user', HttpStatus.NOT_FOUND);
     }
     let postsResponse = [];
     for (let i = 0; i < posts.length; i++) {

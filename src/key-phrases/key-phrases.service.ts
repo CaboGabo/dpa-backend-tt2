@@ -35,7 +35,10 @@ export class KeyPhrasesService {
       { where: { keyname: classificationCriteriaKey } },
     );
     if (!classificationCriteria) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'Classification criteria not found',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     const keyPhrase = await this.keyPhraseRepository.create({

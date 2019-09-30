@@ -56,7 +56,7 @@ export class SpecialistsService {
     });
 
     if (!specialist) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Specialist not found', HttpStatus.NOT_FOUND);
     }
 
     return this.specialistToResponseObject(specialist);
@@ -68,7 +68,7 @@ export class SpecialistsService {
       relations: ['user'],
     });
     if (!psychologist) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
     }
 
     let specialist = await this.specialistRepository.findOne({
@@ -103,16 +103,16 @@ export class SpecialistsService {
     });
 
     if (!psychologist) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
     }
 
     let specialist = await this.specialistRepository.findOne({
-      where: { savedBy: { id: psychologist.id } },
+      where: { savedBy: { id: psychologist.id }, id },
       relations: ['savedBy'],
     });
 
     if (!specialist) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Specialist not found', HttpStatus.NOT_FOUND);
     }
 
     if (data.phone) {
@@ -131,7 +131,7 @@ export class SpecialistsService {
 
     await this.specialistRepository.update({ id }, data);
     specialist = await this.specialistRepository.findOne({
-      where: { savedBy: { id: psychologist.id } },
+      where: { savedBy: { id: psychologist.id }, id },
       relations: ['savedBy'],
     });
 
@@ -145,7 +145,7 @@ export class SpecialistsService {
     });
 
     if (!psychologist) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
     }
 
     let specialist = await this.specialistRepository.findOne({
@@ -154,7 +154,7 @@ export class SpecialistsService {
     });
 
     if (!specialist) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Specialist not found', HttpStatus.NOT_FOUND);
     }
 
     this.ensureOwnership(specialist, psychologist.id);

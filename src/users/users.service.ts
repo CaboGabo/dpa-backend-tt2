@@ -119,7 +119,7 @@ export class UsersService {
       where: { email: data.email },
     });
     if (!user) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
     sgMail.setApiKey(process.env.API_KEY);
@@ -142,7 +142,7 @@ export class UsersService {
   async updatePassword(id: string, data: Partial<UserDTO>) {
     let user = await this.userRepository.findOne({ where: { id } });
     if (!user) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
     await this.userRepository.update({ id: user.id }, data);
@@ -157,7 +157,7 @@ export class UsersService {
   async validateUser(id: string) {
     let user = await this.userRepository.findOne({ where: { id } });
     if (!user) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
     await this.userRepository.update(

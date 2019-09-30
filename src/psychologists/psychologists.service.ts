@@ -53,7 +53,7 @@ export class PsychologistsService {
     });
 
     if (!psychologist) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
     }
 
     return this.psychologistToResponseObject(psychologist);
@@ -102,7 +102,7 @@ export class PsychologistsService {
     });
 
     if (!psychologist) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
     }
 
     if (data.rfc) {
@@ -110,7 +110,7 @@ export class PsychologistsService {
         where: { rfc: psychologist.rfc },
       });
       if (psychologistByRfc && psychologist.id !== psychologistByRfc.id) {
-        throw new HttpException('Rfc already exists', HttpStatus.BAD_REQUEST);
+        throw new HttpException('rfc already exists', HttpStatus.BAD_REQUEST);
       }
     }
 
