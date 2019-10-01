@@ -56,13 +56,17 @@ export class RedditService {
               const content = `"Publicación: ${formatedPost}, Sentimiento: ${
                 processedPost.score
               }, Magnitud: ${processedPost.magnitude}"`;
-              // ENVIAR A AUTOML PARA RECIBIR ETIQUETA
-              const tag = 'Posible depresión';
+              const tag = await this.googleCloud.predictPost(content);
+
               const post = {
-                content: `${content}, ${tag}`,
+                content: formatedPost,
+                sentiment: processedPost.score,
+                magnitude: processedPost.magnitude,
+                tag,
                 type: 'text',
                 postdate: this.toDate(redditPost.created).toDateString(),
               };
+
               console.log(post);
               posts.push(post);
             }
@@ -75,13 +79,17 @@ export class RedditService {
               const content = `"Publicación: ${formatedComment}, Sentimiento: ${
                 processedComment.score
               }, Magnitud: ${processedComment.magnitude}`;
-              // ENVIAR A AUTOML PARA RECIBIR ETIQUETA
-              const tag = 'Posible depresión';
+              const tag = await this.googleCloud.predictPost(content);
+
               const post = {
-                content: `${content}, ${tag}`,
+                content: formatedComment,
+                sentiment: processedComment.score,
+                magnitude: processedComment.magnitude,
+                tag,
                 type: 'text',
                 postdate: this.toDate(redditComment.created).toDateString(),
               };
+
               posts.push(post);
             }
 

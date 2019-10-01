@@ -42,10 +42,12 @@ export class TwitterService {
           processedTweet.score
         }, Magnitud: ${processedTweet.magnitude}"`;
         const tag = await this.googleCloud.predictPost(content);
-        //console.log(tag);
-        //const tag = 'Sin depresión';
+
         const post = {
-          content: `${content}, ${tag}`,
+          content: formatedTweet,
+          sentiment: processedTweet.score,
+          magnitude: processedTweet.magnitude,
+          tag,
           type: 'text',
           postdate: this.formatDate(tweet.created_at),
         };

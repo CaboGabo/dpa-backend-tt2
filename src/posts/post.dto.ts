@@ -5,6 +5,15 @@ export class PostDTO {
   @IsString()
   content: string;
 
+  @IsNumber()
+  sentiment: number;
+
+  @IsNumber()
+  magnitude: number;
+
+  @IsString()
+  tag: string;
+
   @IsString()
   type: string;
 
@@ -16,6 +25,9 @@ export class PostRO {
   id: string;
   created: Date;
   content: string;
+  sentiment: number;
+  magnitude: number;
+  tag: string;
   type: string;
   postdate: Date;
   author: StudentRO;

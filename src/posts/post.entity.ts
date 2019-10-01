@@ -18,6 +18,15 @@ export class PostEntity {
   @Column('text')
   content: string;
 
+  @Column('float')
+  sentiment: number;
+
+  @Column('float')
+  magnitude: number;
+
+  @Column('text')
+  tag: string;
+
   @Column('text')
   type: string;
 
