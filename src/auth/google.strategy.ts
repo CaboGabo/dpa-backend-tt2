@@ -6,8 +6,8 @@ import { AuthService, Provider } from './auth.service';
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(private readonly authService: AuthService) {
     super({
-      clientID: '',
-      clientSecret: '',
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
       callbackURL: 'http://localhost:3000/auth/login/google/callback',
       passReqToCallback: true,
       scope: ['profile'],

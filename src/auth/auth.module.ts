@@ -18,7 +18,7 @@ import { GoogleStrategy } from './google.strategy';
       }),
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy /*GoogleStrategy*/],
+  providers: [AuthService, LocalStrategy, JwtStrategy, GoogleStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}

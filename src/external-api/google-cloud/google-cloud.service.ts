@@ -32,9 +32,9 @@ export class GoogleCloudService {
   }
 
   public async predictPost(post: any): Promise<any> {
-    const projectId = 'dpa-app-1554938187073';
-    const computeRegion = 'us-central1';
-    const modelId = 'TCN8987481374233255342';
+    const projectId = process.env.PROJECT_ID;
+    const computeRegion = process.env.COMPUTE_REGION;
+    const modelId = process.env.MODEL_ID;
     const modelFullId = this.automlClient.modelPath(
       projectId,
       computeRegion,
