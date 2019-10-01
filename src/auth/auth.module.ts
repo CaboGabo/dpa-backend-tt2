@@ -11,9 +11,11 @@ import { GoogleStrategy } from './google.strategy';
   imports: [
     UsersModule,
     PassportModule,
-    JwtModule.register({
-      secret: 'secretkey',
-      signOptions: { expiresIn: '7d' },
+    JwtModule.registerAsync({
+      useFactory: () => ({
+        secret: process.env.SECRET,
+        signOptions: { expiresIn: '7d' },
+      }),
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy /*GoogleStrategy*/],
