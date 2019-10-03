@@ -106,6 +106,7 @@ export class DiagnosticsService {
 
     const posts = await this.postsService.showByUser(userId);
     const [insResult, insScore] = await this.classifierService.classify(posts);
+    console.log(insResult, insScore);
     const result = CryptoJS.AES.encrypt(
       `${insResult}`,
       process.env.SECRET,

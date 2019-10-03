@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PostRO } from '../posts/post.dto';
 
-import * as criteriaA9 from './criteria/criteriaA9';
+import * as criteriaA9 from './tdm/criteriaA9';
 
 @Injectable()
 export class ClassifierService {
