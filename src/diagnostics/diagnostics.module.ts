@@ -12,6 +12,7 @@ import { SuggestionEntity } from '../suggestions/suggestion.entity';
 import { PostEntity } from '../posts/post.entity';
 import { SuggestionsService } from '../suggestions/suggestions.service';
 import { PsychologistEntity } from '../psychologists/psychologist.entity';
+import { ClassifierService } from '../classifier/classifier.service';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { PsychologistEntity } from '../psychologists/psychologist.entity';
     TwitterService,
     PostsService,
     SuggestionsService,
+    ClassifierService,
   ],
   controllers: [DiagnosticsController],
 })

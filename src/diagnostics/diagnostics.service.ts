@@ -13,6 +13,7 @@ import { RedditService } from '../external-api/reddit/reddit.service';
 import { SuggestionsService } from '../suggestions/suggestions.service';
 
 import * as CryptoJS from 'crypto-js';
+import { ClassifierService } from '../classifier/classifier.service';
 
 @Injectable()
 export class DiagnosticsService {
@@ -25,6 +26,7 @@ export class DiagnosticsService {
     private redditService: RedditService,
     private postsService: PostsService,
     private suggestionsService: SuggestionsService,
+    private classifierService: ClassifierService,
   ) {}
 
   private diagnosticToResponseObject(
@@ -103,9 +105,15 @@ export class DiagnosticsService {
     }
 
     const posts = await this.postsService.showByUser(userId);
-    //ENVIAR POSTS AL CLASIFICADOR DE EMILIANO
-    const result = CryptoJS.AES.encrypt('true', process.env.SECRET).toString();
-    const score = CryptoJS.AES.encrypt('85', process.env.SECRET).toString();
+    const [insResult, insScore] = this.classifierService.classify(posts);
+    const result = CryptoJS.AES.encrypt(
+      `${insResult}`,
+      process.env.SECRET,
+    ).toString();
+    const score = CryptoJS.AES.encrypt(
+      `${insScore}`,
+      process.env.SECRET,
+    ).toString();
 
     const diagnostic = await this.diagnosticRepository.create({
       result,
