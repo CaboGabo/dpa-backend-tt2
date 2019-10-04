@@ -34,7 +34,7 @@ export class StudentEntity {
   @Column('text')
   lastName: string;
 
-  @Column('number')
+  @Column()
   age: number;
 
   @Column({
