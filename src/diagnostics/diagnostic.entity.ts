@@ -6,9 +6,11 @@ import {
   ManyToOne,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { StudentEntity } from '../students/student.entity';
 import { SuggestionEntity } from '../suggestions/suggestion.entity';
+import { ActivityEntity } from '../activities/activity.entity';
 
 @Entity('diagnostics')
 export class DiagnosticEntity {
@@ -21,13 +23,9 @@ export class DiagnosticEntity {
   @Column()
   result: string;
 
-  @Column()
-  score: string;
-
   @ManyToOne(type => StudentEntity, student => student.diagnostics)
   student: StudentEntity;
 
-  @ManyToMany(type => SuggestionEntity, { cascade: true })
-  @JoinTable()
-  suggestions: SuggestionEntity[];
+  @OneToMany(type => ActivityEntity, activity => activity.diagnostic)
+  activities: ActivityEntity[];
 }

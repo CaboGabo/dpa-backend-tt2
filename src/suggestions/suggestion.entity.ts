@@ -1,10 +1,12 @@
 import { PsychologistEntity } from '../psychologists/psychologist.entity';
+import { ActivityEntity } from '../activities/activity.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   Column,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('suggestions')
@@ -18,12 +20,24 @@ export class SuggestionEntity {
   @Column('text')
   content: string;
 
+  @Column({
+    type: 'char',
+    length: 1,
+  })
+  gender: string;
+
   @Column()
-  activationScore: number;
+  rangeAge: string;
+
+  @Column()
+  depressionType: string;
 
   @ManyToOne(
     type => PsychologistEntity,
     psychologist => psychologist.suggestions,
   )
   savedBy: PsychologistEntity;
+
+  @OneToMany(type => ActivityEntity, activity => activity.suggestion)
+  activities: ActivityEntity;
 }

@@ -13,6 +13,8 @@ import { PostEntity } from '../posts/post.entity';
 import { SuggestionsService } from '../suggestions/suggestions.service';
 import { PsychologistEntity } from '../psychologists/psychologist.entity';
 import { ClassifierService } from '../classifier/classifier.service';
+import { ActivitiesService } from '../activities/activities.service';
+import { ActivityEntity } from '../activities/activity.entity';
 
 @Module({
   imports: [
@@ -22,6 +24,7 @@ import { ClassifierService } from '../classifier/classifier.service';
       SuggestionEntity,
       PostEntity,
       PsychologistEntity,
+      ActivityEntity,
     ]),
   ],
   providers: [
@@ -32,6 +35,7 @@ import { ClassifierService } from '../classifier/classifier.service';
     PostsService,
     SuggestionsService,
     ClassifierService,
+    ActivitiesService,
   ],
   controllers: [DiagnosticsController],
 })

@@ -10,7 +10,7 @@ export class ClassifierService {
     for (const post of posts) {
       justPosts.push(post.content);
     }
-    return [await this.mainTdm(justPosts), 85];
+    return await this.mainTdm(justPosts);
   }
 
   async mainTdm(posts: string[]) {

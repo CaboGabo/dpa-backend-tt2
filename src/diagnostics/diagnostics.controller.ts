@@ -79,11 +79,15 @@ export class DiagnosticsController {
     return this.diagnosticsService.diagnostic(user);
   }
 
-  @Put('diagnostics/suggestions')
+  @Put('diagnostics/:idDiagnostic/activities')
   @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
-  async updateSuggestionsDiagnostics(@User('id') user) {
-    return this.diagnosticsService.updateSuggestions(user);
+  async updateSuggestionsDiagnostics(
+    @User('id') user,
+    @Param('idDiagnotic') id: string,
+    @Query('page') page: number,
+  ) {
+    return this.diagnosticsService.addActivities(user, id, page);
   }
 
   @Get('api/diagnostics')

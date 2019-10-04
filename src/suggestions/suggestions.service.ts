@@ -4,9 +4,6 @@ import { PsychologistEntity } from '../psychologists/psychologist.entity';
 import { Repository } from 'typeorm';
 import { SuggestionEntity } from './suggestion.entity';
 import { SuggestionRO, SuggestionDTO } from './suggestion.dto';
-import { DiagnosticEntity } from '../diagnostics/diagnostic.entity';
-
-import * as CryptoJS from 'crypto-js';
 
 @Injectable()
 export class SuggestionsService {
@@ -15,8 +12,6 @@ export class SuggestionsService {
     private psychologistRepository: Repository<PsychologistEntity>,
     @InjectRepository(SuggestionEntity)
     private suggestionRepository: Repository<SuggestionEntity>,
-    @InjectRepository(DiagnosticEntity)
-    private diagnosticRepository: Repository<DiagnosticEntity>,
   ) {}
 
   private suggestionToResponseObject(
@@ -42,29 +37,14 @@ export class SuggestionsService {
     }
   }
 
-  async showAll(page: number = 1): Promise<SuggestionRO[]> {
+  async showAll(page: number = 1): Promise<SuggestionEntity[]> {
     const suggestions = await this.suggestionRepository.find({
       relations: ['savedBy'],
       take: 25,
       skip: 25 * (page - 1),
     });
 
-    return suggestions.map(suggestion =>
-      this.suggestionToResponseObject(suggestion),
-    );
-  }
-
-  async showByActivationScore(
-    activationScore: number,
-  ): Promise<SuggestionEntity[]> {
-    const suggestions = await this.suggestionRepository.find({
-      relations: ['savedBy'],
-    });
-
-    const filteredSuggestions = suggestions.filter(
-      suggestion => suggestion.activationScore >= activationScore,
-    );
-    return filteredSuggestions;
+    return suggestions;
   }
 
   async create(userId: string, data: SuggestionDTO): Promise<SuggestionRO> {
@@ -144,7 +124,7 @@ export class SuggestionsService {
     return this.suggestionToResponseObject(suggestion);
   }
 
-  async saveSuggestionsDiagnostic(diagnosticId: string) {
+  /* async saveSuggestionsDiagnostic(diagnosticId: string) {
     const diagnostic = await this.diagnosticRepository.findOne({
       where: { id: diagnosticId },
       relations: ['student', 'suggestions'],
@@ -153,10 +133,11 @@ export class SuggestionsService {
       throw new HttpException('Diagnostic not found', HttpStatus.NOT_FOUND);
     }
 
-    const bytes = CryptoJS.AES.decrypt(diagnostic.score, process.env.SECRET);
-    const score = parseInt(JSON.parse(bytes.toString(CryptoJS.enc.Utf8)));
+    const bytes = CryptoJS.AES.decrypt(diagnostic.result, process.env.SECRET);
+    const result =
+      JSON.parse(bytes.toString(CryptoJS.enc.Utf8)) === 'true' ? true : false;
 
-    const suggestionsEntities = await this.showByActivationScore(score);
+    const suggestionsEntities = await this.showAll();
 
     const suggestions = suggestionsEntities.map(suggestion =>
       this.suggestionToResponseObject(suggestion),
@@ -176,5 +157,5 @@ export class SuggestionsService {
         await this.diagnosticRepository.save(diagnostic);
       }
     });
-  }
+  } */
 }

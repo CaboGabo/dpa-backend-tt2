@@ -16,6 +16,7 @@ import { GeneralDataModule } from './general-data/general-data.module';
 import { SuggestionsModule } from './suggestions/suggestions.module';
 import { DiagnosticsModule } from './diagnostics/diagnostics.module';
 import { AuthModule } from './auth/auth.module';
+import { ActivitiesModule } from './activities/activities.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { AuthModule } from './auth/auth.module';
     SuggestionsModule,
     DiagnosticsModule,
     AuthModule,
+    ActivitiesModule,
   ],
   controllers: [AppController],
   providers: [

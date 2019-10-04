@@ -10,7 +10,7 @@ import { PostsService } from '../posts/posts.service';
 import { PostRO } from '../posts/post.dto';
 import { RedditAuthDTO } from '../external-api/reddit/reddit-auth.dto';
 import { RedditService } from '../external-api/reddit/reddit.service';
-import { SuggestionsService } from '../suggestions/suggestions.service';
+import { ActivitiesService } from '../activities/activities.service';
 
 import * as CryptoJS from 'crypto-js';
 import { ClassifierService } from '../classifier/classifier.service';
@@ -25,24 +25,20 @@ export class DiagnosticsService {
     private twitterService: TwitterService,
     private redditService: RedditService,
     private postsService: PostsService,
-    private suggestionsService: SuggestionsService,
+    private activitiesService: ActivitiesService,
     private classifierService: ClassifierService,
   ) {}
 
   private diagnosticToResponseObject(
     diagnostic: DiagnosticEntity,
   ): DiagnosticRO {
-    let bytes = CryptoJS.AES.decrypt(diagnostic.score, process.env.SECRET);
-    const score = parseInt(JSON.parse(bytes.toString(CryptoJS.enc.Utf8)));
-
-    bytes = CryptoJS.AES.decrypt(diagnostic.result, process.env.SECRET);
+    const bytes = CryptoJS.AES.decrypt(diagnostic.result, process.env.SECRET);
     const result = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
     const responseObject: any = {
       ...diagnostic,
       student: diagnostic.student || null,
-      suggestions: diagnostic.suggestions || null,
-      score,
+      activities: diagnostic.activities || null,
       result: result === 'true' ? true : false,
     };
 
@@ -105,20 +101,15 @@ export class DiagnosticsService {
     }
 
     const posts = await this.postsService.showByUser(userId);
-    const [insResult, insScore] = await this.classifierService.classify(posts);
-    console.log(insResult, insScore);
+    const insResult = await this.classifierService.classify(posts);
+    console.log(insResult);
     const result = CryptoJS.AES.encrypt(
       `${insResult}`,
-      process.env.SECRET,
-    ).toString();
-    const score = CryptoJS.AES.encrypt(
-      `${insScore}`,
       process.env.SECRET,
     ).toString();
 
     const diagnostic = await this.diagnosticRepository.create({
       result,
-      score,
       student,
     });
 
@@ -126,7 +117,7 @@ export class DiagnosticsService {
     return this.diagnosticToResponseObject(diagnostic);
   }
 
-  async updateSuggestions(userId: string): Promise<DiagnosticRO[]> {
+  async addActivities(userId: string, id: string, page: number): Promise<any> {
     const student = await this.studentRepository.findOne({
       where: { user: { id: userId } },
       relations: ['user', 'diagnostics'],
@@ -136,30 +127,29 @@ export class DiagnosticsService {
       throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
     }
 
-    let diagnostics = await this.diagnosticRepository.find({
-      where: { student: { id: student.id } },
-      relations: ['student', 'suggestions'],
+    let diagnostic = await this.diagnosticRepository.findOne({
+      where: { id, student },
+      relations: ['student', 'activities'],
     });
 
-    if (!diagnostics) {
-      throw new HttpException(
-        'No diagnostics were found',
-        HttpStatus.NOT_FOUND,
-      );
+    if (!diagnostic) {
+      throw new HttpException('Diagnostic not found', HttpStatus.NOT_FOUND);
     }
 
-    for (const diagnostic of diagnostics) {
-      await this.suggestionsService.saveSuggestionsDiagnostic(diagnostic.id);
-    }
-
-    diagnostics = await this.diagnosticRepository.find({
-      where: { student: { id: student.id } },
-      relations: ['student', 'suggestions'],
-    });
-
-    return diagnostics.map(diagnostic =>
-      this.diagnosticToResponseObject(diagnostic),
+    const { saved } = await this.activitiesService.saveActivitiesDiagnostic(
+      id,
+      page,
     );
+
+    diagnostic = await this.diagnosticRepository.findOne({
+      where: { id, student },
+      relations: ['student', 'activities'],
+    });
+
+    return {
+      ...this.diagnosticToResponseObject(diagnostic),
+      newActivities: saved,
+    };
   }
 
   async getAll(userId: string): Promise<DiagnosticRO[]> {
@@ -174,7 +164,7 @@ export class DiagnosticsService {
 
     let diagnostics = await this.diagnosticRepository.find({
       where: { student: { id: student.id } },
-      relations: ['student', 'suggestions'],
+      relations: ['student', 'activities'],
     });
 
     return diagnostics.map(diagnostic =>
@@ -185,7 +175,7 @@ export class DiagnosticsService {
   async read(userId: string, id: string): Promise<DiagnosticRO> {
     const student = await this.studentRepository.findOne({
       where: { user: { id: userId } },
-      relations: ['user', 'diagnostics'],
+      relations: ['user', 'activities'],
     });
 
     if (!student) {
