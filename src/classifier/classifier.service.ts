@@ -23,6 +23,26 @@ export class ClassifierService {
       console.log('El criterio A no está presente');
     }
 
+    /*
+	if(await isBBehaviourPresent(postsArray)){
+		console.log("El criterio B está presente");
+		mainCount++;
+	}
+	else
+		console.log("El criterio B no está presente");
+	*/
+
+    /*
+	if(await isCBehaviourPresent(postsArray)){
+		console.log("El criterio C está presente");
+		mainCount++;
+	}
+	else
+		console.log("El criterio C no está presente");
+	*/
+
+    //Mandamos la respuesta final sobre si presenta o no los sintomas del TDM
+
     if (mainCount == 3) {
       return true;
     } else {
@@ -42,4 +62,26 @@ export class ClassifierService {
 
     return false;
   }
+
+  /* async isBBehaviourPresent(postsArray){
+    let presentSymptoms = 0;
+  
+    //if(await criteriaB1.analyzePosts(postsArray))
+      presentSymptoms++;
+  
+    if(presentSymptoms > 0)
+      return true;
+    return false;
+  }
+  
+  async isCBehaviourPresent(postsArray){
+    let presentSymptoms = 0;
+  
+    if(await criteriaC1.analyzePosts(postsArray))
+      presentSymptoms++;
+  
+    if(presentSymptoms > 0)
+      return true;
+    return false;
+  }*/
 }
