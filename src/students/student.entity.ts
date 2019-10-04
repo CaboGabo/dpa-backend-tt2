@@ -34,8 +34,14 @@ export class StudentEntity {
   @Column('text')
   lastName: string;
 
-  @Column('date')
-  birthdate: Date;
+  @Column('number')
+  age: number;
+
+  @Column({
+    type: 'char',
+    length: '1',
+  })
+  gender: string;
 
   @OneToOne(type => UserEntity, user => user.student)
   @JoinColumn()

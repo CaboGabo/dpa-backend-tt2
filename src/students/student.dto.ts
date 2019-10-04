@@ -17,7 +17,10 @@ export class StudentDTO {
   lastName: string;
 
   @IsString()
-  birthdate: string;
+  gender: string;
+
+  @IsNumber()
+  age: number;
 }
 
 export class StudentRO {
@@ -27,7 +30,8 @@ export class StudentRO {
   semester: number;
   firstName: string;
   lastName: string;
-  birthdate: Date;
+  gender: string;
+  age: number;
   user: UserRO;
   posts?: PostRO[];
   diagnostics?: DiagnosticRO[];

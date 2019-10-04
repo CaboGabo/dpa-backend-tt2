@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { DiagnosticEntity } from '../diagnostics/diagnostic.entity';
 import { SuggestionsService } from '../suggestions/suggestions.service';
 import { ActivityDTO, ActivityRO } from './activity.dto';
+import { StudentEntity } from '../students/student.entity';
 
 @Injectable()
 export class ActivitiesService {
@@ -19,6 +20,7 @@ export class ActivitiesService {
   async saveActivitiesDiagnostic(
     idDiagnostic: string,
     page: number,
+    student: StudentEntity,
   ): Promise<any> {
     const diagnostic = await this.diagnosticRepository.findOne({
       where: { id: idDiagnostic },
@@ -27,8 +29,16 @@ export class ActivitiesService {
 
     const suggestions = await this.suggestionsService.showAll(page);
 
+    const filteredSuggestions = suggestions.filter(
+      suggestion =>
+        suggestion.depressionType === diagnostic.depressionType ||
+        suggestion.gender === student.gender ||
+        (parseInt(suggestion.rangeAge.split('-')[0]) <= student.age &&
+          student.age <= parseInt(suggestion.rangeAge.split('-')[1])),
+    );
+
     let saved = 0;
-    for (const suggestion of suggestions) {
+    for (const suggestion of filteredSuggestions) {
       let exists = await this.activityRepository.findOne({
         where: { diagnostic, suggestion },
         relations: ['diagnostic', 'suggestion'],

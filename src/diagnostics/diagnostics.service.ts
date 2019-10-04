@@ -139,6 +139,7 @@ export class DiagnosticsService {
     const { saved } = await this.activitiesService.saveActivitiesDiagnostic(
       id,
       page,
+      student,
     );
 
     diagnostic = await this.diagnosticRepository.findOne({
