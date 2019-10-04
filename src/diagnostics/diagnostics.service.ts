@@ -152,6 +152,72 @@ export class DiagnosticsService {
     };
   }
 
+  async activityDone(
+    userId: string,
+    diagnosticId: string,
+    activityId: string,
+  ): Promise<DiagnosticRO> {
+    const student = await this.studentRepository.findOne({
+      where: { user: { id: userId } },
+      relations: ['user', 'diagnostics'],
+    });
+
+    if (!student) {
+      throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
+    }
+
+    let diagnostic = await this.diagnosticRepository.findOne({
+      where: { diagnosticId, student },
+      relations: ['student', 'activities'],
+    });
+
+    if (!diagnostic) {
+      throw new HttpException('Diagnostic not found', HttpStatus.NOT_FOUND);
+    }
+
+    await this.activitiesService.activityDone(activityId);
+
+    diagnostic = await this.diagnosticRepository.findOne({
+      where: { diagnosticId, student },
+      relations: ['student', 'activities'],
+    });
+
+    return this.diagnosticToResponseObject(diagnostic);
+  }
+
+  async activityNotDone(
+    userId: string,
+    diagnosticId: string,
+    activityId: string,
+  ): Promise<DiagnosticRO> {
+    const student = await this.studentRepository.findOne({
+      where: { user: { id: userId } },
+      relations: ['user', 'diagnostics'],
+    });
+
+    if (!student) {
+      throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
+    }
+
+    let diagnostic = await this.diagnosticRepository.findOne({
+      where: { diagnosticId, student },
+      relations: ['student', 'activities'],
+    });
+
+    if (!diagnostic) {
+      throw new HttpException('Diagnostic not found', HttpStatus.NOT_FOUND);
+    }
+
+    await this.activitiesService.activityNotDone(activityId);
+
+    diagnostic = await this.diagnosticRepository.findOne({
+      where: { diagnosticId, student },
+      relations: ['student', 'activities'],
+    });
+
+    return this.diagnosticToResponseObject(diagnostic);
+  }
+
   async getAll(userId: string): Promise<DiagnosticRO[]> {
     const student = await this.studentRepository.findOne({
       where: { user: { id: userId } },

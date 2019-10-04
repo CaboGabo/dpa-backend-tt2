@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ActivityEntity } from './activity.entity';
 import { Repository } from 'typeorm';
 import { DiagnosticEntity } from '../diagnostics/diagnostic.entity';
 import { SuggestionsService } from '../suggestions/suggestions.service';
+import { ActivityDTO, ActivityRO } from './activity.dto';
 
 @Injectable()
 export class ActivitiesService {
@@ -44,5 +45,55 @@ export class ActivitiesService {
       }
     }
     return { saved };
+  }
+
+  async activityDone(id: string): Promise<boolean> {
+    let activity = await this.activityRepository.findOne({
+      where: { id },
+      relations: ['diagnostic', 'suggestion'],
+    });
+
+    if (!activity) {
+      throw new HttpException('Activity not found', HttpStatus.NOT_FOUND);
+    }
+
+    await this.activityRepository.update(
+      { id },
+      {
+        done: true,
+      },
+    );
+
+    activity = await this.activityRepository.findOne({
+      where: { id },
+      relations: ['diagnostic', 'suggestion'],
+    });
+
+    return true;
+  }
+
+  async activityNotDone(id: string): Promise<boolean> {
+    let activity = await this.activityRepository.findOne({
+      where: { id },
+      relations: ['diagnostic', 'suggestion'],
+    });
+
+    if (!activity) {
+      throw new HttpException('Activity not found', HttpStatus.NOT_FOUND);
+    }
+
+    await this.activityRepository.update(
+      { id },
+      {
+        done: false,
+      },
+    );
+
+    activity = await this.activityRepository.findOne({
+      where: { id },
+      relations: ['diagnostic', 'suggestion'],
+    });
+
+    return true;
   }
 }

@@ -84,10 +84,36 @@ export class DiagnosticsController {
   @UsePipes(new ValidationPipe())
   async updateSuggestionsDiagnostics(
     @User('id') user,
-    @Param('idDiagnotic') id: string,
+    @Param('idDiagnostic') id: string,
     @Query('page') page: number,
   ) {
     return this.diagnosticsService.addActivities(user, id, page);
+  }
+
+  @Put('diagnostics/:idDiagnostic/activities/:idActivity/done')
+  @UseGuards(AuthGuard('jwt'))
+  @UsePipes(new ValidationPipe())
+  async activityDone(
+    @User('id') user,
+    @Param('idDiagnostic') idDiagnostic: string,
+    @Param('idActivity') idActivity: string,
+  ) {
+    return this.diagnosticsService.activityDone(user, idDiagnostic, idActivity);
+  }
+
+  @Put('diagnostics/:idDiagnostic/activities/:idActivity/notdone')
+  @UseGuards(AuthGuard('jwt'))
+  @UsePipes(new ValidationPipe())
+  async activityNotDone(
+    @User('id') user,
+    @Param('idDiagnostic') idDiagnostic: string,
+    @Param('idActivity') idActivity: string,
+  ) {
+    return this.diagnosticsService.activityNotDone(
+      user,
+      idDiagnostic,
+      idActivity,
+    );
   }
 
   @Get('api/diagnostics')
