@@ -116,15 +116,27 @@ export class DiagnosticsController {
     );
   }
 
-  @Get('api/diagnostics')
+  @Get('api/diagnostics/student')
   @UseGuards(AuthGuard('jwt'))
-  async getAllDiagnostics(@User('id') user) {
-    return this.diagnosticsService.getAll(user);
+  async getAllDiagnosticsByStudent(@User('id') user) {
+    return this.diagnosticsService.getAllByStudent(user);
   }
 
-  @Get('api/diagnostics/:id')
+  @Get('api/diagnostics/student/:id')
   @UseGuards(AuthGuard('jwt'))
-  async getDiagnostic(@User('id') user, @Param('id') id) {
-    return this.diagnosticsService.read(user, id);
+  async getDiagnosticByStudent(@User('id') user, @Param('id') id) {
+    return this.diagnosticsService.readByStudent(user, id);
+  }
+
+  @Get('api/diagnostics/psychologist')
+  @UseGuards(AuthGuard('jwt'))
+  async getAllDiagnosticsByPsychologist(@User('id') user) {
+    return this.diagnosticsService.getAllByPsychologist(user);
+  }
+
+  @Get('api/diagnostics/psychologist/:id')
+  @UseGuards(AuthGuard('jwt'))
+  async getDiagnosticByPsychologist(@User('id') user, @Param('id') id) {
+    return this.diagnosticsService.readByPsychologist(user, id);
   }
 }

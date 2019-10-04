@@ -14,6 +14,7 @@ import { ActivitiesService } from '../activities/activities.service';
 
 import * as CryptoJS from 'crypto-js';
 import { ClassifierService } from '../classifier/classifier.service';
+import { PsychologistEntity } from '../psychologists/psychologist.entity';
 
 @Injectable()
 export class DiagnosticsService {
@@ -22,6 +23,8 @@ export class DiagnosticsService {
     private diagnosticRepository: Repository<DiagnosticEntity>,
     @InjectRepository(StudentEntity)
     private studentRepository: Repository<StudentEntity>,
+    @InjectRepository(PsychologistEntity)
+    private psychologistRepository: Repository<PsychologistEntity>,
     private twitterService: TwitterService,
     private redditService: RedditService,
     private postsService: PostsService,
@@ -219,7 +222,7 @@ export class DiagnosticsService {
     return this.diagnosticToResponseObject(diagnostic);
   }
 
-  async getAll(userId: string): Promise<DiagnosticRO[]> {
+  async getAllByStudent(userId: string): Promise<DiagnosticRO[]> {
     const student = await this.studentRepository.findOne({
       where: { user: { id: userId } },
       relations: ['user', 'diagnostics'],
@@ -239,7 +242,46 @@ export class DiagnosticsService {
     );
   }
 
-  async read(userId: string, id: string): Promise<DiagnosticRO> {
+  async getAllByPsychologist(userId: string): Promise<DiagnosticRO[]> {
+    const psychologist = await this.psychologistRepository.findOne({
+      where: { user: { id: userId } },
+      relations: ['user'],
+    });
+
+    if (!psychologist) {
+      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
+    }
+
+    const diagnostics = await this.diagnosticRepository.find();
+
+    return diagnostics.map(diagnostic =>
+      this.diagnosticToResponseObject(diagnostic),
+    );
+  }
+
+  async readByPsychologist(userId: string, id: string): Promise<DiagnosticRO> {
+    const psychologist = await this.psychologistRepository.findOne({
+      where: { user: { id: userId } },
+      relations: ['user'],
+    });
+
+    if (!psychologist) {
+      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
+    }
+
+    const diagnostic = await this.diagnosticRepository.findOne({
+      where: { id },
+      relations: ['student', 'activities'],
+    });
+
+    if (!diagnostic) {
+      throw new HttpException('Diagnostic not found', HttpStatus.NOT_FOUND);
+    }
+
+    return this.diagnosticToResponseObject(diagnostic);
+  }
+
+  async readByStudent(userId: string, id: string): Promise<DiagnosticRO> {
     const student = await this.studentRepository.findOne({
       where: { user: { id: userId } },
       relations: ['user', 'activities'],
