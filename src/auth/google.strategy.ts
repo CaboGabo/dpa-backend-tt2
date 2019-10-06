@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-google-oauth20';
 import { AuthService, Provider } from './auth.service';
+import { UserDTO } from '../users/user.dto';
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(private readonly authService: AuthService) {
@@ -23,10 +24,13 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   ) {
     try {
       console.log(profile);
-      done(
-        null,
-        await this.authService.validateOAuthLogin(profile.id, Provider.GOOGLE),
-      );
+      const user: UserDTO = {
+        username: request.body.username,
+        password: profile.id,
+        email: profile.getEmail(),
+      };
+
+      done(null, await this.authService.validateOAuthLogin(user));
     } catch (err) {
       done(err, false);
     }

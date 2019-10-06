@@ -1,6 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { UserDTO } from '../users/user.dto';
 
 export enum Provider {
   GOOGLE = 'google',
@@ -33,10 +34,18 @@ export class AuthService {
     };
   }
 
-  async validateOAuthLogin(thirdPartyId: string, provider: Provider) {
-    const payload = { thirdPartyId, provider };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+  async validateOAuthLogin(user: UserDTO) {
+    const users = await this.usersService.showAll();
+    const existsEmail = users.filter(usr => user.email === usr.email);
+
+    let payload: any;
+    if (!existsEmail.length) {
+      const newUser = await this.usersService.register(user);
+      payload = { username: newUser.username, sub: newUser.id };
+    } else {
+      payload = { username: existsEmail[0].username, sub: existsEmail[0].id };
+    }
+
+    return payload;
   }
 }
