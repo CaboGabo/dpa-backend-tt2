@@ -35,14 +35,17 @@ export class DiagnosticsService {
   private diagnosticToResponseObject(
     diagnostic: DiagnosticEntity,
   ): DiagnosticRO {
-    const bytes = CryptoJS.AES.decrypt(diagnostic.result, process.env.SECRET);
+    /*  const bytes = CryptoJS.AES.decrypt(diagnostic.result, process.env.SECRET);
+    bytes.toString(CryptoJS.enc.Utf8).then(console.log);
     const result = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    //const result = 'true';
+    console.log('RESULT', result); */
 
     const responseObject: any = {
       ...diagnostic,
       student: diagnostic.student || null,
       activities: diagnostic.activities || null,
-      result: result === 'true' ? true : false,
+      result: diagnostic.result === 'true' ? true : false,
     };
 
     return responseObject;
@@ -93,7 +96,7 @@ export class DiagnosticsService {
     return posts;
   }
 
-  async diagnostic(userId: string): Promise<DiagnosticRO> {
+  async diagnostic(userId: string): Promise<DiagnosticRO[]> {
     const student = await this.studentRepository.findOne({
       where: { user: { id: userId } },
       relations: ['user', 'diagnostics'],
@@ -105,19 +108,35 @@ export class DiagnosticsService {
 
     const posts = await this.postsService.showByUser(userId);
     const insResult = await this.classifierService.classify(posts);
-    console.log(insResult);
-    const result = CryptoJS.AES.encrypt(
-      `${insResult}`,
+
+    /* const resultTdm = CryptoJS.AES.encrypt(
+      `${insResult[0]}`,
       process.env.SECRET,
     ).toString();
 
-    const diagnostic = await this.diagnosticRepository.create({
-      result,
+    const resultTdp = CryptoJS.AES.encrypt(
+      `${insResult[1]}`,
+      process.env.SECRET,
+    ).toString(); */
+
+    const diagnostic1 = await this.diagnosticRepository.create({
+      result: insResult[0],
+      depressionType: 'tdm',
       student,
     });
 
-    await this.diagnosticRepository.save(diagnostic);
-    return this.diagnosticToResponseObject(diagnostic);
+    const diagnostic2 = await this.diagnosticRepository.create({
+      result: insResult[1],
+      depressionType: 'tdp',
+      student,
+    });
+
+    await this.diagnosticRepository.save(diagnostic1);
+    await this.diagnosticRepository.save(diagnostic2);
+
+    return [diagnostic1, diagnostic2].map(diagnostic =>
+      this.diagnosticToResponseObject(diagnostic),
+    );
   }
 
   async addActivities(userId: string, id: string, page: number): Promise<any> {

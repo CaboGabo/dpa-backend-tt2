@@ -13,9 +13,17 @@ import * as criteriaB4 from './criteria/criteriaB4';
 import * as criteriaB6 from './criteria/criteriaB6';
 import * as criteriaC1 from './criteria/criteriaC1';
 
-let resultA2,resultA3,resultA4,resultA6,resultA7,
-    resultA8,resultA9,resultB1,resultB4,resultB6,
-    resultC1;
+let resultA2,
+  resultA3,
+  resultA4,
+  resultA6,
+  resultA7,
+  resultA8,
+  resultA9,
+  resultB1,
+  resultB4,
+  resultB6,
+  resultC1;
 
 @Injectable()
 export class ClassifierService {
@@ -27,11 +35,11 @@ export class ClassifierService {
     await this.allCriterias(justPosts);
     let result = [];
     result[0] = this.mainTdm(justPosts);
-    result[1] = this.mainTdp(justPosts); 
+    result[1] = this.mainTdp(justPosts);
     return result;
   }
 
-  async allCriterias(posts: string[]){
+  async allCriterias(posts: string[]) {
     resultA2 = criteriaA2.analyzePosts(posts);
     resultA3 = criteriaA3.analyzePosts(posts);
     resultA4 = criteriaA4.analyzePosts(posts);
@@ -45,7 +53,6 @@ export class ClassifierService {
     resultC1 = criteriaC1.analyzePosts(posts);
   }
 
-
   async mainTdm(posts: string[]) {
     let mainCount = 0;
 
@@ -56,19 +63,15 @@ export class ClassifierService {
       console.log('El criterio TDM-A no está presente');
     }
 
-	  if(await this.isTdmBBehaviourPresent(posts)){
-		  console.log("El criterio TDM-B está presente");
-		  mainCount++;
-	  }
-	  else
-		  console.log("El criterio TDM-B no está presente");
+    if (await this.isTdmBBehaviourPresent(posts)) {
+      console.log('El criterio TDM-B está presente');
+      mainCount++;
+    } else console.log('El criterio TDM-B no está presente');
 
-	  if(await this.isTdmCBehaviourPresent(posts)){
-		  console.log("El criterio TDM-C está presente");
-		  mainCount++;
-	  }
-	  else
-		  console.log("El criterio TDM-C no está presente");
+    if (await this.isTdmCBehaviourPresent(posts)) {
+      console.log('El criterio TDM-C está presente');
+      mainCount++;
+    } else console.log('El criterio TDM-C no está presente');
 
     //Mandamos la respuesta final sobre si presenta o no los sintomas del TDM
     if (mainCount == 3) {
@@ -78,54 +81,40 @@ export class ClassifierService {
     }
   }
 
-
-  async mainTdp(posts: string[]){
+  async mainTdp(posts: string[]) {
     let mainCount = 0;
 
-    if(await this.isTdpABehaviourPresent(posts)){
-      console.log("El criterio TDP-A está presente");
+    if (await this.isTdpABehaviourPresent(posts)) {
+      console.log('El criterio TDP-A está presente');
       mainCount++;
-    }
-    else
-      console.log("El criterio TDP-A no está presente");
-    
-    if(await this.isTdpBBehaviourPresent(posts)){
-      console.log("El criterio TDP-B está presente");
-      mainCount++;
-    }
-    else
-      console.log("El criterio TDP-B no está presente");
-    
-    if(await this.isTdpCBehaviourPresent(posts)){
-      console.log("El criterio TDP-C está presente");
-      mainCount++;
-    }
-    else
-      console.log("El criterio TDP-C no está presente");
+    } else console.log('El criterio TDP-A no está presente');
 
-    if(await this.isTdpGBehaviourPresent(posts)){
-      console.log("El criterio TDP-G está presente");
+    if (await this.isTdpBBehaviourPresent(posts)) {
+      console.log('El criterio TDP-B está presente');
       mainCount++;
-    }
-    else
-      console.log("El criterio TDP-G no está presente");
+    } else console.log('El criterio TDP-B no está presente');
 
-    if(await this.isTdpHBehaviourPresent(posts)){
-      console.log("El criterio TDP-H está presente");
+    if (await this.isTdpCBehaviourPresent(posts)) {
+      console.log('El criterio TDP-C está presente');
       mainCount++;
-    }
-    else
-      console.log("El criterio TDP-H no está presente");  
+    } else console.log('El criterio TDP-C no está presente');
+
+    if (await this.isTdpGBehaviourPresent(posts)) {
+      console.log('El criterio TDP-G está presente');
+      mainCount++;
+    } else console.log('El criterio TDP-G no está presente');
+
+    if (await this.isTdpHBehaviourPresent(posts)) {
+      console.log('El criterio TDP-H está presente');
+      mainCount++;
+    } else console.log('El criterio TDP-H no está presente');
 
     //Mandamos la respuesta final sobre si presenta o no los sintomas del TDM
-    if(mainCount == 3)
-      return true;
-    else
-      return false;
-}
+    if (mainCount == 3) return true;
+    else return false;
+  }
 
-
-//*******************    PUNTOS TDM  *************************************************************************
+  //*******************    PUNTOS TDM  *************************************************************************
 
   async isTdmABehaviourPresent(posts: string[]) {
     let presentSymptoms = 0;
@@ -135,133 +124,105 @@ export class ClassifierService {
     //if(depPercentage > 50)
     //  presentSymptoms++
 
-    if(resultA2)
-      presentSymptoms++;
+    if (resultA2) presentSymptoms++;
 
-    if(resultA3)
-      presentSymptoms++;
+    if (resultA3) presentSymptoms++;
 
-    if(resultA4)
-      presentSymptoms++;
+    if (resultA4) presentSymptoms++;
 
-    if(resultA6)
-      presentSymptoms++;
+    if (resultA6) presentSymptoms++;
 
-    if(resultA7)
-      presentSymptoms++;
+    if (resultA7) presentSymptoms++;
 
-    if(resultA8)
-      presentSymptoms++;
+    if (resultA8) presentSymptoms++;
 
-    if(resultA9)
-      presentSymptoms++;
+    if (resultA9) presentSymptoms++;
 
-    if(presentSymptoms >= 5)
-      return true;
+    if (presentSymptoms >= 5) return true;
     return false;
   }
 
-  async isTdmBBehaviourPresent(posts: string[]){
+  async isTdmBBehaviourPresent(posts: string[]) {
     let presentSymptoms = 0;
-  
-    if(resultB1)
-      presentSymptoms++;
-  
-    if(presentSymptoms > 0)
-      return true;
-    return false;
-  }
-  
-  async isTdmCBehaviourPresent(posts: string[]){
-    let presentSymptoms = 0;
-  
-    if(resultC1)
-      presentSymptoms++;
-  
-    if(presentSymptoms > 0)
-      return true;
+
+    if (resultB1) presentSymptoms++;
+
+    if (presentSymptoms > 0) return true;
     return false;
   }
 
-  
-//*******************    PUNTOS TDP  *************************************************************************
-
-  async isTdpABehaviourPresent(posts: string[]){
+  async isTdmCBehaviourPresent(posts: string[]) {
     let presentSymptoms = 0;
-    
+
+    if (resultC1) presentSymptoms++;
+
+    if (presentSymptoms > 0) return true;
+    return false;
+  }
+
+  //*******************    PUNTOS TDP  *************************************************************************
+
+  async isTdpABehaviourPresent(posts: string[]) {
+    let presentSymptoms = 0;
+
     //Detección de pensamientos negativos durante dos años
 
-    if(presentSymptoms >= 2)
-      return true;
+    if (presentSymptoms >= 2) return true;
     return false;
   }
 
-  async isTdpBBehaviourPresent(posts: string[]){
+  async isTdpBBehaviourPresent(posts: string[]) {
     let presentSymptoms = 0;
 
     //Pérdida o aumento de apetito
-    if(resultA3)
-      presentSymptoms++;
+    if (resultA3) presentSymptoms++;
 
     //Insomnio
-    if(resultA4)
-      presentSymptoms++;
+    if (resultA4) presentSymptoms++;
 
     //Fatiga
-    if(resultA6)
-      presentSymptoms++;
+    if (resultA6) presentSymptoms++;
 
     //Baja autoestima / Involucra criterio A7 (Pensamientos de inutilidad)
-    if(resultB4 || resultA7)
-      presentSymptoms++;
+    if (resultB4 || resultA7) presentSymptoms++;
 
     //Dificultad para concentrarse
-    if(resultA8)
-      presentSymptoms++;
+    if (resultA8) presentSymptoms++;
 
     //Desesperanza
-    if(resultB6)
-      presentSymptoms++;
+    if (resultB6) presentSymptoms++;
 
-    if(presentSymptoms >= 2)
-      return true;
+    if (presentSymptoms >= 2) return true;
     return false;
   }
 
-  async isTdpCBehaviourPresent(posts: string[]){
+  async isTdpCBehaviourPresent(posts: string[]) {
     //Checar fechas
     let presentSymptoms = 0;
 
     //Deteccion de efectos presentes sin lapsos vacios de 2 meses
 
-    if(presentSymptoms > 0)
-      return true;
+    if (presentSymptoms > 0) return true;
     return false;
   }
 
-  async isTdpGBehaviourPresent(posts: string[]){
+  async isTdpGBehaviourPresent(posts: string[]) {
     let presentSymptoms = 0;
 
     //Sustancia o enfermedad
-    if(resultC1)
-      presentSymptoms++;
+    if (resultC1) presentSymptoms++;
 
-    if(presentSymptoms > 0)
-      return true;
+    if (presentSymptoms > 0) return true;
     return false;
   }
 
-  async isTdpHBehaviourPresent(posts: string[]){
+  async isTdpHBehaviourPresent(posts: string[]) {
     let presentSymptoms = 0;
 
     //Malestar o Deterioro
-    if(resultB1)
-      presentSymptoms++;
+    if (resultB1) presentSymptoms++;
 
-    if(presentSymptoms > 0)
-      return true;
+    if (presentSymptoms > 0) return true;
     return false;
   }
-
-
 }
