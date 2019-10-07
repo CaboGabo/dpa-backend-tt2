@@ -68,7 +68,7 @@ export class UsersController {
     return this.usersService.updatePassword(id, data);
   }
 
-  @Get('auth/validateEmail')
+  @Get('auth/validateEmail/:id')
   @UsePipes(new ValidationPipe())
   validateEmail(@Param('id') id: string) {
     return this.usersService.validateUser(id);
