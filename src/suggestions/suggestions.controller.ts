@@ -29,8 +29,8 @@ export class SuggestionsController {
   }
 
   @Get()
-  showAllSuggestions(@Query('page') page: number) {
-    return this.suggestionsService.showAll(page);
+  showAllSuggestions() {
+    return this.suggestionsService.showAll();
   }
 
   /* @Get('activation/:activationScore')

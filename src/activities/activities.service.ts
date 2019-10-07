@@ -4,7 +4,6 @@ import { ActivityEntity } from './activity.entity';
 import { Repository } from 'typeorm';
 import { DiagnosticEntity } from '../diagnostics/diagnostic.entity';
 import { SuggestionsService } from '../suggestions/suggestions.service';
-import { ActivityDTO, ActivityRO } from './activity.dto';
 import { StudentEntity } from '../students/student.entity';
 
 @Injectable()
@@ -17,54 +16,62 @@ export class ActivitiesService {
     private suggestionsService: SuggestionsService,
   ) {}
 
-  /*async saveActivitiesDiagnostic(
+  async saveActivitiesDiagnosticDetail(
     idDiagnostic: string,
-    page: number,
     student: StudentEntity,
   ): Promise<any> {
     const diagnostic = await this.diagnosticRepository.findOne({
       where: { id: idDiagnostic },
-      relations: ['student', 'activities'],
+      relations: ['student', 'details'],
     });
 
-    const suggestions = await this.suggestionsService.showAll(page);
-
-    const filteredSuggestions = suggestions.filter(
-      suggestion =>
-        suggestion.depressionType === diagnostic.depressionType ||
-        suggestion.gender === student.gender ||
-        (parseInt(suggestion.rangeAge.split('-')[0]) <= student.age &&
-          student.age <= parseInt(suggestion.rangeAge.split('-')[1])),
-    );
+    const suggestions = await this.suggestionsService.showAll();
 
     let saved = 0;
-    for (const suggestion of filteredSuggestions) {
-      let exists = await this.activityRepository.findOne({
-        where: { diagnostic, suggestion },
-        relations: ['diagnostic', 'suggestion'],
-      });
+    for (let i = 0; i < diagnostic.details.length; i++) {
+      const filteredSuggestions = suggestions.filter(
+        suggestion =>
+          (suggestion.depressionType === diagnostic.depressionType ||
+            suggestion.gender === student.gender ||
+            (parseInt(suggestion.rangeAge.split('-')[0]) <= student.age &&
+              student.age <= parseInt(suggestion.rangeAge.split('-')[1]))) &&
+          suggestion.classificationCriteria.id ===
+            diagnostic.details[i].classificationCriteria.id,
+      );
 
-      if (!exists) {
-        const activity = await this.activityRepository.create({
-          diagnostic,
-          suggestion,
+      for (const suggestion of filteredSuggestions) {
+        let exists = await this.activityRepository.findOne({
+          where: { diagnosticDetail: diagnostic.details[i], suggestion },
+          relations: ['diagnosticDetail', 'suggestion'],
         });
 
-        await this.activityRepository.save(activity);
-        saved++;
+        if (!exists) {
+          const activity = await this.activityRepository.create({
+            suggestion,
+            diagnosticDetail: diagnostic.details[i],
+          });
+
+          await this.activityRepository.save(activity);
+          saved++;
+        }
       }
     }
+
     return { saved };
   }
 
-  async activityDone(id: string): Promise<boolean> {
+  async activityDone(userId: string, id: string): Promise<boolean> {
     let activity = await this.activityRepository.findOne({
       where: { id },
-      relations: ['diagnostic', 'suggestion'],
+      relations: ['diagnosticDetail', 'suggestion'],
     });
 
     if (!activity) {
       throw new HttpException('Activity not found', HttpStatus.NOT_FOUND);
+    }
+
+    if (activity.diagnosticDetail.diagnostic.student.user.id !== userId) {
+      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
     }
 
     await this.activityRepository.update(
@@ -76,20 +83,24 @@ export class ActivitiesService {
 
     activity = await this.activityRepository.findOne({
       where: { id },
-      relations: ['diagnostic', 'suggestion'],
+      relations: ['diagnosticDetail', 'suggestion'],
     });
 
     return true;
   }
 
-  async activityNotDone(id: string): Promise<boolean> {
+  async activityNotDone(userId: string, id: string): Promise<boolean> {
     let activity = await this.activityRepository.findOne({
       where: { id },
-      relations: ['diagnostic', 'suggestion'],
+      relations: ['diagnosticDetail', 'suggestion'],
     });
 
     if (!activity) {
       throw new HttpException('Activity not found', HttpStatus.NOT_FOUND);
+    }
+
+    if (activity.diagnosticDetail.diagnostic.student.user.id !== userId) {
+      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
     }
 
     await this.activityRepository.update(
@@ -101,9 +112,9 @@ export class ActivitiesService {
 
     activity = await this.activityRepository.findOne({
       where: { id },
-      relations: ['diagnostic', 'suggestion'],
+      relations: ['diagnosticDetail', 'suggestion'],
     });
 
     return true;
-  }*/
+  }
 }

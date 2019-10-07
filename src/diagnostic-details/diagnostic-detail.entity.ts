@@ -10,7 +10,7 @@ import { DiagnosticEntity } from '../diagnostics/diagnostic.entity';
 import { ActivityEntity } from '../activities/activity.entity';
 import { ClassificationCriteriaEntity } from '../classification-criteria/classification-criteria.entity';
 
-@Entity('diagnosticDetails')
+@Entity('diagnosticdetails')
 export class DiagnosticDetailEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;

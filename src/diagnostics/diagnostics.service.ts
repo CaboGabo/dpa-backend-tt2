@@ -15,6 +15,8 @@ import * as CryptoJS from 'crypto-js';
 import { ClassifierService } from '../classifier/classifier.service';
 import { PsychologistEntity } from '../psychologists/psychologist.entity';
 import { DiagnosticDetailEntity } from '../diagnostic-details/diagnostic-detail.entity';
+import { ClassificationCriteriaEntity } from '../classification-criteria/classification-criteria.entity';
+import { ActivitiesService } from '../activities/activities.service';
 
 @Injectable()
 export class DiagnosticsService {
@@ -27,11 +29,16 @@ export class DiagnosticsService {
     private psychologistRepository: Repository<PsychologistEntity>,
     @InjectRepository(DiagnosticDetailEntity)
     private diagnosticDetailRepository: Repository<DiagnosticDetailEntity>,
+    @InjectRepository(ClassificationCriteriaEntity)
+    private classificationCriteriaRepository: Repository<
+      ClassificationCriteriaEntity
+    >,
 
     private twitterService: TwitterService,
     private redditService: RedditService,
     private postsService: PostsService,
     private classifierService: ClassifierService,
+    private activitiyService: ActivitiesService,
   ) {}
 
   private diagnosticToResponseObject(
@@ -110,8 +117,6 @@ export class DiagnosticsService {
     const posts = await this.postsService.showByUser(userId);
     const insResult = await this.classifierService.classify(posts);
 
-    console.log('RESULTADOS', insResult);
-
     /* const resultTdm = CryptoJS.AES.encrypt(
       `${insResult[0]}`,
       process.env.SECRET,
@@ -122,13 +127,13 @@ export class DiagnosticsService {
     ).toString(); */
 
     const diagnostic1 = await this.diagnosticRepository.create({
-      result: insResult[0],
+      result: insResult[0]['result'],
       depressionType: 'tdm',
       student,
     });
 
     const diagnostic2 = await this.diagnosticRepository.create({
-      result: insResult[1],
+      result: insResult[1]['result'],
       depressionType: 'tdp',
       student,
     });
@@ -136,12 +141,40 @@ export class DiagnosticsService {
     await this.diagnosticRepository.save(diagnostic1);
     await this.diagnosticRepository.save(diagnostic2);
 
+    for (let i = 1; i < insResult[0].length; i++) {
+      const criteria = await this.classificationCriteriaRepository.findOne({
+        where: { keyname: insResult[0][i]['keyname'] },
+      });
+
+      const diagnosticDetail = this.diagnosticDetailRepository.create({
+        classificationCriteria: criteria,
+        result: insResult[0][i]['result'],
+        diagnostic: diagnostic1,
+      });
+
+      await this.diagnosticDetailRepository.save(diagnosticDetail);
+    }
+
+    for (let i = 1; i < insResult[1].length; i++) {
+      const criteria = await this.classificationCriteriaRepository.findOne({
+        where: { keyname: insResult[1][i]['keyname'] },
+      });
+
+      const diagnosticDetail = this.diagnosticDetailRepository.create({
+        classificationCriteria: criteria,
+        result: insResult[1][i]['result'],
+        diagnostic: diagnostic2,
+      });
+
+      await this.diagnosticDetailRepository.save(diagnosticDetail);
+    }
+
     return [diagnostic1, diagnostic2].map(diagnostic =>
       this.diagnosticToResponseObject(diagnostic),
     );
   }
 
-  /*async addActivities(userId: string, id: string, page: number): Promise<any> {
+  async addActivities(userId: string, id: string): Promise<any> {
     const student = await this.studentRepository.findOne({
       where: { user: { id: userId } },
       relations: ['user', 'diagnostics'],
@@ -153,95 +186,27 @@ export class DiagnosticsService {
 
     let diagnostic = await this.diagnosticRepository.findOne({
       where: { id, student },
-      relations: ['student', 'activities'],
+      relations: ['student', 'details'],
     });
 
     if (!diagnostic) {
       throw new HttpException('Diagnostic not found', HttpStatus.NOT_FOUND);
     }
 
-    const { saved } = await this.activitiesService.saveActivitiesDiagnostic(
-      id,
-      page,
-      student,
-    );
+    const {
+      saved,
+    } = await this.activitiyService.saveActivitiesDiagnosticDetail(id, student);
 
     diagnostic = await this.diagnosticRepository.findOne({
       where: { id, student },
-      relations: ['student', 'activities'],
+      relations: ['student', 'details'],
     });
 
     return {
       ...this.diagnosticToResponseObject(diagnostic),
       newActivities: saved,
     };
-  }*/
-
-  /*async activityDone(
-    userId: string,
-    diagnosticId: string,
-    activityId: string,
-  ): Promise<DiagnosticRO> {
-    const student = await this.studentRepository.findOne({
-      where: { user: { id: userId } },
-      relations: ['user', 'diagnostics'],
-    });
-
-    if (!student) {
-      throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
-    }
-
-    let diagnostic = await this.diagnosticRepository.findOne({
-      where: { diagnosticId, student },
-      relations: ['student', 'activities'],
-    });
-
-    if (!diagnostic) {
-      throw new HttpException('Diagnostic not found', HttpStatus.NOT_FOUND);
-    }
-
-    await this.activitiesService.activityDone(activityId);
-
-    diagnostic = await this.diagnosticRepository.findOne({
-      where: { diagnosticId, student },
-      relations: ['student', 'activities'],
-    });
-
-    return this.diagnosticToResponseObject(diagnostic);
-  }*/
-
-  /*async activityNotDone(
-    userId: string,
-    diagnosticId: string,
-    activityId: string,
-  ): Promise<DiagnosticRO> {
-    const student = await this.studentRepository.findOne({
-      where: { user: { id: userId } },
-      relations: ['user', 'diagnostics'],
-    });
-
-    if (!student) {
-      throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
-    }
-
-    let diagnostic = await this.diagnosticRepository.findOne({
-      where: { diagnosticId, student },
-      relations: ['student', 'activities'],
-    });
-
-    if (!diagnostic) {
-      throw new HttpException('Diagnostic not found', HttpStatus.NOT_FOUND);
-    }
-
-    await this.activitiesService.activityNotDone(activityId);
-
-    diagnostic = await this.diagnosticRepository.findOne({
-      where: { diagnosticId, student },
-      relations: ['student', 'activities'],
-    });
-
-    return this.diagnosticToResponseObject(diagnostic);
-  }*/
+  }
 
   async getAllByStudent(userId: string): Promise<DiagnosticRO[]> {
     const student = await this.studentRepository.findOne({

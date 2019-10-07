@@ -38,11 +38,9 @@ export class SuggestionsService {
     }
   }
 
-  async showAll(page: number = 1): Promise<SuggestionEntity[]> {
+  async showAll(): Promise<SuggestionEntity[]> {
     const suggestions = await this.suggestionRepository.find({
       relations: ['savedBy', 'classificationCriteria'],
-      take: 25,
-      skip: 25 * (page - 1),
     });
 
     return suggestions;

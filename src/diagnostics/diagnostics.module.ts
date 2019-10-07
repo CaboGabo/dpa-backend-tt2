@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { StudentEntity } from '../students/student.entity';
 import { GoogleCloudService } from '../external-api/google-cloud/google-cloud.service';
 import { RedditService } from '../external-api/reddit/reddit.service';
-import { TwitterService } from 'src/external-api/twitter/twitter.service';
+import { TwitterService } from '../external-api/twitter/twitter.service';
 import { DiagnosticEntity } from './diagnostic.entity';
 import { PostsService } from '../posts/posts.service';
 import { SuggestionEntity } from '../suggestions/suggestion.entity';
@@ -15,6 +15,8 @@ import { PsychologistEntity } from '../psychologists/psychologist.entity';
 import { ClassifierService } from '../classifier/classifier.service';
 import { ActivitiesService } from '../activities/activities.service';
 import { ActivityEntity } from '../activities/activity.entity';
+import { DiagnosticDetailEntity } from '../diagnostic-details/diagnostic-detail.entity';
+import { ClassificationCriteriaEntity } from '../classification-criteria/classification-criteria.entity';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { ActivityEntity } from '../activities/activity.entity';
       PostEntity,
       PsychologistEntity,
       ActivityEntity,
+      DiagnosticDetailEntity,
+      ClassificationCriteriaEntity,
     ]),
   ],
   providers: [

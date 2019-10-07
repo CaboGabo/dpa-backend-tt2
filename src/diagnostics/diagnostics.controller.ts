@@ -79,42 +79,15 @@ export class DiagnosticsController {
     return this.diagnosticsService.diagnostic(user);
   }
 
-  /*@Put('diagnostics/:idDiagnostic/activities')
+  @Put('diagnostics/:idDiagnostic/activities')
   @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   async updateSuggestionsDiagnostics(
     @User('id') user,
     @Param('idDiagnostic') id: string,
-    @Query('page') page: number,
   ) {
-    return this.diagnosticsService.addActivities(user, id, page);
+    return this.diagnosticsService.addActivities(user, id);
   }
-
-  @Put('diagnostics/:idDiagnostic/activities/:idActivity/done')
-  @UseGuards(AuthGuard('jwt'))
-  @UsePipes(new ValidationPipe())
-  async activityDone(
-    @User('id') user,
-    @Param('idDiagnostic') idDiagnostic: string,
-    @Param('idActivity') idActivity: string,
-  ) {
-    return this.diagnosticsService.activityDone(user, idDiagnostic, idActivity);
-  }
-
-  @Put('diagnostics/:idDiagnostic/activities/:idActivity/notdone')
-  @UseGuards(AuthGuard('jwt'))
-  @UsePipes(new ValidationPipe())
-  async activityNotDone(
-    @User('id') user,
-    @Param('idDiagnostic') idDiagnostic: string,
-    @Param('idActivity') idActivity: string,
-  ) {
-    return this.diagnosticsService.activityNotDone(
-      user,
-      idDiagnostic,
-      idActivity,
-    );
-  }*/
 
   @Get('api/diagnostics/student')
   @UseGuards(AuthGuard('jwt'))
