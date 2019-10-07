@@ -9,6 +9,7 @@ import {
   UseGuards,
   Put,
   Delete,
+  Res,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserDTO } from './user.dto';
@@ -70,7 +71,9 @@ export class UsersController {
 
   @Get('auth/validateEmail/:id')
   @UsePipes(new ValidationPipe())
-  validateEmail(@Param('id') id: string) {
-    return this.usersService.validateUser(id);
+  validateEmail(@Param('id') id: string, @Res() res) {
+    if (this.usersService.validateUser(id)) {
+      return res.redirect('http://localhost:4200/finish-sign-up');
+    }
   }
 }
