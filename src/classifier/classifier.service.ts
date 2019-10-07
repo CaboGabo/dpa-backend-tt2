@@ -34,23 +34,38 @@ export class ClassifierService {
     }
     await this.allCriterias(justPosts);
     let result = [];
+
     result[0] = await this.mainTdm(justPosts);
     result[1] = await this.mainTdp(justPosts);
     return result;
   }
 
   async allCriterias(posts: string[]) {
-    resultA2 = criteriaA2.analyzePosts(posts);
-    resultA3 = criteriaA3.analyzePosts(posts);
-    resultA4 = criteriaA4.analyzePosts(posts);
-    resultA6 = criteriaA6.analyzePosts(posts);
-    resultA7 = criteriaA7.analyzePosts(posts);
-    resultA8 = criteriaA8.analyzePosts(posts);
-    resultA9 = criteriaA9.analyzePosts(posts);
-    resultB1 = criteriaB1.analyzePosts(posts);
-    resultB4 = criteriaB4.analyzePosts(posts);
-    resultB6 = criteriaB6.analyzePosts(posts);
-    resultC1 = criteriaC1.analyzePosts(posts);
+    [
+      resultA2,
+      resultA3,
+      resultA4,
+      resultA6,
+      resultA7,
+      resultA8,
+      resultA9,
+      resultB1,
+      resultB4,
+      resultB6,
+      resultC1,
+    ] = await Promise.all([
+      criteriaA2.analyzePosts(posts),
+      criteriaA3.analyzePosts(posts),
+      criteriaA4.analyzePosts(posts),
+      criteriaA6.analyzePosts(posts),
+      criteriaA7.analyzePosts(posts),
+      criteriaA8.analyzePosts(posts),
+      criteriaA9.analyzePosts(posts),
+      criteriaB1.analyzePosts(posts),
+      criteriaB4.analyzePosts(posts),
+      criteriaB6.analyzePosts(posts),
+      criteriaC1.analyzePosts(posts),
+    ]);
   }
 
   async mainTdm(posts: string[]) {
