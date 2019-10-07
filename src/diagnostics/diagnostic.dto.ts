@@ -1,6 +1,6 @@
 import { IsBoolean, IsInt, IsString } from 'class-validator';
 import { StudentRO } from '../students/student.dto';
-import { ActivityRO } from '../activities/activity.dto';
+import { DiagnosticDetailEntity } from '../diagnostic-details/diagnostic-detail.entity';
 
 export class DiagnosticDTO {
   @IsBoolean()
@@ -16,5 +16,5 @@ export class DiagnosticRO {
   result: boolean;
   depressionType: string;
   student: StudentRO;
-  activities?: ActivityRO[];
+  details?: DiagnosticDetailEntity[];
 }

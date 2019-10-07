@@ -1,5 +1,6 @@
 import { PsychologistEntity } from '../psychologists/psychologist.entity';
 import { ActivityEntity } from '../activities/activity.entity';
+import { ClassificationCriteriaEntity } from '../classification-criteria/classification-criteria.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -39,5 +40,11 @@ export class SuggestionEntity {
   savedBy: PsychologistEntity;
 
   @OneToMany(type => ActivityEntity, activity => activity.suggestion)
-  activities: ActivityEntity;
+  activities: ActivityEntity[];
+
+  @ManyToOne(
+    type => ClassificationCriteriaEntity,
+    classificationCriteria => classificationCriteria.suggestions,
+  )
+  classificationCriteria: ClassificationCriteriaEntity;
 }

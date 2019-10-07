@@ -10,11 +10,11 @@ import { PostsService } from '../posts/posts.service';
 import { PostRO } from '../posts/post.dto';
 import { RedditAuthDTO } from '../external-api/reddit/reddit-auth.dto';
 import { RedditService } from '../external-api/reddit/reddit.service';
-import { ActivitiesService } from '../activities/activities.service';
 
 import * as CryptoJS from 'crypto-js';
 import { ClassifierService } from '../classifier/classifier.service';
 import { PsychologistEntity } from '../psychologists/psychologist.entity';
+import { DiagnosticDetailEntity } from '../diagnostic-details/diagnostic-detail.entity';
 
 @Injectable()
 export class DiagnosticsService {
@@ -25,10 +25,12 @@ export class DiagnosticsService {
     private studentRepository: Repository<StudentEntity>,
     @InjectRepository(PsychologistEntity)
     private psychologistRepository: Repository<PsychologistEntity>,
+    @InjectRepository(DiagnosticDetailEntity)
+    private diagnosticDetailRepository: Repository<DiagnosticDetailEntity>,
+
     private twitterService: TwitterService,
     private redditService: RedditService,
     private postsService: PostsService,
-    private activitiesService: ActivitiesService,
     private classifierService: ClassifierService,
   ) {}
 
@@ -40,11 +42,10 @@ export class DiagnosticsService {
     const result = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     //const result = 'true';
     console.log('RESULT', result); */
-
     const responseObject: any = {
       ...diagnostic,
       student: diagnostic.student || null,
-      activities: diagnostic.activities || null,
+      details: diagnostic.details || null,
       result: diagnostic.result === 'true' ? true : false,
     };
 
@@ -115,7 +116,6 @@ export class DiagnosticsService {
       `${insResult[0]}`,
       process.env.SECRET,
     ).toString();
-
     const resultTdp = CryptoJS.AES.encrypt(
       `${insResult[1]}`,
       process.env.SECRET,
@@ -141,7 +141,7 @@ export class DiagnosticsService {
     );
   }
 
-  async addActivities(userId: string, id: string, page: number): Promise<any> {
+  /*async addActivities(userId: string, id: string, page: number): Promise<any> {
     const student = await this.studentRepository.findOne({
       where: { user: { id: userId } },
       relations: ['user', 'diagnostics'],
@@ -175,9 +175,9 @@ export class DiagnosticsService {
       ...this.diagnosticToResponseObject(diagnostic),
       newActivities: saved,
     };
-  }
+  }*/
 
-  async activityDone(
+  /*async activityDone(
     userId: string,
     diagnosticId: string,
     activityId: string,
@@ -208,9 +208,9 @@ export class DiagnosticsService {
     });
 
     return this.diagnosticToResponseObject(diagnostic);
-  }
+  }*/
 
-  async activityNotDone(
+  /*async activityNotDone(
     userId: string,
     diagnosticId: string,
     activityId: string,
@@ -241,7 +241,7 @@ export class DiagnosticsService {
     });
 
     return this.diagnosticToResponseObject(diagnostic);
-  }
+  }*/
 
   async getAllByStudent(userId: string): Promise<DiagnosticRO[]> {
     const student = await this.studentRepository.findOne({
@@ -255,7 +255,7 @@ export class DiagnosticsService {
 
     let diagnostics = await this.diagnosticRepository.find({
       where: { student: { id: student.id } },
-      relations: ['student', 'activities'],
+      relations: ['student', 'details'],
     });
 
     return diagnostics.map(diagnostic =>
@@ -292,7 +292,7 @@ export class DiagnosticsService {
 
     const diagnostic = await this.diagnosticRepository.findOne({
       where: { id },
-      relations: ['student', 'activities'],
+      relations: ['student', 'details'],
     });
 
     if (!diagnostic) {
@@ -305,7 +305,7 @@ export class DiagnosticsService {
   async readByStudent(userId: string, id: string): Promise<DiagnosticRO> {
     const student = await this.studentRepository.findOne({
       where: { user: { id: userId } },
-      relations: ['user', 'activities'],
+      relations: ['user', 'diagnostics'],
     });
 
     if (!student) {
@@ -314,6 +314,7 @@ export class DiagnosticsService {
 
     let diagnostics = await this.diagnosticRepository.find({
       where: { student: { id: student.id } },
+      relations: ['student', 'details'],
     });
 
     const diagnostic = diagnostics.filter(diagnostic => diagnostic.id === id);

@@ -1,4 +1,6 @@
 import { KeyPhraseEntity } from '../key-phrases/key-phrase.entity';
+import { SuggestionEntity } from '../suggestions/suggestion.entity';
+import { DiagnosticDetailEntity } from '../diagnostic-details/diagnostic-detail.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -30,4 +32,16 @@ export class ClassificationCriteriaEntity {
     cascade: true,
   })
   keyphrases: KeyPhraseEntity[];
+
+  @OneToMany(
+    type => SuggestionEntity,
+    suggestion => suggestion.classificationCriteria,
+  )
+  suggestions: SuggestionEntity[];
+
+  @OneToMany(
+    type => DiagnosticDetailEntity,
+    diagnosticDetail => diagnosticDetail.classificationCriteria,
+  )
+  diagnosticDetails: DiagnosticDetailEntity[];
 }

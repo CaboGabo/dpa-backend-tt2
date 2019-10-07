@@ -1,5 +1,6 @@
 import { IsString } from 'class-validator';
 import { KeyPhraseRO } from '../key-phrases/key-phrase.dto';
+import { SuggestionRO } from '../suggestions/suggestion.dto';
 
 export class ClassificationCriteriaDTO {
   @IsString()
@@ -19,4 +20,5 @@ export class ClassificationCriteriaRO {
   description: string;
   keyname: string;
   keyphrases?: KeyPhraseRO[];
+  suggestions?: SuggestionRO[];
 }

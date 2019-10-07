@@ -9,8 +9,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { StudentEntity } from '../students/student.entity';
-import { SuggestionEntity } from '../suggestions/suggestion.entity';
-import { ActivityEntity } from '../activities/activity.entity';
+import { DiagnosticDetailEntity } from '../diagnostic-details/diagnostic-detail.entity';
 
 @Entity('diagnostics')
 export class DiagnosticEntity {
@@ -29,6 +28,12 @@ export class DiagnosticEntity {
   @ManyToOne(type => StudentEntity, student => student.diagnostics)
   student: StudentEntity;
 
-  @OneToMany(type => ActivityEntity, activity => activity.diagnostic)
-  activities: ActivityEntity[];
+  /*@OneToMany(type => ActivityEntity, activity => activity.diagnostic)
+  activities: ActivityEntity[];*/
+
+  @OneToMany(
+    type => DiagnosticDetailEntity,
+    diagnosticDetail => diagnosticDetail.diagnostic,
+  )
+  details: DiagnosticDetailEntity[];
 }

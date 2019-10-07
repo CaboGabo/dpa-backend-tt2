@@ -20,6 +20,7 @@ export class SuggestionsService {
     const responseObject: any = {
       ...suggestion,
       savedBy: suggestion.savedBy || null,
+      classificationCriteria: suggestion.classificationCriteria || null,
     };
 
     return responseObject;
@@ -39,7 +40,7 @@ export class SuggestionsService {
 
   async showAll(page: number = 1): Promise<SuggestionEntity[]> {
     const suggestions = await this.suggestionRepository.find({
-      relations: ['savedBy'],
+      relations: ['savedBy', 'classificationCriteria'],
       take: 25,
       skip: 25 * (page - 1),
     });
@@ -81,7 +82,7 @@ export class SuggestionsService {
 
     let suggestion = await this.suggestionRepository.findOne({
       where: { savedBy: { id: psychologist.id }, id },
-      relations: ['savedBy'],
+      relations: ['savedBy', 'classificationCriteria'],
     });
 
     if (!suggestion) {
@@ -93,7 +94,7 @@ export class SuggestionsService {
     await this.suggestionRepository.update({ id }, data);
     suggestion = await this.suggestionRepository.findOne({
       where: { savedBy: { id: psychologist.id }, id },
-      relations: ['savedBy'],
+      relations: ['savedBy', 'classificationCriteria'],
     });
 
     return this.suggestionToResponseObject(suggestion);
@@ -111,7 +112,7 @@ export class SuggestionsService {
 
     let suggestion = await this.suggestionRepository.findOne({
       where: { savedBy: { id: psychologist.id }, id },
-      relations: ['savedBy'],
+      relations: ['savedBy', 'classificationCriteria'],
     });
 
     if (!suggestion) {

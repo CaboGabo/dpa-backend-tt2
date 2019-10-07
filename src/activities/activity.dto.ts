@@ -1,6 +1,6 @@
 import { IsBoolean } from 'class-validator';
-import { DiagnosticRO } from '../diagnostics/diagnostic.dto';
 import { SuggestionRO } from '../suggestions/suggestion.dto';
+import { DiagnosticDetailRO } from '../diagnostic-details/diagnostic-detail.dto';
 
 export class ActivityDTO {
   @IsBoolean()
@@ -10,7 +10,7 @@ export class ActivityDTO {
 export class ActivityRO {
   id: string;
   created: Date;
-  diagnostic: DiagnosticRO;
+  diagnosticDetail: DiagnosticDetailRO;
   suggestion: SuggestionRO;
   done: boolean;
 }

@@ -1,6 +1,7 @@
-import { IsString, IsInt } from 'class-validator';
+import { IsString } from 'class-validator';
 import { PsychologistRO } from '../psychologists/psychologist.dto';
 import { Column } from 'typeorm';
+import { ClassificationCriteriaEntity } from '../classification-criteria/classification-criteria.entity';
 
 export class SuggestionDTO {
   @IsString()
@@ -23,4 +24,5 @@ export class SuggestionRO {
   gender: string;
   rangeAge: string;
   savedBy: PsychologistRO;
+  classificationCriteria: ClassificationCriteriaEntity;
 }

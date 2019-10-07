@@ -79,7 +79,7 @@ export class DiagnosticsController {
     return this.diagnosticsService.diagnostic(user);
   }
 
-  @Put('diagnostics/:idDiagnostic/activities')
+  /*@Put('diagnostics/:idDiagnostic/activities')
   @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   async updateSuggestionsDiagnostics(
@@ -114,7 +114,7 @@ export class DiagnosticsController {
       idDiagnostic,
       idActivity,
     );
-  }
+  }*/
 
   @Get('api/diagnostics/student')
   @UseGuards(AuthGuard('jwt'))

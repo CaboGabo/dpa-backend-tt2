@@ -19,6 +19,7 @@ export class ClassificationCriteriaService {
     const responseObject: any = {
       ...classificationCriteria,
       keyphrases: classificationCriteria.keyphrases || null,
+      suggestions: classificationCriteria.suggestions || null,
     };
     return responseObject;
   }
@@ -26,7 +27,7 @@ export class ClassificationCriteriaService {
   async showAll(): Promise<ClassificationCriteriaRO[]> {
     const classificationCriteria = await this.classificationCriteriaRepository.find(
       {
-        relations: ['keyphrases'],
+        relations: ['keyphrases', 'suggestions'],
       },
     );
 
@@ -37,7 +38,7 @@ export class ClassificationCriteriaService {
 
   async read(keyname: string): Promise<ClassificationCriteriaRO> {
     const classificationCriteria = await this.classificationCriteriaRepository.findOne(
-      { where: { keyname }, relations: ['keyphrases'] },
+      { where: { keyname }, relations: ['keyphrases', 'suggestions'] },
     );
 
     return this.classificationCriteriaToResponseObject(classificationCriteria);

@@ -17,7 +17,7 @@ export class ActivitiesService {
     private suggestionsService: SuggestionsService,
   ) {}
 
-  async saveActivitiesDiagnostic(
+  /*async saveActivitiesDiagnostic(
     idDiagnostic: string,
     page: number,
     student: StudentEntity,
@@ -105,5 +105,5 @@ export class ActivitiesService {
     });
 
     return true;
-  }
+  }*/
 }

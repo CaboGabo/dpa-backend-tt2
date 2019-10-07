@@ -5,8 +5,8 @@ import {
   Column,
   ManyToOne,
 } from 'typeorm';
-import { DiagnosticEntity } from '../diagnostics/diagnostic.entity';
 import { SuggestionEntity } from '../suggestions/suggestion.entity';
+import { DiagnosticDetailEntity } from '../diagnostic-details/diagnostic-detail.entity';
 
 @Entity('activities')
 export class ActivityEntity {
@@ -22,8 +22,11 @@ export class ActivityEntity {
   })
   done: boolean;
 
-  @ManyToOne(type => DiagnosticEntity, diagnostic => diagnostic.activities)
-  diagnostic: DiagnosticEntity;
+  @ManyToOne(
+    type => DiagnosticDetailEntity,
+    diagnosticDetail => diagnosticDetail.activities,
+  )
+  diagnosticDetail: DiagnosticDetailEntity;
 
   @ManyToOne(type => SuggestionEntity, suggestion => suggestion.activities)
   suggestion: SuggestionEntity;

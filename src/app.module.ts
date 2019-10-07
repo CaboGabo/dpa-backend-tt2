@@ -17,6 +17,7 @@ import { SuggestionsModule } from './suggestions/suggestions.module';
 import { DiagnosticsModule } from './diagnostics/diagnostics.module';
 import { AuthModule } from './auth/auth.module';
 import { ActivitiesModule } from './activities/activities.module';
+import { DiagnosticDetailsModule } from './diagnostic-details/diagnostic-details.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { ActivitiesModule } from './activities/activities.module';
     DiagnosticsModule,
     AuthModule,
     ActivitiesModule,
+    DiagnosticDetailsModule,
   ],
   controllers: [AppController],
   providers: [
