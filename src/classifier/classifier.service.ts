@@ -34,8 +34,8 @@ export class ClassifierService {
     }
     await this.allCriterias(justPosts);
     let result = [];
-    result[0] = this.mainTdm(justPosts);
-    result[1] = this.mainTdp(justPosts);
+    result[0] = await this.mainTdm(justPosts);
+    result[1] = await this.mainTdp(justPosts);
     return result;
   }
 

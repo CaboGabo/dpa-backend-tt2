@@ -5,12 +5,13 @@ import { Repository } from 'typeorm';
 import { UserDTO } from './user.dto';
 import * as sgMail from '@sendgrid/mail';
 import * as fs from 'fs';
+//import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>,
+    private userRepository: Repository<UserEntity>, // private authService: AuthService,
   ) {}
 
   async showAll(page: number = 1) {
@@ -169,6 +170,12 @@ export class UsersService {
 
     user = await this.userRepository.findOne({ where: { id } });
 
+    //const token = await this.authService.login(user);
+
     return user.toResponseObject();
+    /*return {
+      user: user.toResponseObject(),
+      ...token,
+    };*/
   }
 }
