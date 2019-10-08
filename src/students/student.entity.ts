@@ -8,7 +8,7 @@ import {
   JoinColumn,
   OneToMany,
 } from 'typeorm';
-import { PostEntity } from 'src/posts/post.entity';
+import { PostEntity } from '../posts/post.entity';
 import { DiagnosticEntity } from '../diagnostics/diagnostic.entity';
 
 @Entity('students')

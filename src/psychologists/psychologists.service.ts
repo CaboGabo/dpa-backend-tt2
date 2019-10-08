@@ -2,7 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PsychologistEntity } from './psychologist.entity';
 import { Repository } from 'typeorm';
-import { UserEntity } from 'src/users/user.entity';
+import { UserEntity } from '../users/user.entity';
 import { PsychologistRO, PsychologistDTO } from './psychologist.dto';
 
 @Injectable()

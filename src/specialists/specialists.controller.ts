@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { SpecialistsService } from './specialists.service';
 import { ValidationPipe } from '../shared/validation.pipe';
-import { User } from 'src/users/user.decorator';
+import { User } from '../users/user.decorator';
 import { SpecialistDTO } from './specialist.dto';
 import { AuthGuard } from '@nestjs/passport';
 

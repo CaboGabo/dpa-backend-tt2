@@ -5,7 +5,7 @@ import {
   Column,
   ManyToOne,
 } from 'typeorm';
-import { PsychologistEntity } from 'src/psychologists/psychologist.entity';
+import { PsychologistEntity } from '../psychologists/psychologist.entity';
 
 @Entity('general_data')
 export class GeneralDataEntity {

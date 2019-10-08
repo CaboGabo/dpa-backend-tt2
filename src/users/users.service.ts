@@ -77,6 +77,33 @@ export class UsersService {
     return user.toResponseObject();
   }
 
+  async resendEmail(data: Partial<UserDTO>) {
+    const user = await this.userRepository.findOne({
+      where: { email: data.email },
+    });
+
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
+    const template = fs.readFileSync('src/email/confirmation-email.html');
+
+    sgMail.setApiKey(process.env.API_KEY);
+    let html = template
+      .toString()
+      .replace(':username', user.username)
+      .replace(':id', user.id);
+    const msg = {
+      to: user.email,
+      from: 'gabo.alejandro.huitron@gmail.com',
+      subject: 'DPa - Confirmación de email',
+      html: html,
+    };
+    sgMail.send(msg);
+
+    return user.toResponseObject();
+  }
+
   async edit(username: string, data: Partial<UserDTO>) {
     let user = await this.userRepository.findOne({ where: { username } });
     if (data.email) {

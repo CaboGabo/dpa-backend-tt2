@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { ActivitiesService } from './activities.service';
 import { AuthGuard } from '@nestjs/passport';
-import { User } from 'src/users/user.decorator';
+import { User } from '../users/user.decorator';
 
 @Controller()
 export class ActivitiesController {

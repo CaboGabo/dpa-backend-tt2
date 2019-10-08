@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { KeyPhraseEntity } from './key-phrase.entity';
 import { Repository } from 'typeorm';
 import { KeyPhraseRO, KeyPhraseDTO } from './key-phrase.dto';
-import { ClassificationCriteriaEntity } from 'src/classification-criteria/classification-criteria.entity';
+import { ClassificationCriteriaEntity } from '../classification-criteria/classification-criteria.entity';
 
 @Injectable()
 export class KeyPhrasesService {

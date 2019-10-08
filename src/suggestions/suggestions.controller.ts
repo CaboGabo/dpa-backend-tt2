@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { SuggestionsService } from './suggestions.service';
 import { ValidationPipe } from '../shared/validation.pipe';
-import { User } from 'src/users/user.decorator';
+import { User } from '../users/user.decorator';
 import { SuggestionDTO } from './suggestion.dto';
 import { AuthGuard } from '@nestjs/passport';
 

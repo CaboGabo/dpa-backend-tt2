@@ -1,7 +1,5 @@
 import { Controller, Logger, Get, UseGuards } from '@nestjs/common';
 import { PostsService } from './posts.service';
-import { User } from 'src/users/user.decorator';
-import { AuthGuard } from '@nestjs/passport';
 
 @Controller()
 export class PostsController {

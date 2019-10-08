@@ -1,6 +1,6 @@
 import { IsString, IsNumber } from 'class-validator';
 import { UserRO } from '../users/user.dto';
-import { PostRO } from 'src/posts/post.dto';
+import { PostRO } from '../posts/post.dto';
 import { DiagnosticRO } from '../diagnostics/diagnostic.dto';
 
 export class StudentDTO {

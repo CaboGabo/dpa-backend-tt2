@@ -1,5 +1,5 @@
 import { IsString } from 'class-validator';
-import { ClassificationCriteriaRO } from 'src/classification-criteria/classification-criteria.dto';
+import { ClassificationCriteriaRO } from '../classification-criteria/classification-criteria.dto';
 
 export class KeyPhraseDTO {
   @IsString()

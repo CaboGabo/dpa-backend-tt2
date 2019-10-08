@@ -12,7 +12,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { StudentsService } from './students.service';
-import { User } from 'src/users/user.decorator';
+import { User } from '../users/user.decorator';
 import { ValidationPipe } from '../shared/validation.pipe';
 import { StudentDTO } from './student.dto';
 import { AuthGuard } from '@nestjs/passport';

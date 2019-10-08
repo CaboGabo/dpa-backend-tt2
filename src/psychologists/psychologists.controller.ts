@@ -12,8 +12,8 @@ import {
   Delete,
 } from '@nestjs/common';
 import { PsychologistsService } from './psychologists.service';
-import { ValidationPipe } from 'src/shared/validation.pipe';
-import { User } from 'src/users/user.decorator';
+import { ValidationPipe } from '../shared/validation.pipe';
+import { User } from '../users/user.decorator';
 import { PsychologistDTO } from './psychologist.dto';
 import { AuthGuard } from '@nestjs/passport';
 

@@ -14,7 +14,7 @@ import {
 import { UsersService } from './users.service';
 import { UserDTO } from './user.dto';
 import { User } from './user.decorator';
-import { ValidationPipe } from 'src/shared/validation.pipe';
+import { ValidationPipe } from '../shared/validation.pipe';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller()
@@ -41,6 +41,12 @@ export class UsersController {
   @UsePipes(new ValidationPipe())
   register(@Body() data: UserDTO) {
     return this.usersService.register(data);
+  }
+
+  @Post('auth/resend-email')
+  @UsePipes(new ValidationPipe())
+  resend(@Body() data: Partial<UserDTO>) {
+    return this.usersService.resendEmail(data);
   }
 
   @Put('auth/user')

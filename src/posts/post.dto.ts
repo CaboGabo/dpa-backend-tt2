@@ -1,5 +1,5 @@
 import { IsString, IsNumber } from 'class-validator';
-import { StudentRO } from 'src/students/student.dto';
+import { StudentRO } from '../students/student.dto';
 
 export class PostDTO {
   @IsString()
