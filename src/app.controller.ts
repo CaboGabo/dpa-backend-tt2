@@ -7,6 +7,7 @@ import {
   Req,
   HttpException,
   HttpStatus,
+  Res,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth/auth.service';
@@ -27,14 +28,12 @@ export class AppController {
 
   @Get('auth/login/google/callback')
   @UseGuards(AuthGuard('google'))
-  googleLoginCallback(@Req() req) {
+  googleLoginCallback(@Req() req, @Res() res) {
     const jwt: string = req.access_token;
     if (jwt) {
-      return {
-        access_token: jwt,
-      };
+      res.redirect(`http://localhost:4200/login/success/${jwt}`);
+    } else {
+      res.redirect(`http://localhost:4200/login/failure`);
     }
-
-    throw new HttpException('Error login google', HttpStatus.BAD_REQUEST);
   }
 }

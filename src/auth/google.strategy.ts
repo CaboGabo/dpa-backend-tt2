@@ -24,13 +24,10 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   ) {
     try {
       console.log(profile);
-      const user: UserDTO = {
-        username: request.body.username,
-        password: profile.id,
-        email: profile.getEmail(),
-      };
-
-      done(null, await this.authService.validateOAuthLogin(user));
+      done(
+        null,
+        await this.authService.validateOAuthLogin(profile, Provider.GOOGLE),
+      );
     } catch (err) {
       done(err, false);
     }

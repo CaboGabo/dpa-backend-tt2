@@ -1,8 +1,9 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { UserDTO } from '../users/user.dto';
 import { UserEntity } from '../users/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 export enum Provider {
   GOOGLE = 'google',
@@ -11,6 +12,8 @@ export enum Provider {
 @Injectable()
 export class AuthService {
   constructor(
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
   ) {}
@@ -37,18 +40,27 @@ export class AuthService {
     };
   }
 
-  async validateOAuthLogin(user: UserDTO) {
-    const users = await this.usersService.showAll();
-    const existsEmail = users.filter(usr => user.email === usr.email);
+  async validateOAuthLogin(profile: any, provider: Provider) {
+    let user = await this.userRepository.findOne({
+      where: { username: profile.id },
+    });
 
-    let payload: any;
-    if (!existsEmail.length) {
-      const newUser = await this.usersService.register(user);
-      payload = { username: newUser.username, sub: newUser.id };
-    } else {
-      payload = { username: existsEmail[0].username, sub: existsEmail[0].id };
+    if (!user) {
+      user = await this.userRepository.create({
+        username: profile.id,
+        email: profile.getEmail(),
+      });
+
+      await this.userRepository.save(user);
     }
 
-    return payload;
+    const payload: any = {
+      username: user.username,
+      sub: user.id,
+    };
+
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
   }
 }
