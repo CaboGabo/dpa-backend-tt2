@@ -7,6 +7,7 @@ import { DiagnosticEntity } from '../diagnostics/diagnostic.entity';
 import { SuggestionsService } from '../suggestions/suggestions.service';
 import { PsychologistEntity } from '../psychologists/psychologist.entity';
 import { SuggestionEntity } from '../suggestions/suggestion.entity';
+import { ClassificationCriteriaEntity } from '../classification-criteria/classification-criteria.entity';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { SuggestionEntity } from '../suggestions/suggestion.entity';
       DiagnosticEntity,
       PsychologistEntity,
       SuggestionEntity,
+      ClassificationCriteriaEntity,
     ]),
   ],
   providers: [ActivitiesService, SuggestionsService],
