@@ -17,7 +17,7 @@ import { User } from 'src/users/user.decorator';
 import { SuggestionDTO } from './suggestion.dto';
 import { AuthGuard } from '@nestjs/passport';
 
-@Controller('api/suggestions')
+@Controller()
 export class SuggestionsController {
   private logger = new Logger('SuggestionsController');
   constructor(private suggestionsService: SuggestionsService) {}
@@ -28,7 +28,7 @@ export class SuggestionsController {
     options.id && this.logger.log('SUGGESTION ' + JSON.stringify(options.id));
   }
 
-  @Get()
+  @Get('api/suggestions')
   showAllSuggestions() {
     return this.suggestionsService.showAll();
   }
@@ -40,15 +40,19 @@ export class SuggestionsController {
     return this.suggestionsService.showByActivationScore(activationScore);
   } */
 
-  @Post()
+  @Post('api/classificationCriteria/:keyname/suggestions')
   @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
-  createSuggestion(@User('id') user, @Body() body: SuggestionDTO) {
+  createSuggestion(
+    @User('id') user,
+    @Param('criteriaId') criteria: string,
+    @Body() body: SuggestionDTO,
+  ) {
     this.logData({ user, body });
-    return this.suggestionsService.create(user, body);
+    return this.suggestionsService.create(user, criteria, body);
   }
 
-  @Put(':id')
+  @Put('api/suggestions/:id')
   @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   updateSuggestion(
@@ -60,7 +64,7 @@ export class SuggestionsController {
     return this.suggestionsService.update(id, user, body);
   }
 
-  @Delete(':id')
+  @Delete('api/suggestions/:id')
   @UseGuards(AuthGuard('jwt'))
   destroySuggestion(@Param('id') id: string, @User('id') user) {
     this.logData({ id, user });

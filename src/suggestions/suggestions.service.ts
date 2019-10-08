@@ -4,6 +4,7 @@ import { PsychologistEntity } from '../psychologists/psychologist.entity';
 import { Repository } from 'typeorm';
 import { SuggestionEntity } from './suggestion.entity';
 import { SuggestionRO, SuggestionDTO } from './suggestion.dto';
+import { ClassificationCriteriaEntity } from '../classification-criteria/classification-criteria.entity';
 
 @Injectable()
 export class SuggestionsService {
@@ -12,6 +13,10 @@ export class SuggestionsService {
     private psychologistRepository: Repository<PsychologistEntity>,
     @InjectRepository(SuggestionEntity)
     private suggestionRepository: Repository<SuggestionEntity>,
+    @InjectRepository(ClassificationCriteriaEntity)
+    private classificationCriteriaRepository: Repository<
+      ClassificationCriteriaEntity
+    >,
   ) {}
 
   private suggestionToResponseObject(
@@ -46,7 +51,11 @@ export class SuggestionsService {
     return suggestions;
   }
 
-  async create(userId: string, data: SuggestionDTO): Promise<SuggestionRO> {
+  async create(
+    userId: string,
+    criteriaId: string,
+    data: SuggestionDTO,
+  ): Promise<SuggestionRO> {
     const psychologist = await this.psychologistRepository.findOne({
       where: { user: { id: userId } },
       relations: ['user'],
@@ -55,9 +64,21 @@ export class SuggestionsService {
       throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
     }
 
+    const criteria = await this.classificationCriteriaRepository.findOne({
+      where: { id: criteriaId },
+    });
+
+    if (!criteria) {
+      throw new HttpException(
+        'Classification criteria not found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
     const suggestion = await this.suggestionRepository.create({
       ...data,
       savedBy: psychologist,
+      classificationCriteria: criteria,
     });
 
     await this.suggestionRepository.save(suggestion);

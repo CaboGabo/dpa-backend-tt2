@@ -15,10 +15,10 @@ export class PostsController {
     options.id && this.logger.log('POST ' + JSON.stringify(options.id));
   }
 
-  @Get('api/posts')
+  /*@Get('api/posts')
   @UseGuards(AuthGuard('jwt'))
   showPostsByUser(@User('id') user) {
     this.logData({ user });
     return this.postsService.showByUser(user);
-  }
+  }*/
 }

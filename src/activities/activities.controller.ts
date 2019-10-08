@@ -10,7 +10,7 @@ import { ActivitiesService } from './activities.service';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/users/user.decorator';
 
-@Controller('activities')
+@Controller()
 export class ActivitiesController {
   constructor(private activityService: ActivitiesService) {}
 
