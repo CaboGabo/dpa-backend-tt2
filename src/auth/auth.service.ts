@@ -5,9 +5,9 @@ import { UserEntity } from '../users/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-export enum Provider {
+/*export enum Provider {
   GOOGLE = 'google',
-}
+}*/
 
 @Injectable()
 export class AuthService {
@@ -44,7 +44,7 @@ export class AuthService {
     };
   }
 
-  async validateOAuthLogin(profile: any, provider: Provider) {
+  /*async validateOAuthLogin(profile: any, provider: Provider) {
     let user = await this.userRepository.findOne({
       where: { username: profile.id },
     });
@@ -66,5 +66,5 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
     };
-  }
+  }*/
 }
