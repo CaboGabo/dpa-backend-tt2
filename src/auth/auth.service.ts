@@ -21,6 +21,10 @@ export class AuthService {
   async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOne(username);
 
+    if (user.google) {
+      return user.toResponseObject();
+    }
+
     if (!user.isValidated) {
       throw new HttpException('Email is not validated', HttpStatus.BAD_REQUEST);
     }

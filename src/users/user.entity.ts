@@ -37,6 +37,11 @@ export class UserEntity {
   })
   isValidated: boolean;
 
+  @Column({
+    default: false,
+  })
+  google: boolean;
+
   @OneToOne(type => StudentEntity, student => student.user)
   student: StudentEntity;
 
