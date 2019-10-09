@@ -98,6 +98,13 @@ export class UsersService {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
+    if (user.google) {
+      throw new HttpException(
+        'User signed with Google',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     const template = fs.readFileSync('src/email/confirmation-email.html');
 
     sgMail.setApiKey(process.env.API_KEY);
@@ -160,6 +167,13 @@ export class UsersService {
     });
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
+    if (user.google) {
+      throw new HttpException(
+        'User signed with Google',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     sgMail.setApiKey(process.env.API_KEY);
