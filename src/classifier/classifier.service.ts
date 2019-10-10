@@ -84,6 +84,7 @@ export class ClassifierService {
                       ]}
 
     let mainCount = 0;
+    let cBehaviour = false;
 
     if (await this.isTdmABehaviourPresent(posts)) {
       console.log('El criterio TDM-A está presente');
@@ -99,11 +100,11 @@ export class ClassifierService {
 
     if (await this.isTdmCBehaviourPresent(posts)) {
       console.log('El criterio TDM-C está presente');
-      mainCount++;
+      cBehaviour = true;
     } else console.log('El criterio TDM-C no está presente');
 
     //Mandamos la respuesta final sobre si presenta o no los sintomas del TDM
-    if (mainCount == 3)
+    if (mainCount == 2 && !cBehaviour)
       resultTdm.globalResult = true;
 
     return resultTdm;
@@ -125,6 +126,7 @@ export class ClassifierService {
                 
 
     let mainCount = 0;
+    let gBehaviour = false;
 
     if (await this.isTdpABehaviourPresent(posts)) {
       console.log('El criterio TDP-A está presente');
@@ -143,7 +145,7 @@ export class ClassifierService {
 
     if (await this.isTdpGBehaviourPresent(posts)) {
       console.log('El criterio TDP-G está presente');
-      mainCount++;
+      gBehaviour = true;
     } else console.log('El criterio TDP-G no está presente');
 
     if (await this.isTdpHBehaviourPresent(posts)) {
@@ -153,7 +155,7 @@ export class ClassifierService {
 
     
     //Mandamos la respuesta final sobre si presenta o no los sintomas del TDM
-    if (mainCount == 5)
+    if (mainCount == 4 && !gBehaviour)
       resultTdp.globalResult = true;
 
     return resultTdp;
@@ -212,7 +214,7 @@ export class ClassifierService {
 
     //Detección de pensamientos negativos durante dos años
 
-    if (presentSymptoms >= 2) return true;
+    if (presentSymptoms >= 0) return true;
     return false;
   }
 
