@@ -43,6 +43,12 @@ export class UsersController {
     return this.usersService.register(data);
   }
 
+  @Post('auth/register/google')
+  @UsePipes(new ValidationPipe())
+  registerGoogle(@Body() data: UserDTO) {
+    return this.usersService.register(data, true);
+  }
+
   @Post('auth/resend-email')
   @UsePipes(new ValidationPipe())
   resend(@Body() data: Partial<UserDTO>) {

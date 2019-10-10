@@ -19,21 +19,7 @@ export class AppController {
   @Post('auth/login')
   @UseGuards(AuthGuard('local'))
   async login(@Request() req) {
+    console.log(req);
     return this.authService.login(req.user);
-  }
-
-  @Get('auth/login/google')
-  @UseGuards(AuthGuard('google'))
-  googleLogin() {}
-
-  @Get('auth/login/google/callback')
-  @UseGuards(AuthGuard('google'))
-  googleLoginCallback(@Req() req, @Res() res) {
-    const jwt: string = req.access_token;
-    if (jwt) {
-      res.redirect(`http://localhost:4200/login/success/${jwt}`);
-    } else {
-      res.redirect(`http://localhost:4200/login/failure`);
-    }
   }
 }

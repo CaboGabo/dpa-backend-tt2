@@ -41,7 +41,7 @@ export class UsersService {
     return user;
   }
 
-  async register(data: UserDTO) {
+  async register(data: UserDTO, google = false) {
     const { username, email } = data;
 
     let user = await this.userRepository.findOne({ where: { username } });
@@ -55,24 +55,36 @@ export class UsersService {
     if (user) {
       throw new HttpException('Email already exists', HttpStatus.BAD_REQUEST);
     }
-    user = await this.userRepository.create(data);
+
+    if (google) {
+      user = await this.userRepository.create({
+        ...data,
+        google: true,
+        isValidated: true,
+      });
+    } else {
+      user = await this.userRepository.create({ ...data, google: false });
+    }
+
     await this.userRepository.save(user);
 
-    sgMail.setApiKey(process.env.API_KEY);
+    if (!google) {
+      sgMail.setApiKey(process.env.API_KEY);
 
-    const template = fs.readFileSync('src/email/confirmation-email.html');
+      const template = fs.readFileSync('src/email/confirmation-email.html');
 
-    let html = template
-      .toString()
-      .replace(':username', user.username)
-      .replace(':id', user.id);
-    const msg = {
-      to: user.email,
-      from: 'gabo.alejandro.huitron@gmail.com',
-      subject: 'DPa - Confirmación de email',
-      html: html,
-    };
-    sgMail.send(msg);
+      let html = template
+        .toString()
+        .replace(':username', user.username)
+        .replace(':id', user.id);
+      const msg = {
+        to: user.email,
+        from: 'gabo.alejandro.huitron@gmail.com',
+        subject: 'DPa - Confirmación de email',
+        html: html,
+      };
+      sgMail.send(msg);
+    }
 
     return user.toResponseObject();
   }
@@ -84,6 +96,13 @@ export class UsersService {
 
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
+    if (user.google) {
+      throw new HttpException(
+        'User signed with Google',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     const template = fs.readFileSync('src/email/confirmation-email.html');
@@ -148,6 +167,13 @@ export class UsersService {
     });
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
+    if (user.google) {
+      throw new HttpException(
+        'User signed with Google',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     sgMail.setApiKey(process.env.API_KEY);
