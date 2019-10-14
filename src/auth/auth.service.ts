@@ -19,8 +19,12 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOne(username);
-
+    //console.log(username, pass);
+    const user = await this.userRepository.findOne({
+      where: { username },
+      relations: ['student', 'psychologist'],
+    });
+    //console.log(user);
     if (user.google) {
       return user.toResponseObject();
     }
@@ -30,8 +34,10 @@ export class AuthService {
     }
 
     if (user && (await user.comparePassword(pass))) {
+      console.log('fine');
       return user.toResponseObject();
     }
+    console.log('Not fine');
     return null;
   }
 

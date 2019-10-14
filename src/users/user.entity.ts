@@ -54,6 +54,7 @@ export class UserEntity {
   }
 
   async comparePassword(attempt: string): Promise<boolean> {
+    console.log(await bcrypt.compare(attempt, this.password));
     return await bcrypt.compare(attempt, this.password);
   }
 
@@ -68,10 +69,14 @@ export class UserEntity {
 
     if (this.student) {
       responseObject.student = this.student;
+    } else {
+      responseObject.student = null;
     }
 
     if (this.psychologist) {
       responseObject.psychologist = this.psychologist;
+    } else {
+      responseObject.psychologist = null;
     }
 
     return responseObject;
