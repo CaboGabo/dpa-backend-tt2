@@ -40,12 +40,12 @@ export class SuggestionsController {
     return this.suggestionsService.showByActivationScore(activationScore);
   } */
 
-  @Post('api/classificationCriteria/:keyname/suggestions')
+  @Post('api/classification-criteria/:keyname/suggestions')
   @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   createSuggestion(
     @User('id') user,
-    @Param('criteriaId') criteria: string,
+    @Param('keyname') criteria: string,
     @Body() body: SuggestionDTO,
   ) {
     this.logData({ user, body });

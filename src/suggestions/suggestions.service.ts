@@ -53,7 +53,7 @@ export class SuggestionsService {
 
   async create(
     userId: string,
-    criteriaId: string,
+    keyname: string,
     data: SuggestionDTO,
   ): Promise<SuggestionRO> {
     const psychologist = await this.psychologistRepository.findOne({
@@ -65,7 +65,7 @@ export class SuggestionsService {
     }
 
     const criteria = await this.classificationCriteriaRepository.findOne({
-      where: { id: criteriaId },
+      where: { keyname },
     });
 
     if (!criteria) {
