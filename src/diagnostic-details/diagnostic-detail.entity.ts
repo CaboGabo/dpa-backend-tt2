@@ -19,7 +19,7 @@ export class DiagnosticDetailEntity {
   created: Date;
 
   @Column()
-  result: string;
+  result: boolean;
 
   @ManyToOne(type => DiagnosticEntity, diagnostic => diagnostic.details)
   diagnostic: DiagnosticEntity;

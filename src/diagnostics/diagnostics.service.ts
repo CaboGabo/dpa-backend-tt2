@@ -53,7 +53,6 @@ export class DiagnosticsService {
       ...diagnostic,
       student: diagnostic.student || null,
       details: diagnostic.details || null,
-      result: diagnostic.result === 'true' ? true : false,
     };
 
     return responseObject;
@@ -117,6 +116,15 @@ export class DiagnosticsService {
     const posts = await this.postsService.showByUser(userId);
     const insResult = await this.classifierService.classify(posts);
 
+    const {
+      globalResult: tdmResult,
+      criteriaResults: criteriaTdm,
+    } = insResult[0];
+    const {
+      globalResult: tdpResult,
+      criteriaResults: criteriaTdp,
+    } = insResult[1];
+
     /* const resultTdm = CryptoJS.AES.encrypt(
       `${insResult[0]}`,
       process.env.SECRET,
@@ -127,13 +135,13 @@ export class DiagnosticsService {
     ).toString(); */
 
     const diagnostic1 = await this.diagnosticRepository.create({
-      result: insResult[0]['result'],
+      result: tdmResult,
       depressionType: 'tdm',
       student,
     });
 
     const diagnostic2 = await this.diagnosticRepository.create({
-      result: insResult[1]['result'],
+      result: tdpResult,
       depressionType: 'tdp',
       student,
     });
@@ -141,28 +149,28 @@ export class DiagnosticsService {
     await this.diagnosticRepository.save(diagnostic1);
     await this.diagnosticRepository.save(diagnostic2);
 
-    for (let i = 1; i < insResult[0].length; i++) {
+    for (let i = 1; i < criteriaTdm.length; i++) {
       const criteria = await this.classificationCriteriaRepository.findOne({
-        where: { keyname: insResult[0][i]['keyname'] },
+        where: { keyname: criteriaTdm[i]['keyname'] },
       });
 
       const diagnosticDetail = this.diagnosticDetailRepository.create({
         classificationCriteria: criteria,
-        result: insResult[0][i]['result'],
+        result: criteriaTdm[i]['result'],
         diagnostic: diagnostic1,
       });
 
       await this.diagnosticDetailRepository.save(diagnosticDetail);
     }
 
-    for (let i = 1; i < insResult[1].length; i++) {
+    for (let i = 1; i < criteriaTdp.length; i++) {
       const criteria = await this.classificationCriteriaRepository.findOne({
-        where: { keyname: insResult[1][i]['keyname'] },
+        where: { keyname: criteriaTdp[i]['keyname'] },
       });
 
       const diagnosticDetail = this.diagnosticDetailRepository.create({
         classificationCriteria: criteria,
-        result: insResult[1][i]['result'],
+        result: criteriaTdp[i]['result'],
         diagnostic: diagnostic2,
       });
 
@@ -223,6 +231,17 @@ export class DiagnosticsService {
       relations: ['student', 'details'],
     });
 
+    for (const diagnostic of diagnostics) {
+      let i = 0;
+      for (const detail of diagnostic.details) {
+        diagnostic.details[i] = await this.diagnosticDetailRepository.findOne({
+          where: { id: detail.id },
+          relations: ['activities', 'classificationCriteria'],
+        });
+        i++;
+      }
+    }
+
     return diagnostics.map(diagnostic =>
       this.diagnosticToResponseObject(diagnostic),
     );
@@ -239,6 +258,17 @@ export class DiagnosticsService {
     }
 
     const diagnostics = await this.diagnosticRepository.find();
+
+    for (const diagnostic of diagnostics) {
+      let i = 0;
+      for (const detail of diagnostic.details) {
+        diagnostic.details[i] = await this.diagnosticDetailRepository.findOne({
+          where: { id: detail.id },
+          relations: ['activities', 'classificationCriteria'],
+        });
+        i++;
+      }
+    }
 
     return diagnostics.map(diagnostic =>
       this.diagnosticToResponseObject(diagnostic),
@@ -264,6 +294,15 @@ export class DiagnosticsService {
       throw new HttpException('Diagnostic not found', HttpStatus.NOT_FOUND);
     }
 
+    let i = 0;
+    for (const detail of diagnostic.details) {
+      diagnostic.details[i] = await this.diagnosticDetailRepository.findOne({
+        where: { id: detail.id },
+        relations: ['activities', 'classificationCriteria'],
+      });
+      i++;
+    }
+
     return this.diagnosticToResponseObject(diagnostic);
   }
 
@@ -277,17 +316,24 @@ export class DiagnosticsService {
       throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
     }
 
-    let diagnostics = await this.diagnosticRepository.find({
-      where: { student: { id: student.id } },
+    let diagnostic = await this.diagnosticRepository.findOne({
+      where: { student: { id: student.id }, id },
       relations: ['student', 'details'],
     });
 
-    const diagnostic = diagnostics.filter(diagnostic => diagnostic.id === id);
-
-    if (diagnostic.length === 0) {
+    if (!diagnostic) {
       throw new HttpException('Diagnostic not found', HttpStatus.NOT_FOUND);
     }
 
-    return this.diagnosticToResponseObject(diagnostic[0]);
+    let i = 0;
+    for (const detail of diagnostic.details) {
+      diagnostic.details[i] = await this.diagnosticDetailRepository.findOne({
+        where: { id: detail.id },
+        relations: ['activities', 'classificationCriteria'],
+      });
+      i++;
+    }
+
+    return this.diagnosticToResponseObject(diagnostic);
   }
 }

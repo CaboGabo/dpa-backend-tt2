@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { DiagnosticEntity } from '../diagnostics/diagnostic.entity';
 import { SuggestionsService } from '../suggestions/suggestions.service';
 import { StudentEntity } from '../students/student.entity';
+import { DiagnosticDetailEntity } from '../diagnostic-details/diagnostic-detail.entity';
 
 @Injectable()
 export class ActivitiesService {
@@ -13,6 +14,8 @@ export class ActivitiesService {
     private activityRepository: Repository<ActivityEntity>,
     @InjectRepository(DiagnosticEntity)
     private diagnosticRepository: Repository<DiagnosticEntity>,
+    @InjectRepository(DiagnosticDetailEntity)
+    private diagnosticDetailRepository: Repository<DiagnosticDetailEntity>,
     private suggestionsService: SuggestionsService,
   ) {}
 
@@ -25,34 +28,54 @@ export class ActivitiesService {
       relations: ['student', 'details'],
     });
 
+    let i = 0;
+    for (const detail of diagnostic.details) {
+      diagnostic.details[i] = await this.diagnosticDetailRepository.findOne({
+        where: { id: detail.id },
+        relations: ['activities', 'classificationCriteria'],
+      });
+      i++;
+    }
+
     const suggestions = await this.suggestionsService.showAll();
 
     let saved = 0;
     for (let i = 0; i < diagnostic.details.length; i++) {
-      const filteredSuggestions = suggestions.filter(
-        suggestion =>
-          (suggestion.depressionType === diagnostic.depressionType ||
-            suggestion.gender === student.gender ||
-            (parseInt(suggestion.rangeAge.split('-')[0]) <= student.age &&
-              student.age <= parseInt(suggestion.rangeAge.split('-')[1]))) &&
-          suggestion.classificationCriteria.id ===
-            diagnostic.details[i].classificationCriteria.id,
-      );
+      if (diagnostic.details[i].result) {
+        const filteredSuggestions = suggestions
+          .filter(
+            suggestion =>
+              suggestion.classificationCriteria.id ===
+              diagnostic.details[i].classificationCriteria.id,
+          )
+          .filter(
+            suggestion =>
+              suggestion.depressionType === diagnostic.depressionType,
+          )
+          .filter(suggestion => suggestion.gender === student.gender)
+          .filter(
+            suggestion =>
+              parseInt(suggestion.rangeAge.split('-')[0]) <= student.age &&
+              student.age <= parseInt(suggestion.rangeAge.split('-')[1]),
+          );
 
-      for (const suggestion of filteredSuggestions) {
-        let exists = await this.activityRepository.findOne({
-          where: { diagnosticDetail: diagnostic.details[i], suggestion },
-          relations: ['diagnosticDetail', 'suggestion'],
-        });
+        console.log('filtered', filteredSuggestions);
 
-        if (!exists) {
-          const activity = await this.activityRepository.create({
-            suggestion,
-            diagnosticDetail: diagnostic.details[i],
+        for (const suggestion of filteredSuggestions) {
+          let exists = await this.activityRepository.findOne({
+            where: { diagnosticDetail: diagnostic.details[i], suggestion },
+            relations: ['diagnosticDetail', 'suggestion'],
           });
 
-          await this.activityRepository.save(activity);
-          saved++;
+          if (!exists) {
+            const activity = await this.activityRepository.create({
+              suggestion,
+              diagnosticDetail: diagnostic.details[i],
+            });
+
+            await this.activityRepository.save(activity);
+            saved++;
+          }
         }
       }
     }

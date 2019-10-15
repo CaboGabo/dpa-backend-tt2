@@ -20,7 +20,7 @@ export class DiagnosticEntity {
   created: Date;
 
   @Column()
-  result: string;
+  result: boolean;
 
   @Column()
   depressionType: string;
