@@ -34,10 +34,10 @@ export class AuthService {
     }
 
     if (user && (await user.comparePassword(pass))) {
-      console.log('fine');
+      //console.log('fine');
       return user.toResponseObject();
     }
-    console.log('Not fine');
+    //console.log('Not fine');
     return null;
   }
 

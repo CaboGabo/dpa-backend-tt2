@@ -13,7 +13,7 @@ export class RedditService {
     const authenticationUrl = snoowrap.getAuthUrl({
       clientId: 'sMWdg1ctbYuP6Q',
       scope: ['identity', 'mysubreddits', 'read', 'history'],
-      redirectUri: 'http://localhost:3000/reddit',
+      redirectUri: 'http://localhost:4200/sign-up-networks',
       permanent: false,
       state: 'fe211bebc52eb3da9bef8db6e63104d3',
     });
@@ -31,7 +31,7 @@ export class RedditService {
       scope: ['identity', 'mysubreddits', 'read', 'history'],
       clientId: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      redirectUri: 'http://localhost:3000/reddit',
+      redirectUri: 'http://localhost:4200/sign-up-networks',
     };
 
     let posts: PostDTO[];
