@@ -24,6 +24,7 @@ export class RedditService {
 
     let posts = [];
 
+
     const r = await snoowrap.fromAuthCode(redditKeys);
     const me = await r.getMe().name;
     const redditPosts = await r.getUser(me).getSubmissions({ amount: count });
