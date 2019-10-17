@@ -43,7 +43,7 @@ export class PostsService {
 
   async createMany(userId: string, posts: PostDTO[]): Promise<PostRO[]> {
     const student = await this.studentRepository.findOne({
-      where: { student: { user: { id: userId } } },
+      where: { user: { id: userId } },
       relations: ['user'],
     });
 

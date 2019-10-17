@@ -22,7 +22,7 @@ export class RedditService {
       redirectUri: 'http://localhost:4200/sign-up-networks',
     };
 
-    let posts: PostDTO[];
+    let posts = [];
 
     snoowrap
       .fromAuthCode(redditKeys)
