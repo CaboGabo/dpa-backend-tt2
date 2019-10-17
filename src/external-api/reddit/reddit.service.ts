@@ -9,18 +9,6 @@ import { PostDTO } from '../../posts/post.dto';
 export class RedditService {
   constructor(private googleCloud: GoogleCloudService) {}
 
-  public getAuthenticationUrl() {
-    const authenticationUrl = snoowrap.getAuthUrl({
-      clientId: 'sMWdg1ctbYuP6Q',
-      scope: ['identity', 'mysubreddits', 'read', 'history'],
-      redirectUri: 'http://localhost:4200/sign-up-networks',
-      permanent: false,
-      state: 'fe211bebc52eb3da9bef8db6e63104d3',
-    });
-
-    return authenticationUrl;
-  }
-
   public async getRedditPosts(
     redditAuth: RedditAuthDTO,
     count: number,
@@ -29,8 +17,8 @@ export class RedditService {
       code: redditAuth.code,
       userAgent: 'DPa App',
       scope: ['identity', 'mysubreddits', 'read', 'history'],
-      clientId: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
+      clientId: process.env.CLIENT_ID_REDDIT,
+      clientSecret: process.env.CLIENT_SECRET_REDDIT,
       redirectUri: 'http://localhost:4200/sign-up-networks',
     };
 

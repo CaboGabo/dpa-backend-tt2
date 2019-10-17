@@ -76,10 +76,6 @@ export class DiagnosticsService {
     return createdPosts;
   }
 
-  redditAuth(): string {
-    return this.redditService.getAuthenticationUrl();
-  }
-
   async fetchAllReddit(
     userId: string,
     redditAuth: RedditAuthDTO,

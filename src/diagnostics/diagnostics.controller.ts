@@ -44,12 +44,6 @@ export class DiagnosticsController {
     );
   }
 
-  @Post('reddit/auth')
-  @UseGuards(AuthGuard('jwt'))
-  redditAuthorization() {
-    return this.diagnosticsService.redditAuth();
-  }
-
   @Post('reddit')
   @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
