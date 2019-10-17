@@ -24,76 +24,75 @@ export class RedditService {
 
     let posts = [];
 
-    snoowrap
-      .fromAuthCode(redditKeys)
-      .then(r => {
-        r.getMe()
-          .fetch()
-          .then(async userInfo => {
-            const [redditPosts, redditComments] = await Promise.all([
-              r.getUser(userInfo.name).getSubmissions({ limit: count }),
-              r.getUser(userInfo.name).getComments({ limit: count }),
-            ]);
-            for (const redditPost of redditPosts) {
-              const formatedPost = this.formatPost(
-                `${redditPost.title}: ${redditPost.selftext}`,
-              );
-              const processedPost = await this.googleCloud.analyzePost(
-                formatedPost,
-              );
-              const content = `"Publicación: ${formatedPost}, Sentimiento: ${
-                processedPost.score
-              }, Magnitud: ${processedPost.magnitude}"`;
-              const tag = await this.googleCloud.predictPost(content);
+    const r = await snoowrap.fromAuthCode(redditKeys);
+    const me = await r.getMe().name;
+    const redditPosts = await r.getUser(me).getSubmissions({ amount: count });
+    const redditComments = await r.getUser(me).getComments({ amount: count });
 
-              const post = {
-                content: formatedPost,
-                sentiment: processedPost.score,
-                magnitude: processedPost.magnitude,
-                tag,
-                type: 'text',
-                postdate: this.toDate(redditPost.created).toDateString(),
-              };
+    console.log("me");
+    console.log(me);
 
-              console.log(post);
-              posts.push(post);
-            }
+    for (const redditPost of redditPosts) {
+      posts.push(await this.buildPost(redditPost));
+    }
 
-            for (const redditComment of redditComments) {
-              const formatedComment = this.formatPost(redditComment.body);
-              const processedComment = await this.googleCloud.analyzePost(
-                formatedComment,
-              );
-              const content = `"Publicación: ${formatedComment}, Sentimiento: ${
-                processedComment.score
-              }, Magnitud: ${processedComment.magnitude}`;
-              const tag = await this.googleCloud.predictPost(content);
+    for (const redditComment of redditComments) {
+      posts.push(await this.buildComment(redditComment));
+    }
 
-              const post = {
-                content: formatedComment,
-                sentiment: processedComment.score,
-                magnitude: processedComment.magnitude,
-                tag,
-                type: 'text',
-                postdate: this.toDate(redditComment.created).toDateString(),
-              };
-
-              posts.push(post);
-            }
-
-            return posts;
-          });
-      })
-      .catch(err => {
-        console.log(err);
-        throw new ServiceUnavailableException();
-      });
+    return posts;
   }
 
   toDate(secs: number): Date {
     let date = new Date(1970, 0, 1);
     date.setSeconds(secs);
     return date;
+  }
+
+  async buildPost(p: any) {
+    const formatedPost = this.formatPost(
+      `${p.title}: ${p.selftext}`,
+    );
+    const processedPost = await this.googleCloud.analyzePost(
+      formatedPost,
+    );
+    const content = `"Publicación: ${formatedPost}, Sentimiento: ${
+      processedPost.score
+    }, Magnitud: ${processedPost.magnitude}"`;
+    const tag = await this.googleCloud.predictPost(content);
+
+    const post = {
+      content: formatedPost,
+      sentiment: processedPost.score,
+      magnitude: processedPost.magnitude,
+      tag,
+      type: 'text',
+      postdate: this.toDate(p.created).toDateString(),
+    };
+    console.log(post);
+    return post;
+  }
+
+  async buildComment(c: any) {
+    const formatedComment = this.formatPost(c.body);
+      const processedComment = await this.googleCloud.analyzePost(
+        formatedComment,
+      );
+      const content = `"Publicación: ${formatedComment}, Sentimiento: ${
+        processedComment.score
+      }, Magnitud: ${processedComment.magnitude}`;
+      const tag = await this.googleCloud.predictPost(content);
+
+      const post = {
+        content: formatedComment,
+        sentiment: processedComment.score,
+        magnitude: processedComment.magnitude,
+        tag,
+        type: 'text',
+        postdate: this.toDate(c.created).toDateString(),
+      };
+
+      return post;
   }
 
   formatPost(text: string): string {
