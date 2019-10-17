@@ -17,6 +17,7 @@ import { PsychologistEntity } from '../psychologists/psychologist.entity';
 import { DiagnosticDetailEntity } from '../diagnostic-details/diagnostic-detail.entity';
 import { ClassificationCriteriaEntity } from '../classification-criteria/classification-criteria.entity';
 import { ActivitiesService } from '../activities/activities.service';
+import { ActivityEntity } from '../activities/activity.entity';
 
 @Injectable()
 export class DiagnosticsService {
@@ -33,6 +34,8 @@ export class DiagnosticsService {
     private classificationCriteriaRepository: Repository<
       ClassificationCriteriaEntity
     >,
+    @InjectRepository(ActivityEntity)
+    private activityRepository: Repository<ActivityEntity>,
 
     private twitterService: TwitterService,
     private redditService: RedditService,
@@ -130,13 +133,13 @@ export class DiagnosticsService {
       process.env.SECRET,
     ).toString(); */
 
-    const diagnostic1 = await this.diagnosticRepository.create({
+    let diagnostic1 = await this.diagnosticRepository.create({
       result: tdmResult,
       depressionType: 'tdm',
       student,
     });
 
-    const diagnostic2 = await this.diagnosticRepository.create({
+    let diagnostic2 = await this.diagnosticRepository.create({
       result: tdpResult,
       depressionType: 'tdp',
       student,
@@ -173,6 +176,32 @@ export class DiagnosticsService {
       await this.diagnosticDetailRepository.save(diagnosticDetail);
     }
 
+    diagnostic1 = await this.diagnosticRepository.findOne({
+      where: { id: diagnostic1.id },
+    });
+
+    let i = 0;
+    for (const detail of diagnostic1.details) {
+      diagnostic1.details[i] = await this.diagnosticDetailRepository.findOne({
+        where: { id: detail.id },
+        relations: ['activities', 'classificationCriteria'],
+      });
+      i++;
+    }
+
+    diagnostic2 = await this.diagnosticRepository.findOne({
+      where: { id: diagnostic2.id },
+    });
+
+    i = 0;
+    for (const detail of diagnostic2.details) {
+      diagnostic2.details[i] = await this.diagnosticDetailRepository.findOne({
+        where: { id: detail.id },
+        relations: ['activities', 'classificationCriteria'],
+      });
+      i++;
+    }
+
     return [diagnostic1, diagnostic2].map(diagnostic =>
       this.diagnosticToResponseObject(diagnostic),
     );
@@ -206,6 +235,26 @@ export class DiagnosticsService {
       relations: ['student', 'details'],
     });
 
+    let i = 0;
+    for (const detail of diagnostic.details) {
+      diagnostic.details[i] = await this.diagnosticDetailRepository.findOne({
+        where: { id: detail.id },
+        relations: ['activities', 'classificationCriteria'],
+      });
+
+      let j = 0;
+      for (const activity of diagnostic.details[i].activities) {
+        diagnostic.details[i].activities[
+          j
+        ] = await this.activityRepository.findOne({
+          where: { id: activity.id },
+          relations: ['suggestion', 'diagnosticDetail'],
+        });
+        j++;
+      }
+      i++;
+    }
+
     return {
       ...this.diagnosticToResponseObject(diagnostic),
       newActivities: saved,
@@ -234,6 +283,16 @@ export class DiagnosticsService {
           where: { id: detail.id },
           relations: ['activities', 'classificationCriteria'],
         });
+        let j = 0;
+        for (const activity of diagnostic.details[i].activities) {
+          diagnostic.details[i].activities[
+            j
+          ] = await this.activityRepository.findOne({
+            where: { id: activity.id },
+            relations: ['suggestion', 'diagnosticDetail'],
+          });
+          j++;
+        }
         i++;
       }
     }
@@ -262,6 +321,17 @@ export class DiagnosticsService {
           where: { id: detail.id },
           relations: ['activities', 'classificationCriteria'],
         });
+
+        let j = 0;
+        for (const activity of diagnostic.details[i].activities) {
+          diagnostic.details[i].activities[
+            j
+          ] = await this.activityRepository.findOne({
+            where: { id: activity.id },
+            relations: ['suggestion', 'diagnosticDetail'],
+          });
+          j++;
+        }
         i++;
       }
     }
@@ -296,6 +366,17 @@ export class DiagnosticsService {
         where: { id: detail.id },
         relations: ['activities', 'classificationCriteria'],
       });
+
+      let j = 0;
+      for (const activity of diagnostic.details[i].activities) {
+        diagnostic.details[i].activities[
+          j
+        ] = await this.activityRepository.findOne({
+          where: { id: activity.id },
+          relations: ['suggestion', 'diagnosticDetail'],
+        });
+        j++;
+      }
       i++;
     }
 
@@ -327,6 +408,17 @@ export class DiagnosticsService {
         where: { id: detail.id },
         relations: ['activities', 'classificationCriteria'],
       });
+
+      let j = 0;
+      for (const activity of diagnostic.details[i].activities) {
+        diagnostic.details[i].activities[
+          j
+        ] = await this.activityRepository.findOne({
+          where: { id: activity.id },
+          relations: ['suggestion', 'diagnosticDetail'],
+        });
+        j++;
+      }
       i++;
     }
 
