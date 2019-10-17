@@ -91,7 +91,7 @@ export class RedditService {
       magnitude: processedComment.magnitude,
       tag,
       type: 'text',
-      postdate: this.toDate(c.created).toDateString(),
+      postdate: this.formatDate(this.toDate(c.created)),
     };
 
     return post;
