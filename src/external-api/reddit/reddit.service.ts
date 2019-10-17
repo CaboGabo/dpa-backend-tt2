@@ -31,8 +31,8 @@ export class RedditService {
           .fetch()
           .then(async userInfo => {
             const [redditPosts, redditComments] = await Promise.all([
-              r.getUser(userInfo.name).getSubmissions({ limit: count }),
-              r.getUser(userInfo.name).getComments({ limit: count }),
+              r.getUser(userInfo.name).getSubmissions({ amount: count }),
+              r.getUser(userInfo.name).getComments({ amount: count }),
             ]);
             for (const redditPost of redditPosts) {
               const formatedPost = this.formatPost(
