@@ -24,13 +24,12 @@ export class RedditService {
 
     let posts = [];
 
-
     const r = await snoowrap.fromAuthCode(redditKeys);
     const me = await r.getMe().name;
     const redditPosts = await r.getUser(me).getSubmissions({ amount: count });
     const redditComments = await r.getUser(me).getComments({ amount: count });
 
-    console.log("me");
+    console.log('me');
     console.log(me);
 
     for (const redditPost of redditPosts) {
@@ -51,12 +50,8 @@ export class RedditService {
   }
 
   async buildPost(p: any) {
-    const formatedPost = this.formatPost(
-      `${p.title}: ${p.selftext}`,
-    );
-    const processedPost = await this.googleCloud.analyzePost(
-      formatedPost,
-    );
+    const formatedPost = this.formatPost(`${p.title}: ${p.selftext}`);
+    const processedPost = await this.googleCloud.analyzePost(formatedPost);
     const content = `"Publicación: ${formatedPost}, Sentimiento: ${
       processedPost.score
     }, Magnitud: ${processedPost.magnitude}"`;
@@ -68,32 +63,38 @@ export class RedditService {
       magnitude: processedPost.magnitude,
       tag,
       type: 'text',
-      postdate: this.toDate(p.created).toDateString(),
+      postdate: this.formatDate(this.toDate(p.created)),
     };
     console.log(post);
     return post;
   }
 
+  formatDate(date: Date): string {
+    const stringDate = `${date.getFullYear()}-${date.getMonth() +
+      1}-${date.getDate()}`;
+    return stringDate;
+  }
+
   async buildComment(c: any) {
     const formatedComment = this.formatPost(c.body);
-      const processedComment = await this.googleCloud.analyzePost(
-        formatedComment,
-      );
-      const content = `"Publicación: ${formatedComment}, Sentimiento: ${
-        processedComment.score
-      }, Magnitud: ${processedComment.magnitude}`;
-      const tag = await this.googleCloud.predictPost(content);
+    const processedComment = await this.googleCloud.analyzePost(
+      formatedComment,
+    );
+    const content = `"Publicación: ${formatedComment}, Sentimiento: ${
+      processedComment.score
+    }, Magnitud: ${processedComment.magnitude}`;
+    const tag = await this.googleCloud.predictPost(content);
 
-      const post = {
-        content: formatedComment,
-        sentiment: processedComment.score,
-        magnitude: processedComment.magnitude,
-        tag,
-        type: 'text',
-        postdate: this.toDate(c.created).toDateString(),
-      };
+    const post = {
+      content: formatedComment,
+      sentiment: processedComment.score,
+      magnitude: processedComment.magnitude,
+      tag,
+      type: 'text',
+      postdate: this.toDate(c.created).toDateString(),
+    };
 
-      return post;
+    return post;
   }
 
   formatPost(text: string): string {
