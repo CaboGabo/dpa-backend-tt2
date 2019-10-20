@@ -6,6 +6,7 @@ import {
   ClassificationCriteriaRO,
   ClassificationCriteriaDTO,
 } from './classification-criteria.dto';
+import { criteria } from './classification-criteria.data';
 
 @Injectable()
 export class ClassificationCriteriaService {
@@ -104,5 +105,14 @@ export class ClassificationCriteriaService {
     await this.classificationCriteriaRepository.remove(classificationCriteria);
 
     return this.classificationCriteriaToResponseObject(classificationCriteria);
+  }
+
+  async populate() {
+    for (const c of criteria) {
+      const dbc = await this.classificationCriteriaRepository.findOne({ name: c.name });
+      if (!dbc) {
+        await this.create(c);
+      }
+    }
   }
 }

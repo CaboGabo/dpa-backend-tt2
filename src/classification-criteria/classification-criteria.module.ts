@@ -7,6 +7,7 @@ import { ClassificationCriteriaEntity } from './classification-criteria.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([ClassificationCriteriaEntity])],
   providers: [ClassificationCriteriaService],
+  exports: [ClassificationCriteriaService],
   controllers: [ClassificationCriteriaController],
 })
 export class ClassificationCriteriaModule {}
