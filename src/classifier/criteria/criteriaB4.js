@@ -22,6 +22,8 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'Mi autoestima está por los suelos', 'bajaAutoestima');
 	manager.addDocument('es', 'No tengo autoestima', 'bajaAutoestima');
 	manager.addDocument('es', 'Me considero de baja autoestima', 'bajaAutoestima');
+	manager.addDocument('es', 'autoestima', 'bajaAutoestima');
+	manager.addDocument('es', 'No tengo muy buena autoestima', 'bajaAutoestima');
 
 	//Me considero...
 	//No se valoran, ni sus talentos ni sus posibilidades.
@@ -29,9 +31,14 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'No me quiero', 'bajaAutoestima');
 	manager.addDocument('es', 'No me aprecio', 'bajaAutoestima');
 	manager.addDocument('es', 'Me odio', 'bajaAutoestima');
+	manager.addDocument('es', 'A veces me odio', 'bajaAutoestima');
 	manager.addDocument('es', 'Me desprecio', 'bajaAutoestima');
 	manager.addDocument('es', 'Me aborrezco', 'bajaAutoestima');
 	manager.addDocument('es', 'No quiero saber nada de mi', 'bajaAutoestima');
+	manager.addDocument('es', 'Poco valorado', 'bajaAutoestima');
+	manager.addDocument('es', 'Poco valorada', 'bajaAutoestima');
+	manager.addDocument('es', 'Me siento poco valorado', 'bajaAutoestima');
+	manager.addDocument('es', 'Me siento poco valorada', 'bajaAutoestima');
 	manager.addDocument('es', 'No valgo', 'bajaAutoestima');
 	manager.addDocument('es', 'No valgo nada', 'bajaAutoestima');
 	manager.addDocument('es', 'No tengo valor', 'bajaAutoestima');
@@ -60,21 +67,40 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'Me considero inferior', 'bajaAutoestima');
 	manager.addDocument('es', 'Me considero un perdedor', 'bajaAutoestima');
 	manager.addDocument('es', 'Me considero una perdedora', 'bajaAutoestima');
+	manager.addDocument('es', 'Me hace que no valgo nada', 'bajaAutoestima');
+	manager.addDocument('es', 'Me hace que no tengo valor', 'bajaAutoestima');
+	manager.addDocument('es', 'Me hace sentir el peor', 'bajaAutoestima');
+	manager.addDocument('es', 'A veces me hace sentir el peor', 'bajaAutoestima');
+	manager.addDocument('es', 'Me hace sentir la peor', 'bajaAutoestima');
+	manager.addDocument('es', 'Me hace sentir lo peor', 'bajaAutoestima');
+	manager.addDocument('es', 'Me hace sentir inferior', 'bajaAutoestima');
+	manager.addDocument('es', 'Me hace sentir un perdedor', 'bajaAutoestima');
+	manager.addDocument('es', 'Me hace sentir una perdedora', 'bajaAutoestima');
+	manager.addDocument('es', 'Inseguridades', 'bajaAutoestima');
+	manager.addDocument('es', 'Mis inseguridades', 'bajaAutoestima');
+
 	manager.addDocument('es', 'Todos son mejores que yo', 'bajaAutoestima');
+	manager.addDocument('es', 'Siento que todos son mejores que yo', 'bajaAutoestima');
 	manager.addDocument('es', 'Todos son más buenos que yo', 'bajaAutoestima');
+	manager.addDocument('es', 'Siento que todos son más buenos que yo', 'bajaAutoestima');
 	manager.addDocument('es', 'Todos me ganan', 'bajaAutoestima');
 	manager.addDocument('es', 'No tengo nada bueno', 'bajaAutoestima');
 	manager.addDocument('es', 'No sirvo para nada', 'bajaAutoestima');
 	manager.addDocument('es', 'No soy competente', 'bajaAutoestima');
+	manager.addDocument('es', 'Siento que no soy competente', 'bajaAutoestima');
 	manager.addDocument('es', 'No me considero competente', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy un incompetente', 'bajaAutoestima');
+	manager.addDocument('es', 'Siento que soy un incompetente', 'bajaAutoestima');
+	manager.addDocument('es', 'A veces siento que soy un incompetente', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy un bueno para nada', 'bajaAutoestima');
+	manager.addDocument('es', 'Me hace sentir un bueno para nada', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy una buena para nada', 'bajaAutoestima');
 	manager.addDocument('es', 'Me considero un incompetente', 'bajaAutoestima');
 	manager.addDocument('es', 'Me considero una incompetente', 'bajaAutoestima');
 	manager.addDocument('es', 'Me considero un bueno para nada', 'bajaAutoestima');
 	manager.addDocument('es', 'Me considero una buena para nada', 'bajaAutoestima');
 	manager.addDocument('es', 'No soy bueno para nada', 'bajaAutoestima');
+	manager.addDocument('es', 'Me hace sentir que no soy bueno para nada', 'bajaAutoestima');
 	manager.addDocument('es', 'No soy buena para nada', 'bajaAutoestima');
 	manager.addDocument('es', 'No soy bueno', 'bajaAutoestima');
 	manager.addDocument('es', 'No soy buena', 'bajaAutoestima');
@@ -82,6 +108,7 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'No soy talentoso', 'bajaAutoestima');
 	manager.addDocument('es', 'No soy apto', 'bajaAutoestima');
 	manager.addDocument('es', 'No soy apta', 'bajaAutoestima');
+	manager.addDocument('es', 'Me hace sentir que no soy apta', 'bajaAutoestima');
 	manager.addDocument('es', 'No soy apto para nada', 'bajaAutoestima');
 	manager.addDocument('es', 'No soy apta para nada', 'bajaAutoestima');
 	manager.addDocument('es', 'No me considero bueno para nada', 'bajaAutoestima');
@@ -112,6 +139,11 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'Nadie me hace pela', 'bajaAutoestima');
 	manager.addDocument('es', 'A nadie le agrado', 'bajaAutoestima');
 	manager.addDocument('es', 'A nadie le gusto', 'bajaAutoestima');
+	manager.addDocument('es', 'Me odio', 'bajaAutoestima');
+	manager.addDocument('es', 'Me odio con todo mi ser', 'bajaAutoestima');
+	manager.addDocument('es', 'Me odio hasta el punto de querer desaparecer', 'bajaAutoestima');
+	manager.addDocument('es', 'Me aborrezco', 'bajaAutoestima');
+	manager.addDocument('es', 'A veces me aborrezco ', 'bajaAutoestima');
 
 
 
@@ -172,35 +204,138 @@ async function trainnlp(manager) {
 	//Son muy ansiosos y nerviosos
 	manager.addDocument('es', 'Soy ansioso', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy muy ansioso', 'bajaAutoestima');
+	manager.addDocument('es', 'Tengo ansiedad', 'bajaAutoestima');
+	manager.addDocument('es', 'Tengo mucha ansiedad', 'bajaAutoestima');
+	manager.addDocument('es', 'Tengo tanta ansiedad', 'bajaAutoestima');
+	manager.addDocument('es', 'Me ha creado ansiedad', 'bajaAutoestima');
+	manager.addDocument('es', 'Esto me ha creado ansiedad', 'bajaAutoestima');
+	manager.addDocument('es', 'Esta situacion me ha creado tanta ansiedad', 'bajaAutoestima');
+	manager.addDocument('es', 'Este trabajo me ha creado tanta ansiedad', 'bajaAutoestima');
+	manager.addDocument('es', 'Me provoca ansiedad', 'bajaAutoestima');
+	manager.addDocument('es', 'Me ha provocado ansiedad', 'bajaAutoestima');
+	manager.addDocument('es', 'Me ha provocado bastante ansiedad', 'bajaAutoestima');
+	manager.addDocument('es', 'Sufro de ansiedad', 'bajaAutoestima');
+	manager.addDocument('es', 'Estoy ansioso', 'bajaAutoestima');
+	manager.addDocument('es', 'He estado ansioso', 'bajaAutoestima');
+	manager.addDocument('es', 'He estado ansioso estos dias', 'bajaAutoestima');
+	manager.addDocument('es', 'Ultimamente he estado ansioso', 'bajaAutoestima');
+	manager.addDocument('es', 'Ayer estuve ansioso', 'bajaAutoestima');
+	manager.addDocument('es', 'Estoy muy ansioso', 'bajaAutoestima');
+	manager.addDocument('es', 'Estoy con mucha ansiedad', 'bajaAutoestima');
+	manager.addDocument('es', 'Me encuentro con mucha ansiedad', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy nervioso', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy muy nervioso', 'bajaAutoestima');
+	manager.addDocument('es', 'Estoy ansiosa', 'bajaAutoestima');
+	manager.addDocument('es', 'Hoy estoy ansiosa', 'bajaAutoestima');
+	manager.addDocument('es', 'Estoy muy ansiosa', 'bajaAutoestima');
+	manager.addDocument('es', 'He estado ansiosa', 'bajaAutoestima');
+	manager.addDocument('es', 'He estado ansiosa estos dias', 'bajaAutoestima');
+	manager.addDocument('es', 'Ultimamente he estado ansiosa', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy ansiosa', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy muy ansiosa', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy nerviosa', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy muy nerviosa', 'bajaAutoestima');
+	manager.addDocument('es', 'Hay nerviosismo', 'bajaAutoestima');
+	manager.addDocument('es', 'Hay mucho nerviosismo', 'bajaAutoestima');
+	manager.addDocument('es', 'Tengo nerviosismo', 'bajaAutoestima');
+	manager.addDocument('es', 'Tengo mucho nerviosismo', 'bajaAutoestima');
+	manager.addDocument('es', 'es asi Tengo ansiedad', 'bajaAutoestima');
+
 
 	//Personas aisladas, tímidas y casi no tienen amigos o muy pocos.
 	manager.addDocument('es', 'No tengo amigos', 'bajaAutoestima');
 	manager.addDocument('es', 'No tengo ningun amigo', 'bajaAutoestima');
 	manager.addDocument('es', 'No tengo a nadie', 'bajaAutoestima');
+	manager.addDocument('es', 'Nunca he tenido amigos', 'bajaAutoestima');
+	manager.addDocument('es', 'Nunca he tenido ningun amigo', 'bajaAutoestima');
+	manager.addDocument('es', 'Nunca he tenido a nadie', 'bajaAutoestima');
 	manager.addDocument('es', 'Sin amigos', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy hermético', 'bajaAutoestima');
+	manager.addDocument('es', 'Me caracterizo por ser hermético', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre me he caracterizado por ser hermético', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre he sido hermético', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy hermética', 'bajaAutoestima');
+	manager.addDocument('es', 'Me caracterizo por ser hermética', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre he sido hermética', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre me he caracterizado por ser hermética', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy bastante hermético', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy bastante hermética', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy aislado', 'bajaAutoestima');
+	manager.addDocument('es', 'He sido aislado', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy aislada', 'bajaAutoestima');
+	manager.addDocument('es', 'He sido aislada', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy muy aislado', 'bajaAutoestima');
+	manager.addDocument('es', 'Me caracterizo por ser aislado', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre me he caracterizado por ser aislado', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy muy aislada', 'bajaAutoestima');
+	manager.addDocument('es', 'Me caracterizo por ser aislada', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre me he caracterizado por ser aislada', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy tímido', 'bajaAutoestima');
+	manager.addDocument('es', 'Me caracterizo por ser tímido', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre me he caracterizado por ser timido', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre he sido tímido', 'bajaAutoestima');
+	manager.addDocument('es', 'He sido algo tímido', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy tímida', 'bajaAutoestima');
+	manager.addDocument('es', 'Me caracterizo por ser tímida', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre me he caracterizado por ser timida', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre he sido tímida', 'bajaAutoestima');
+	manager.addDocument('es', 'He sido algo tímida', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy bastante tímido', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy bastante tímida', 'bajaAutoestima');
 	manager.addDocument('es', 'Me da miedo la gente', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre me ha dado miedo la gente', 'bajaAutoestima');
 	manager.addDocument('es', 'Me da miedo acercarme a la gente', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre me ha dado miedo acercarme a la gente', 'bajaAutoestima');
 	manager.addDocument('es', 'No soy social', 'bajaAutoestima');
+	manager.addDocument('es', 'Nunca he sido social', 'bajaAutoestima');
+	manager.addDocument('es', 'Nunca he sido muy social', 'bajaAutoestima');
 	manager.addDocument('es', 'No soy muy social', 'bajaAutoestima');
 	manager.addDocument('es', 'Soy antisocial', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre he sido antisocial', 'bajaAutoestima');
+	manager.addDocument('es', 'Me caracterizo por ser antisocial', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre me he caracterizado por ser antisocial', 'bajaAutoestima');
+	manager.addDocument('es', 'Aislado de la gente', 'bajaAutoestima');
+	manager.addDocument('es', 'aislado de la gente sumido en tus pensamientos negativos como recuperar amistades pérdidas', 'bajaAutoestima');
+	manager.addDocument('es', 'Aislado de las personas', 'bajaAutoestima');
+	manager.addDocument('es', 'Aislado de las sociedad', 'bajaAutoestima');
+	manager.addDocument('es', 'Aislado de mis familia', 'bajaAutoestima');
+	
+	manager.addDocument('es', 'Estoy solo', 'bajaAutoestima');
+	manager.addDocument('es', 'Estoy siempre solo', 'bajaAutoestima');
+	manager.addDocument('es', 'Al final cuando miro a mi alrededor estoy siempre solo', 'bajaAutoestima');
+	manager.addDocument('es', 'Estoy muy solo', 'bajaAutoestima');
+	manager.addDocument('es', 'Estoy solito', 'bajaAutoestima');
+	manager.addDocument('es', 'Me siento solo', 'bajaAutoestima');
+	manager.addDocument('es', 'Me siento muy solo', 'bajaAutoestima');
+	manager.addDocument('es', 'Me siento solito', 'bajaAutoestima');
+	manager.addDocument('es', 'Me he sentido solo', 'bajaAutoestima');
+	manager.addDocument('es', 'Me he sentido solo ultimamente', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre me he sentido solo', 'bajaAutoestima');
+	manager.addDocument('es', 'Estos días me he sentido solo', 'bajaAutoestima');
+	manager.addDocument('es', 'Estoy sola', 'bajaAutoestima');
+	manager.addDocument('es', 'Estoy siempre sola', 'bajaAutoestima');
+	manager.addDocument('es', 'Al final estoy siempre sola', 'bajaAutoestima');
+	manager.addDocument('es', 'Estoy muy sola', 'bajaAutoestima');
+	manager.addDocument('es', 'Estoy solita', 'bajaAutoestima');
+	manager.addDocument('es', 'Me siento sola', 'bajaAutoestima');
+	manager.addDocument('es', 'Me siento muy sola', 'bajaAutoestima');
+	manager.addDocument('es', 'Me siento solita', 'bajaAutoestima');
+	manager.addDocument('es', 'Me he sentido sola', 'bajaAutoestima');
+	manager.addDocument('es', 'Me he sentido sola ultimamente', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre me he sentido sola', 'bajaAutoestima');
+	manager.addDocument('es', 'Estos días me he sentido sola', 'bajaAutoestima');
+	manager.addDocument('es', 'Estoy en soledad', 'bajaAutoestima');
+	manager.addDocument('es', 'No puedo con esta soledad', 'bajaAutoestima');
+	manager.addDocument('es', 'Mi soledad', 'bajaAutoestima');
+	manager.addDocument('es', 'Esta soledad', 'bajaAutoestima');
+	manager.addDocument('es', 'Esta soledad me está matando', 'bajaAutoestima');
+	manager.addDocument('es', 'Soy solitario', 'bajaAutoestima');
+	manager.addDocument('es', 'Me siento solitario', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre he sido solitario', 'bajaAutoestima');
+	manager.addDocument('es', 'Me siento un ser solitario', 'bajaAutoestima');
+	manager.addDocument('es', 'Soy solitaria', 'bajaAutoestima');
+	manager.addDocument('es', 'Me siento solitaria', 'bajaAutoestima');
+	manager.addDocument('es', 'Siempre he sido solitaria', 'bajaAutoestima');
 
 	//Pesimista
 	manager.addDocument('es', 'Soy feo', 'bajaAutoestima');
@@ -217,6 +352,11 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'Me irá mal', 'bajaAutoestima');
 	manager.addDocument('es', 'Todo irá mal', 'bajaAutoestima');
 	manager.addDocument('es', 'Todo saldrá mal', 'bajaAutoestima');
+	manager.addDocument('es', 'Lo peor está por venir', 'bajaAutoestima');
+	manager.addDocument('es', 'Se aproxima lo peor', 'bajaAutoestima');
+	manager.addDocument('es', 'Se acerca lo peor', 'bajaAutoestima');
+	manager.addDocument('es', 'Estoy listo para lo peor', 'bajaAutoestima');
+	manager.addDocument('es', 'Pero estoy listo para lo peor', 'bajaAutoestima');
 
 	//OTROS
 	manager.addDocument('es', 'no me he mantenido estable en el animo', 'bajaAutoestima');
@@ -233,6 +373,15 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'Quisiera ser otra persona', 'bajaAutoestima');
 	manager.addDocument('es', 'Me gustaría ser otra persona', 'bajaAutoestima');
 	manager.addDocument('es', 'Tengo el autoestima muy bajo', 'bajaAutoestima');
+	manager.addDocument('es', 'Tambien con mucha ansiedad', 'bajaAutoestima');
+	manager.addDocument('es', 'ha sido muy difícil porqué a pesar de tener muchas amistades siempre me he sentido sola', 'bajaAutoestima');
+	manager.addDocument('es', 'Ya no eres importante', 'bajaAutoestima');
+	manager.addDocument('es', 'No eres importante', 'bajaAutoestima');
+	manager.addDocument('es', 'No eres importante para nadie', 'bajaAutoestima');
+	manager.addDocument('es', 'la depresión está en una tensa calma pero estoy listo para lo peor', 'bajaAutoestima');
+	//manager.addDocument('es', '', 'bajaAutoestima');
+	//manager.addDocument('es', '', 'bajaAutoestima');
+	//manager.addDocument('es', '', 'bajaAutoestima');
 	//manager.addDocument('es', '', 'bajaAutoestima');
 
 
@@ -429,6 +578,86 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'No sé porque tengo tanto sueño', 'conAutoestima');
 	manager.addDocument('es', 'la ansiedad aún no inicia', 'conAutoestima');
 	manager.addDocument('es', 'Tome un poco de mas por la depre', 'conAutoestima');
+	manager.addDocument('es', 'Alguna vez me sentí tan desesperado que no veía una solución', 'conAutoestima');
+	manager.addDocument('es', 'todo iba mal', 'conAutoestima');
+	manager.addDocument('es', 'Tuve un entrenamiento de vida', 'conAutoestima');
+	manager.addDocument('es', 'no me invitaron', 'conAutoestima');
+	manager.addDocument('es', '💔😭😭 No los juzgo', 'conAutoestima');
+	manager.addDocument('es', 'No tengo ganas de nada quisiera morirme', 'conAutoestima');
+	manager.addDocument('es', 'algo me sale mal', 'conAutoestima');
+	manager.addDocument('es', 'lo peor es que cuando alguien me trata mal', 'conAutoestima');
+	manager.addDocument('es', 'no soporto las ganas de llorar', 'conAutoestima');
+	manager.addDocument('es', 'Me pregunto si existe una Enkarni de verdad', 'conAutoestima');
+	manager.addDocument('es', 'no entiendo esta vida y no me gusta', 'conAutoestima');
+	manager.addDocument('es', 'el tiempo para contestarme', 'conAutoestima');
+	manager.addDocument('es', 'pero he sufrido una recaída', 'conAutoestima');
+	manager.addDocument('es', 'No me importa hablar con gente de cualquier lugar', 'conAutoestima');
+	manager.addDocument('es', 'quiero ser independiente pero esta maldita ansiedad no me deja', 'conAutoestima');
+	manager.addDocument('es', 'Tengo muchas ganas de comer una dona', 'conAutoestima');
+	manager.addDocument('es', 'desde niña me crié sin padres', 'conAutoestima');
+	manager.addDocument('es', 'aquí aún no encuentro trabajo', 'conAutoestima');
+	manager.addDocument('es', 'poco más de dos', 'conAutoestima');
+	manager.addDocument('es', 'me den ganas de luchar', 'conAutoestima');
+	manager.addDocument('es', 'no sé', 'conAutoestima');
+	manager.addDocument('es', 'He caído en una fuerte depresión', 'conAutoestima');
+	manager.addDocument('es', 'Desde hace 6 años no tengo una estabilidad laboral', 'conAutoestima');
+	manager.addDocument('es', 'el yo no tenerlo me aterra', 'conAutoestima');
+	manager.addDocument('es', 'cursos de formación que no te pagan', 'conAutoestima');
+	manager.addDocument('es', 'Encima tengo un niño pequeño', 'conAutoestima');
+	manager.addDocument('es', 'me cuesta mucho no derrumbarme delante de él', 'conAutoestima');
+	manager.addDocument('es', 'ver qué opinan ustedes que no me conocen', 'conAutoestima');
+	manager.addDocument('es', 'una muy buena empresa', 'conAutoestima');
+	manager.addDocument('es', 'pero no', 'conAutoestima');
+	manager.addDocument('es', 'No poder dormir me está matando', 'conAutoestima');
+	manager.addDocument('es', 'Hace un mes me tuve que mudar de ciudad por falta  de trabajo', 'conAutoestima');
+	manager.addDocument('es', 'la verdad creo que no me hace falta nada material para ser feliz', 'conAutoestima');
+	manager.addDocument('es', 'en realidad creo que son cosas mías porque nunca me han dicho nada', 'conAutoestima');
+	manager.addDocument('es', 'no quiero hacerles daño', 'conAutoestima');
+	manager.addDocument('es', 'hacer lo mismo sin querer', 'conAutoestima');
+	manager.addDocument('es', 'solo vendo por internet', 'conAutoestima');
+	manager.addDocument('es', 'mentalmente que no se que hacer', 'conAutoestima');
+	manager.addDocument('es', 'Ultimamente he sentido mucho odio hacia todo', 'conAutoestima');
+	manager.addDocument('es', 'Hoy me desperté sin ganas de nada', 'conAutoestima');
+	manager.addDocument('es', 'soñar', 'conAutoestima');
+	manager.addDocument('es', 'solo quiero sentir un poco de felicidad en mi', 'conAutoestima');
+	manager.addDocument('es', 'Spoiler: No hay máscaras', 'conAutoestima');
+	manager.addDocument('es', 'que chingón ha sido compartir tanto contigo', 'conAutoestima');
+	manager.addDocument('es', 'Nunca me han gustado los segundos lugares', 'conAutoestima');
+	manager.addDocument('es', 'Ahora solo queda seguir alcanzando objetivos', 'conAutoestima');
+	manager.addDocument('es', 'también existen personas que solo son pasajeros en tu vida', 'conAutoestima');
+	manager.addDocument('es', 'solo saca lo mejor de cada una de ellas', 'conAutoestima');
+	manager.addDocument('es', 'Pero nadie entiende lo mal que me siento', 'conAutoestima');
+	manager.addDocument('es', 'Y eso me pone mal', 'conAutoestima');
+	manager.addDocument('es', 'no he ido al trabajo', 'conAutoestima');
+	manager.addDocument('es', 'he estado sin comer ', 'conAutoestima');
+	manager.addDocument('es', 'no tengo ganas de de hacer absolutamente nada', 'conAutoestima');
+	manager.addDocument('es', 'no encuentro la felicidad', 'conAutoestima');
+	manager.addDocument('es', 'para que tengan una sólida introducción a la topología', 'conAutoestima');
+	manager.addDocument('es', 'Amigos me siento demasiado mal', 'conAutoestima');
+	manager.addDocument('es', 'saber que faltan muchisimas horas para que termine el dia', 'conAutoestima');
+	manager.addDocument('es', 'estuve luchando contra un transtorno alimenticio', 'conAutoestima');
+	manager.addDocument('es', 'recibi atencion psicologica mas sin embargo no siento alguna mejoria', 'conAutoestima');
+	manager.addDocument('es', 'hasta yo me pregunto dónde está ese Omar que todos conocieron', 'conAutoestima');
+	manager.addDocument('es', 'estoy bajo medicamento', 'conAutoestima');
+	manager.addDocument('es', 'al principio todo iva mejorando pero mis ingresos an bajado demasiado que no puedo comprar el medicamento', 'conAutoestima');
+	manager.addDocument('es', 'mis amigos que me acompañaron', 'conAutoestima');
+	manager.addDocument('es', 'esa persona muere', 'conAutoestima');
+	manager.addDocument('es', 'Casi termina el dia y estoy logrando no sentirme mal', 'conAutoestima');
+	manager.addDocument('es', 'Despertar sin ningún problema', 'conAutoestima');
+	manager.addDocument('es', 'me siento mal pero no hay razones', 'conAutoestima');
+	manager.addDocument('es', 'sin ganas de nada', 'conAutoestima');
+	manager.addDocument('es', 'Mañana me operan un ectoprion', 'conAutoestima');
+	manager.addDocument('es', 'Estoy teniendo una muy mala noche y eso aumenta mi cansancio', 'conAutoestima');
+	manager.addDocument('es', 'Estoy desesperada y no quiero tomar una mala decisión', 'conAutoestima');
+	manager.addDocument('es', 'sin energía', 'conAutoestima');
+	manager.addDocument('es', 'en un ambiente en el cual se podría considerar inseguro', 'conAutoestima');
+	manager.addDocument('es', 'Me parece un ciclo muy monótono', 'conAutoestima');
+	manager.addDocument('es', 'siento una envidia rencorosa', 'conAutoestima');
+	manager.addDocument('es', 'Estoy terriblemente triste', 'conAutoestima');
+	manager.addDocument('es', 'Soy un gordo, me comí un helado grande y una pizza', 'conAutoestima');
+	manager.addDocument('es', 'Se me antoja todo ultimamente y no estoy embarazada', 'conAutoestima');
+	//manager.addDocument('es', '', 'conAutoestima');
+	//manager.addDocument('es', '', 'conAutoestima');
 	//manager.addDocument('es', '', 'conAutoestima');
 
 	//Entrenamos el modelo
@@ -453,7 +682,7 @@ exports.analyzePosts = async function (postsArray) {
 	console.log("***********					 			*****************");
  						
 
-	var keywords = 	[	
+	let keywords = 	[	
 						'baja', 'autoestima', 'deprecio', 'incompetente', 'odio',
 						'valor', 'valgo', 'malo', 'peor', 'inferior', 'perdedor',
 						'bueno', 'competente', 'conseguir', 'lograr', 'alcanzar',
@@ -462,7 +691,8 @@ exports.analyzePosts = async function (postsArray) {
 						'puedo', 'aprecio', 'desprecio', 'aborrezco', 'posibilidad',
 						'aptitud', 'talento', 'metas', 'apto', 'talentoso', 'mejor', 'original',
 						'diferente', 'posibilidad', 'interesante', 'ansioso', 'nervioso', 'animo',
-						'emocional', 'merecer', 'debil', 'importar', 'defecto'
+						'emocional', 'merecer', 'debil', 'importar', 'defecto', 'ansiedad',
+						'nerviosismo', 'inseguro', 'inseguridad'
 					];
 
 	let keywordsExceptions = 	[

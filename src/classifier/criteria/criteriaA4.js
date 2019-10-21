@@ -52,6 +52,30 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'Dormí bastante mal', 'insomnio');
 	manager.addDocument('es', 'Dormí muy mal', 'insomnio');
 	manager.addDocument('es', 'Qué triste que cualquier tontería me cause insomnio', 'insomnio');
+	manager.addDocument('es', 'Ansío poder dormir', 'insomnio');
+	manager.addDocument('es', 'Ansío poder dormir un poco', 'insomnio');
+	manager.addDocument('es', 'Ansío poder dormir aunque sea una hora', 'insomnio');
+	manager.addDocument('es', 'Ansío poder descansar', 'insomnio');
+	manager.addDocument('es', 'Espero poder dormir', 'insomnio');
+	manager.addDocument('es', 'Espero poder dormir un rato', 'insomnio');
+	manager.addDocument('es', 'Espero poder dormir aunque sea un poco', 'insomnio');
+	manager.addDocument('es', 'Espero poder descansar', 'insomnio');
+	manager.addDocument('es', 'Nada me ayuda a dormir', 'insomnio');
+	manager.addDocument('es', 'Ojalá pueda dormir', 'insomnio');
+	manager.addDocument('es', 'Ojalá pueda descansar', 'insomnio');
+	manager.addDocument('es', 'Ojalá pueda dormir algo', 'insomnio');
+	manager.addDocument('es', 'Ojalá pueda descansar algo', 'insomnio');
+	manager.addDocument('es', 'Ojalá pueda dormir un poco', 'insomnio');
+	manager.addDocument('es', 'Ojalá pueda descansar un poco', 'insomnio');
+	manager.addDocument('es', 'Tuve una mala noche', 'insomnio');
+	manager.addDocument('es', 'Tengo muy malas noches', 'insomnio');
+	manager.addDocument('es', 'He tenido muchas malas noches', 'insomnio');
+	manager.addDocument('es', 'Ultimamaente he tenido muchas malas noches', 'insomnio');
+	manager.addDocument('es', 'He tenido muy malas noches', 'insomnio');
+	manager.addDocument('es', 'He tenido muy malas noches ultimamente', 'insomnio');
+	//manager.addDocument('es', '', 'insomnio');
+	//manager.addDocument('es', '', 'insomnio');
+	//manager.addDocument('es', '', 'insomnio');
 	//manager.addDocument('es', '', 'insomnio');
 
 	
@@ -91,6 +115,17 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'no sentirme tan mal ya que no quiero estarme sintiendo así', 'no_insomnio');
 	manager.addDocument('es', 'igual he perdido el gusto por mis hobbies', 'no_insomnio');
 	manager.addDocument('es', 'poco demostrativa era un gran defecto', 'no_insomnio');
+	manager.addDocument('es', 'Quiero cambiar', 'no_insomnio');
+	manager.addDocument('es', 'Gracias X tomar la molestia', 'no_insomnio');
+	manager.addDocument('es', 'estoy bastante fastidiada', 'no_insomnio');
+	manager.addDocument('es', 'Desde hace 6 años no tengo una estabilidad laboral', 'no_insomnio');
+	manager.addDocument('es', 'Desde entonces no levanto cabeza', 'no_insomnio');
+	manager.addDocument('es', 'Llevaba 6 meses muy bien', 'no_insomnio');
+	manager.addDocument('es', 'necesito ayuda', 'no_insomnio');
+	manager.addDocument('es', 'no quiero tomar mala decisión', 'no_insomnio');
+	manager.addDocument('es', 'Soy un gordo, me comí un helado grande y una pizza', 'no_insomnio');
+	manager.addDocument('es', 'Se me antoja todo ultimamente y no estoy embarazada', 'no_insomnio');
+	//manager.addDocument('es', '', 'no_insomnio');
 	//manager.addDocument('es', '', 'no_insomnio');
 
 	//Entrenamos el modelo

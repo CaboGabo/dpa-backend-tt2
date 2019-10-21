@@ -38,6 +38,9 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'Pierdo la esperanza de todo', 'desesperanza');
 	manager.addDocument('es', 'He perdido la esperanza de que me vaya mejor', 'desesperanza');
 	manager.addDocument('es', 'Perdí la esperanza en mi familia', 'desesperanza');
+	manager.addDocument('es', 'No hay nada que esperar', 'desesperanza');
+	manager.addDocument('es', 'Sin algo que esperar', 'desesperanza');
+	manager.addDocument('es', 'Sin mucho que esperar', 'desesperanza');
 
 
 	//No encontrar alternativas de solución ante una determinada situación
@@ -104,7 +107,6 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'No veo ninguna alternativa de solución', 'desesperanza');
 	manager.addDocument('es', 'No veo alternativa de solución alguna', 'desesperanza');
 	manager.addDocument('es', 'No veo alguna alternativa de solución', 'desesperanza');
-
 	manager.addDocument('es', 'No veo la luz', 'desesperanza');
 	manager.addDocument('es', 'No veo la luz al final del tunel', 'desesperanza');
 	manager.addDocument('es', 'Todo lo veo obscuro', 'desesperanza');
@@ -112,7 +114,6 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'No veo salida', 'desesperanza');
 	manager.addDocument('es', 'No veo la salida', 'desesperanza');
 	manager.addDocument('es', 'No veo una salida', 'desesperanza');
-	
 	manager.addDocument('es', 'No encuentro salida', 'desesperanza');
 	manager.addDocument('es', 'No encuentro la salida', 'desesperanza');
 	manager.addDocument('es', 'No encuentro una salida', 'desesperanza');
@@ -120,9 +121,9 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'No encuentro la salida de esto', 'desesperanza');
 	manager.addDocument('es', 'No encuentro la salida de mis problemas', 'desesperanza');
 	manager.addDocument('es', 'No encuentro una salida a todo esto', 'desesperanza');
-
 	manager.addDocument('es', 'Ya todo está perdido', 'desesperanza');
 	manager.addDocument('es', 'Ya no hay nada que hacer', 'desesperanza');
+	manager.addDocument('es', 'No puedo más', 'desesperanza');
 
 	//No tener expectativas de futuro 
 	manager.addDocument('es', 'No tengo expectativas', 'desesperanza');
@@ -160,7 +161,10 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'Ya no espero nada del futuro', 'desesperanza');
 	manager.addDocument('es', 'Ya no espero nada de mi futuro', 'desesperanza');
 	manager.addDocument('es', 'Ya no espero nada de nadie', 'desesperanza');
-	
+
+	manager.addDocument('es', 'El futuro sin sentido', 'desesperanza');
+	manager.addDocument('es', 'El futuro no tiene sentido', 'desesperanza');
+
 	manager.addDocument('es', 'talvez se la ultima ya que no puedo más con esta agonía', 'desesperanza');
 	manager.addDocument('es', 'No lo voy a lograr', 'desesperanza');
 	manager.addDocument('es', 'No le encuentro ya sentido a nada', 'desesperanza');
@@ -172,11 +176,14 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'no tengo esperanza alguna de que su situación mejore', 'desesperanza');
 	manager.addDocument('es', 'El futuro sin sentido', 'desesperanza');
 	manager.addDocument('es', 'ya no voy a poder más', 'desesperanza');
-	//manager.addDocument('es', '', 'desesperanza');
-	//manager.addDocument('es', '', 'desesperanza');
-	//manager.addDocument('es', '', 'desesperanza');
-	//manager.addDocument('es', '', 'desesperanza');
-	//manager.addDocument('es', '', 'desesperanza');
+	manager.addDocument('es', 'Todo siempre será peor', 'desesperanza');
+	manager.addDocument('es', 'Esto solo empeorará', 'desesperanza');
+	manager.addDocument('es', 'Las cosas solo van de mal en peor', 'desesperanza');
+	manager.addDocument('es', 'Pienso que nunca pasará', 'desesperanza');
+	manager.addDocument('es', 'Nunca pasará', 'desesperanza');
+	manager.addDocument('es', 'Siento que estoy perdiendo la batalla', 'desesperanza');
+	manager.addDocument('es', 'No vale la pena seguir', 'desesperanza');
+	manager.addDocument('es', 'Tampoco vale la pena seguir', 'desesperanza');
 
 
 //***************************************************************************************************************************************
@@ -294,6 +301,29 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'no me hace falta nada material para ser feliz', 'esperanza');
 	manager.addDocument('es', 'Todos tienen sus trabajos y yo no', 'esperanza');
 	manager.addDocument('es', 'No me importa hablar con gente de cualquier lugar', 'esperanza');
+	manager.addDocument('es', 'no lo hicera si en verdad no lo necesitará', 'esperanza');
+	manager.addDocument('es', 'perdí interes en aquellas cosas', 'esperanza');
+	manager.addDocument('es', 'ya van letios meses sintiendo esto acompañado de unos ataques no se como llamarlos', 'esperanza');
+	manager.addDocument('es', 'no puedo hacer nada sin pesar en lo q pasara si lo hago', 'esperanza');
+	manager.addDocument('es', 'en q todos seran mejor si no estas', 'esperanza');
+	manager.addDocument('es', 'las cosas buenas a mi no tiene', 'esperanza');
+	manager.addDocument('es', 'siempre estoy hecho mierda', 'esperanza');
+	manager.addDocument('es', 'no vale nada lo unico', 'esperanza');
+	manager.addDocument('es', 'nunca pude escuchar bien lo', 'esperanza');
+	manager.addDocument('es', 'no merecían conocer mi vida privada', 'esperanza');
+	manager.addDocument('es', 'este día los haga sentir más solos', 'esperanza');
+	manager.addDocument('es', 'ya no tengo pilas para nada', 'esperanza');
+	manager.addDocument('es', 'Ojalá nunca me toque compartir una foto de ustedes', 'esperanza');
+	manager.addDocument('es', 'el estar en linea no me hace sentir tan solo', 'esperanza');
+	manager.addDocument('es', 'pero ya estoy perdiendo el miedo', 'esperanza');
+	manager.addDocument('es', 'no solo en mi mente', 'esperanza');
+	manager.addDocument('es', 'mi madre no hacia nada porque decia que no podia ver a su pareja asi', 'esperanza');
+	manager.addDocument('es', 'estuve 3 veces en terapia las cuales nunca termine', 'esperanza');
+	//manager.addDocument('es', '', 'esperanza');
+	//manager.addDocument('es', '', 'esperanza');
+	//manager.addDocument('es', '', 'esperanza');
+	//manager.addDocument('es', '', 'esperanza');
+	//manager.addDocument('es', '', 'esperanza');
 	//manager.addDocument('es', '', 'esperanza');
 
 
@@ -339,8 +369,10 @@ exports.analyzePosts = async function (postsArray) {
 	await trainnlp(manager);
 
 	//Para este caso ocupamos otros tokens
-	let tokensDel = [';', ',', '?', '¿', '!', '¡', ' y ', ' e ', ' o ', ' u ', ' ni ', ' que '];
+	/*
+	let tokensDel = [';', ':', ',', '?', '¿', '!', '¡', ' y ', ' e ', ' o ', ' u ', ' ni ', ' que '];
 	await classifier.setTokensDel(tokensDel);
+	*/
 
 
 	//Mandamos cada uno de los posts a checar si existe alguna coincidencia

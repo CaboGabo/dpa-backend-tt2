@@ -36,8 +36,12 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'Ya no tengo interes por nada', 'perdidaInteres');
 	manager.addDocument('es', 'Ya no tengo interes de nada', 'perdidaInteres');
 	manager.addDocument('es', 'Ya no tengo ningun interes', 'perdidaInteres');
+	manager.addDocument('es', 'Perdí interes', 'perdidaInteres');
+	manager.addDocument('es', 'Perdí interes en todo', 'perdidaInteres');
+	manager.addDocument('es', 'Perdí interes en las cosas', 'perdidaInteres');
 	manager.addDocument('es', 'Perdí el interes', 'perdidaInteres');
-	manager.addDocument('es', 'Perdí el interes', 'perdidaInteres');
+	manager.addDocument('es', 'Perdí interes en aquellas cosas que me encantaba hacer', 'perdidaInteres');
+	manager.addDocument('es', 'Perdí interes en aquellas cosas' , 'perdidaInteres');
 	manager.addDocument('es', 'Perdí el interes por todo', 'perdidaInteres');
 	manager.addDocument('es', 'Perdí el interes de todo', 'perdidaInteres');
 	manager.addDocument('es', 'Perdi el interes', 'perdidaInteres');
@@ -106,6 +110,10 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'Dejo de interesarme', 'perdidaInteres');
 	manager.addDocument('es', 'Dejo de captar mi atencion', 'perdidaInteres');
 	manager.addDocument('es', 'Dejo de gustarme', 'perdidaInteres');
+	manager.addDocument('es', 'Deje el medicamento', 'perdidaInteres');
+	manager.addDocument('es', 'Deje el tratamiento', 'perdidaInteres');
+	manager.addDocument('es', 'Deje de jugar videojuegos', 'perdidaInteres');
+	manager.addDocument('es', 'Deje de disfrutar la vida', 'perdidaInteres');
 	manager.addDocument('es', 'Empieza a dejar de gustarme', 'perdidaInteres');
 	manager.addDocument('es', 'Empieza a dejar de interesarme', 'perdidaInteres');
 	manager.addDocument('es', 'Empieza a dejar de llamarme la atención', 'perdidaInteres');
@@ -131,7 +139,12 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'No encuentro sentido', 'perdidaInteres');
 	manager.addDocument('es', 'No le encuentro sentido', 'perdidaInteres');
 	manager.addDocument('es', 'No le encuentro sentido a nada', 'perdidaInteres');
-	//manager.addDocument('es', 'No le encuentren ya sentido a nada', 'perdidaInteres');
+	//manager.addDocument('es', '', 'perdidaInteres');
+	//manager.addDocument('es', '', 'perdidaInteres');
+	//manager.addDocument('es', '', 'perdidaInteres');
+	//manager.addDocument('es', '', 'perdidaInteres');
+	//manager.addDocument('es', '', 'perdidaInteres');
+
 
 	//Pérdida de placer
 	manager.addDocument('es', 'Perdí el placer', 'perdidaInteres');
@@ -160,7 +173,11 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'Ya no tengo placer de nada', 'perdidaInteres');
 	manager.addDocument('es', 'Ya no tengo ningun placer', 'perdidaInteres');
 	manager.addDocument('es', 'Lo que antes me causaba placer ahora ya no', 'perdidaInteres');
+	manager.addDocument('es', 'Lo que antes solía causarme placer ahora ya no', 'perdidaInteres');
 	manager.addDocument('es', 'Lo que antes me provocaba placer ahora ya no', 'perdidaInteres');
+	manager.addDocument('es', 'Lo que antes solía provocarme placer ahora ya no', 'perdidaInteres');
+	manager.addDocument('es', 'Lo que antes me provocaba placer ahora son una cosa más', 'perdidaInteres');
+	manager.addDocument('es', 'Las cosas que antes me provocaban placer ahora ya no', 'perdidaInteres');
 	manager.addDocument('es', 'Dejó de causarme placer', 'perdidaInteres');
 	manager.addDocument('es', 'Dejó de provocarme placer', 'perdidaInteres');
 	manager.addDocument('es', 'Pasó a no causarme placer', 'perdidaInteres');
@@ -171,6 +188,14 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'Nada me causa gozo', 'perdidaInteres');
 	manager.addDocument('es', 'Ya nada me causa gozo', 'perdidaInteres');
 	manager.addDocument('es', 'Lo que antes gozaba ahora ya no', 'perdidaInteres');
+	manager.addDocument('es', 'Lo que antes solo gozar ahora ya no', 'perdidaInteres');
+	//manager.addDocument('es', 'Nada me motiva', 'perdidaInteres');
+	//manager.addDocument('es', '', 'perdidaInteres');
+	//manager.addDocument('es', '', 'perdidaInteres');
+	//manager.addDocument('es', '', 'perdidaInteres');
+	//manager.addDocument('es', '', 'perdidaInteres');
+	//manager.addDocument('es', '', 'perdidaInteres');
+	//manager.addDocument('es', '', 'perdidaInteres');
 
 //**********************************************************************************************************
 
@@ -217,6 +242,7 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'Dejo de llover ya', 'sinPerdidaInteres');
 	manager.addDocument('es', 'Dejo mis cosas en mi casa', 'sinPerdidaInteres');
 	manager.addDocument('es', 'Dejó a sus hijos', 'sinPerdidaInteres');
+	manager.addDocument('es', 'Deja de llorar', 'sinPerdidaInteres');
 	manager.addDocument('es', 'Empieza a interesarme', 'sinPerdidaInteres');
 	manager.addDocument('es', 'Empieza a gustarme', 'sinPerdidaInteres');
 	manager.addDocument('es', 'Empieza a llamarme la atención', 'sinPerdidaInteres');
@@ -275,7 +301,18 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'ya no tengo a nadie', 'sinPerdidaInteres');
 	manager.addDocument('es', 'tengo que fingir que me encuentro estable para que no me tengan lastima', 'sinPerdidaInteres');
 	manager.addDocument('es', 'Espero no molestar', 'sinPerdidaInteres');
+	manager.addDocument('es', 'quiero ser independiente pero esta maldita ansiedad no me deja', 'sinPerdidaInteres');
+	manager.addDocument('es', 'la verdad creo que no me hace falta nada material para ser feliz', 'sinPerdidaInteres');
+	manager.addDocument('es', 'me cuesta mucho no derrumbarme delante de él', 'sinPerdidaInteres');
+	manager.addDocument('es', 'de verdad no termino de adaptarme', 'sinPerdidaInteres');
+	manager.addDocument('es', 'la verdad no es nada grande', 'sinPerdidaInteres');
+	manager.addDocument('es', 'no me dejan vivir en paz', 'sinPerdidaInteres');
 	//manager.addDocument('es', '', 'sinPerdidaInteres');
+	//manager.addDocument('es', '', 'sinPerdidaInteres');
+	//manager.addDocument('es', '', 'sinPerdidaInteres');
+	//manager.addDocument('es', '', 'sinPerdidaInteres');
+	//manager.addDocument('es', '', 'sinPerdidaInteres');
+	
 	//Entrenamos el modelo
 	console.log('Training...');
 	await manager.train();
@@ -319,9 +356,14 @@ exports.analyzePosts = async function (postsArray) {
 		await updateOcurrences(postsArray[i]);
 	}
 
+	//Reset de arrays personalizados para el clasificador
+
+	classifier.resetTokensDel();
+
 	//Obtenemos las ocurrencias
 	if (classifier.getOcurrences() >= minOcurrences){
 		classifier.resetOcurrences();
+
 		return true;
 	}
 	classifier.resetOcurrences();

@@ -62,6 +62,32 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'no hay día en el cual no piense matarme', 'p_muerte');
 	manager.addDocument('es', 'Solo quiero morir y descansar en paz', 'p_muerte');
 	manager.addDocument('es', 'Siento que ya no voy a poder más', 'p_muerte');
+	manager.addDocument('es', 'Dejar de existir', 'p_muerte');
+	manager.addDocument('es', 'Desería dejar de existir', 'p_muerte');
+	manager.addDocument('es', 'Deseo dejar de existir', 'p_muerte');
+	manager.addDocument('es', 'Quisiera dejar de existir', 'p_muerte');
+	manager.addDocument('es', 'Quiero dejar de existir', 'p_muerte');
+	manager.addDocument('es', 'elegir dejar de existir', 'p_muerte');
+	manager.addDocument('es', 'decidir dejar de existir', 'p_muerte');
+	manager.addDocument('es', 'elegir el momento para dejar de existir', 'p_muerte');
+	manager.addDocument('es', 'Le pido a dios que me lleve', 'p_muerte');
+	manager.addDocument('es', 'Llevame dios', 'p_muerte');
+	manager.addDocument('es', 'Necesito irme de este sufrimiento', 'p_muerte');
+	manager.addDocument('es', 'Necesito irme de este mundo', 'p_muerte');
+	manager.addDocument('es', 'Necesito morir', 'p_muerte');
+	manager.addDocument('es', 'Necesito dejar de existir', 'p_muerte');
+	manager.addDocument('es', 'Querer desaparecer', 'p_muerte');
+	manager.addDocument('es', 'Quiero desaparecer', 'p_muerte');
+	manager.addDocument('es', 'Quisiera desaparecer', 'p_muerte');
+	manager.addDocument('es', 'A veces me odio hasta el punto de querer desaparecer', 'p_muerte');
+	manager.addDocument('es', 'Mi vida terminará', 'p_muerte');
+	manager.addDocument('es', 'Mi vida terminará pronto', 'p_muerte');
+	manager.addDocument('es', 'Quiero que mi vida termine pronto', 'p_muerte');
+	manager.addDocument('es', 'Quisiera que mi vida termine pronto', 'p_muerte');
+	manager.addDocument('es', 'Siento que mi vida terminará pronto', 'p_muerte');
+	//manager.addDocument('es', '', 'p_muerte');
+	//manager.addDocument('es', '', 'p_muerte');
+	//manager.addDocument('es', '', 'p_muerte');
 	//manager.addDocument('es', '', 'p_muerte');
 
 //**********************************************************************************************************
@@ -123,6 +149,66 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'poco a poco estoy saliendo de esto', 'p_vida');
 	manager.addDocument('es', 'Un suave dolor de cabeza me quiere acompañar durante el resto del día pero ya estoy acostumbrado a eso', 'p_vida');
 	manager.addDocument('es', 'ver el mundo diferente', 'p_vida');
+	manager.addDocument('es', 'fortaleza amén explica lo que Dios ha hecho en ti hoy amén dale gracias por un día más de vida amén', 'p_vida');
+	manager.addDocument('es', 'Tuve un entrenamiento de vida', 'p_vida');
+	manager.addDocument('es', 'La vida lo es todo', 'p_vida');
+	manager.addDocument('es', 'Este ultimo año he tenido muchisima hambre', 'p_vida');
+	manager.addDocument('es', 'Me pregunto si existe una Enkarni de verdad', 'p_vida');
+	manager.addDocument('es', 'Me siento fatal he estado muy mal estos dias ayer discuti con mis hijos creo que ya se aburrieron de mi', 'p_vida');
+	manager.addDocument('es', 'Ya me quede sin dinero', 'p_vida');
+	manager.addDocument('es', 'quiero contar que aparentemente no tengo problemas de tipo economico', 'p_vida');
+	manager.addDocument('es', 'He encontrado este foro', 'p_vida');
+	manager.addDocument('es', 'a mi me hizo mucho daño su comportamiento quería estar con ella pero ella no quería nada de nadie', 'p_vida');
+	manager.addDocument('es', 'no quiero hacerles daño', 'p_vida');
+	manager.addDocument('es', 'este trabajo me ha creado tanta ansiedad', 'p_vida');
+	manager.addDocument('es', 'No poder dormir me está matando', 'p_vida');
+	manager.addDocument('es', 'He perdido la ilusión', 'p_vida');
+	manager.addDocument('es', 'nada me motiva', 'p_vida');
+	manager.addDocument('es', 'también existen personas que solo son pasajeros en tu vida', 'p_vida');
+	manager.addDocument('es', 'Un excelente curso si pueden llevar también Cálculo IV con él', 'p_vida');
+	manager.addDocument('es', 'comienzas a disfrutar la vida', 'p_vida');
+	manager.addDocument('es', 'de día', 'p_vida');
+	manager.addDocument('es', 'No siento deseos ni siquiera de levantarme', 'p_vida');
+	manager.addDocument('es', 'eso no me deja concentrarme', 'p_vida');
+	manager.addDocument('es', 'Por Dios, me costó un mundo levantarme hoy', 'p_vida');
+	manager.addDocument('es', 'Dios no existe', 'p_vida');
+	manager.addDocument('es', 'Dios es bueno', 'p_vida');
+	manager.addDocument('es', 'más cuando tienes estos trastornos porque Dios de habrá enseñado conmigo no entiendo que hice mal para merecerme esto a la final el tiene sus designios a sido tanto mi pensamiento de dormir', 'p_vida');
+	manager.addDocument('es', 'las cosas que antes me provocaban placer ahora son una más', 'p_vida');
+	manager.addDocument('es', 'Cada día caigo más profundo en el pozo', 'p_vida');
+	manager.addDocument('es', 'recibi atencion psicologica mas sin embargo no siento alguna mejoria', 'p_vida');
+	manager.addDocument('es', 'cada día engordo más', 'p_vida');
+	manager.addDocument('es', 'factores de mi depresión pueden haber muchos pero que mas da mencionarlos', 'p_vida');
+	manager.addDocument('es', 'te das cuenta que dejaste un desastre en tu vida autocompadeciendote', 'p_vida');
+	manager.addDocument('es', 'como si la vida misma fuera otra monotonía más por hacer', 'p_vida');
+	manager.addDocument('es', 'a veces es mejor solo dejarse llevar', 'p_vida');
+	manager.addDocument('es', 'Quiero estar bien', 'p_vida');
+	manager.addDocument('es', 'siento que la angustia no me está dejando respirar', 'p_vida');
+	manager.addDocument('es', 'Deja de llorar', 'p_vida');
+	manager.addDocument('es', 'El culpable de todo esto soy yo', 'p_vida');
+	manager.addDocument('es', 'Tome un poco de mas por la depre', 'p_vida');
+	manager.addDocument('es', 'A veces pienso en que debería ir mejor con un psiquiatra', 'p_vida');
+	manager.addDocument('es', 'En este momento me siento perdida', 'p_vida');
+	manager.addDocument('es', 'Debo de admitir que mi vida no he vivido alguna dificultad', 'p_vida');
+	manager.addDocument('es', 'no me dejan vivir en paz', 'p_vida');
+	manager.addDocument('es', 'más triste', 'p_vida');
+	manager.addDocument('es', 'Actualmente me encuentro en uno de los peores períodos de mi vida', 'p_vida');
+	manager.addDocument('es', 'Supongo que el adulto cínico no ha logrado matar del todo al niño dentro de mi porque esto me hizo muy feliz', 'p_vida');
+	manager.addDocument('es', 'Trabajar, comer, relacionarse hacer hijos y morir', 'p_vida');
+	manager.addDocument('es', 'No quiero saber nada de nadie', 'p_vida');
+	manager.addDocument('es', 'espero poder usarlo', 'p_vida');
+	manager.addDocument('es', 'Y hoy voy para abajo', 'p_vida');
+	manager.addDocument('es', 'ya no tengo pilas para nada', 'p_vida');
+	manager.addDocument('es', 'ya no me dejo ayudar porque a nadie le importo un carajo', 'p_vida');
+	manager.addDocument('es', 'que tampoco vale la pena seguir me esta matando', 'p_vida');
+	manager.addDocument('es', 'ahora que pienso', 'p_vida');
+	manager.addDocument('es', 'No espero nada de la vida ', 'p_vida');
+	manager.addDocument('es', 'Me he sentido mal ultimamente', 'p_vida');
+	manager.addDocument('es', 'Soy la persona más inutil que existe', 'p_vida');
+	//manager.addDocument('es', '', 'p_vida');
+	//manager.addDocument('es', '', 'p_vida');
+	//manager.addDocument('es', '', 'p_vida');
+	//manager.addDocument('es', '', 'p_vida');
 	//manager.addDocument('es', '', 'p_vida');
 
 	//Entrenamos el modelo
@@ -149,7 +235,7 @@ exports.analyzePosts = async function (postsArray) {
 	//Poner al principio del arreglo las palabras clave más significativas
 	var keywords = ['suicidio','muerte','miedo','morir','daño','tumba',
 					'mutilar','cortar','vivir','funeral','acabar','terminar',
-					'fallecer','dormir','luz','obscuridad'];
+					'fallecer','dormir','luz','obscuridad','existir'];
 
 	//Establecemos los stemms con los que se comparan las utterances
 	await classifier.setKeywordsStemms(keywords);

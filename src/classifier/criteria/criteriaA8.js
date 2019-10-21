@@ -95,6 +95,9 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'Ultimamente me cuesta concentrarme', 'disminucionPensar');
 	manager.addDocument('es', 'Me cuesta concentrarme', 'disminucionPensar');
 	manager.addDocument('es', 'Me cuesta concentrarme ultimamente', 'disminucionPensar');
+	manager.addDocument('es', 'Nada me entra en la cabeza', 'disminucionPensar');
+	manager.addDocument('es', 'Las cosas no me entran a la cabeza', 'disminucionPensar');
+	manager.addDocument('es', 'No me entra en la cabeza', 'disminucionPensar');
 
 	//Indecisión. (Duda/ incertidumbre)
 	manager.addDocument('es', 'Estoy indeciso', 'disminucionPensar');
@@ -141,6 +144,10 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'Ya no se que puedo hacer', 'disminucionPensar');
 	manager.addDocument('es', 'Ya no se que podría hacer', 'disminucionPensar');
 	manager.addDocument('es', 'No saber que hacer', 'disminucionPensar');
+	manager.addDocument('es', 'No se que quiero', 'disminucionPensar');
+	manager.addDocument('es', 'No se que deseo', 'disminucionPensar');
+	manager.addDocument('es', 'No tengo idea de que quiero', 'disminucionPensar');
+	manager.addDocument('es', 'No tengo idea de que deseo', 'disminucionPensar');
 
 //**********************************************************************************************************
 
@@ -195,6 +202,47 @@ async function trainnlp(manager) {
 	manager.addDocument('es', 'que no se extiende por ningún espacio', 'sinDisminucion');
 	manager.addDocument('es', 'Si se ven bien pendejos/pendejas defendiendo algo sólo por llevar la contraria', 'sinDisminucion');
 	manager.addDocument('es', 'hacer menos la protesta', 'sinDisminucion');
+	manager.addDocument('es', 'Mi familia me da la espalda ps no siento su apoyo', 'sinDisminucion');
+	manager.addDocument('es', 'No tengo ganas de nada quisiera morirme', 'sinDisminucion');
+	manager.addDocument('es', 'no entiendo esta vida y no me gusta', 'sinDisminucion');
+	manager.addDocument('es', 'la verdad creo que no me hace falta nada material para ser feliz', 'sinDisminucion');
+	manager.addDocument('es', 'no quiero hacerles daño', 'sinDisminucion');
+	manager.addDocument('es', 'Desde hace 6 años no tengo una estabilidad laboral', 'sinDisminucion');
+	manager.addDocument('es', 'me cuesta mucho no derrumbarme delante de él', 'sinDisminucion');
+	manager.addDocument('es', 'la verdad no es nada grande', 'sinDisminucion');
+	manager.addDocument('es', 'pero no renuncio porque tengo gastos', 'sinDisminucion');
+	manager.addDocument('es', 'que simplemente aún no llevan cálculo se los agradecería', 'sinDisminucion');
+	manager.addDocument('es', 'Más que un segundo lugar se logró formar un maravilloso grupo de personas', 'sinDisminucion');
+	manager.addDocument('es', 'no encuentro la felicidad', 'sinDisminucion');
+	manager.addDocument('es', 'tengo examen dentro de 3 horas no me se nada', 'sinDisminucion');
+	manager.addDocument('es', 'talvez se la ultima ya que no puedo más con esta agonía', 'sinDisminucion');
+	manager.addDocument('es', 'Tengo que sacar fuerza de mi interior para que no se den cuenta que me siento fatal', 'sinDisminucion');
+	manager.addDocument('es', 'bipolaridad no me puedo acostumbrar', 'sinDisminucion');
+	manager.addDocument('es', 'Hola buenas tardes grupo hoy no me he sentido bien me siento muy triste no se que hacer', 'sinDisminucion');
+	manager.addDocument('es', 'No quiero saber nada de nadie', 'sinDisminucion');
+	manager.addDocument('es', 'No es cierto que uno se arregla', 'sinDisminucion');
+	manager.addDocument('es', 'en un ambiente en el cual se podría considerar inseguro', 'sinDisminucion');
+	manager.addDocument('es', 'detesto que esos idiotas tengan cosas que podrían haber sido mías', 'sinDisminucion');
+	manager.addDocument('es', 'mientras tú piensas que soy tu mejor amigo', 'sinDisminucion');
+	manager.addDocument('es', 'No me gusta la situación en la que estoy pero', 'sinDisminucion');
+	manager.addDocument('es', 'pensar en no querer vivir', 'sinDisminucion');
+	manager.addDocument('es', 'no tengo permitido parecer débil', 'sinDisminucion');
+	manager.addDocument('es', 'se manifiestan contra la violencia', 'sinDisminucion');
+	manager.addDocument('es', 'He pensando mucho en quitarme la vida', 'sinDisminucion');
+	manager.addDocument('es', 'Cuando la depresión me tiene incapacitada no solo es mi cabeza mi cuerpo no me responde', 'sinDisminucion');
+	manager.addDocument('es', 'Saber que no tengo amigos', 'sinDisminucion');
+	manager.addDocument('es', 'No cabe duda que el peor enemigo eres tú', 'sinDisminucion');
+	manager.addDocument('es', 'no se que esperar', 'sinDisminucion');
+	manager.addDocument('es', 'Pienso suicidarme cuando tenga 26', 'sinDisminucion');
+	manager.addDocument('es', 'ahora que pienso', 'sinDisminucion');
+	manager.addDocument('es', 'inseguridad', 'sinDisminucion');
+	manager.addDocument('es', 'Quiero estar bien y no lo estoy', 'sinDisminucion');
+	manager.addDocument('es', 'mitigar la frialdad nocturna a la que estoy acostumbrado', 'sinDisminucion');
+	manager.addDocument('es', 'obviamente se que no soy la unica pasando por esto', 'sinDisminucion');
+	manager.addDocument('es', 'No sé porque tengo tanto sueño', 'sinDisminucion');
+	manager.addDocument('es', 'la ansiedad aún no inicia', 'sinDisminucion');
+	//manager.addDocument('es', '', 'sinDisminucion');
+	//manager.addDocument('es', '', 'sinDisminucion');
 	//manager.addDocument('es', '', 'sinDisminucion');
 
 	//Entrenamos el modelo
