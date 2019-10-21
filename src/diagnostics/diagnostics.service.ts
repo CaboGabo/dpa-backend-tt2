@@ -178,6 +178,7 @@ export class DiagnosticsService {
 
     diagnostic1 = await this.diagnosticRepository.findOne({
       where: { id: diagnostic1.id },
+      relations: ['details', 'student'],
     });
 
     let i = 0;
@@ -191,6 +192,7 @@ export class DiagnosticsService {
 
     diagnostic2 = await this.diagnosticRepository.findOne({
       where: { id: diagnostic2.id },
+      relations: ['details', 'student'],
     });
 
     i = 0;
