@@ -21,6 +21,9 @@ export class GeneralDataEntity {
   @Column('text')
   content: string;
 
+  @Column('text')
+  image: string;
+
   @ManyToOne(
     type => PsychologistEntity,
     psychologist => psychologist.generalData,

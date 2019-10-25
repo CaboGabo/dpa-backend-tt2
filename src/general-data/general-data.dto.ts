@@ -7,6 +7,9 @@ export class GeneralDataDTO {
 
   @IsString()
   content: string;
+
+  @IsString()
+  image: string;
 }
 
 export class GeneralDataRO {
@@ -14,5 +17,6 @@ export class GeneralDataRO {
   created: Date;
   url: string;
   content: string;
+  image: string;
   savedBy: PsychologistRO;
 }
