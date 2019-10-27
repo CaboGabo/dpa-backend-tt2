@@ -102,7 +102,10 @@ export class DiagnosticsService {
     return posts;
   }
 
-  async diagnostic(userId: string): Promise<DiagnosticRO[]> {
+  async diagnostic(
+    userId: string,
+    classifiedPosts: any,
+  ): Promise<DiagnosticRO[]> {
     const student = await this.studentRepository.findOne({
       where: { user: { id: userId } },
       relations: ['user', 'diagnostics'],
@@ -112,26 +115,60 @@ export class DiagnosticsService {
       throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     }
 
-    const posts = await this.postsService.showByUser(userId);
-    const insResult = await this.classifierService.classify(posts);
+    const criteria = [
+      'A2',
+      'A3',
+      'A4',
+      'A6',
+      'A7',
+      'A8',
+      'A9',
+      'B1',
+      'B4',
+      'B6',
+      'C1',
+    ];
 
-    const {
-      globalResult: tdmResult,
-      criteriaResults: criteriaTdm,
-    } = insResult[0];
-    const {
-      globalResult: tdpResult,
-      criteriaResults: criteriaTdp,
-    } = insResult[1];
+    let counters = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-    /* const resultTdm = CryptoJS.AES.encrypt(
-      `${insResult[0]}`,
-      process.env.SECRET,
-    ).toString();
-    const resultTdp = CryptoJS.AES.encrypt(
-      `${insResult[1]}`,
-      process.env.SECRET,
-    ).toString(); */
+    for (const classifiedPost of classifiedPosts.classifiedPosts) {
+      let i = 0;
+      for (const tag of classifiedPost['tags']) {
+        if (
+          tag === 'perdidaInteres' ||
+          tag === 'modPeso' ||
+          tag === 'insomnio' ||
+          tag === 'fatiga' ||
+          tag === 'inutilidad' ||
+          tag === 'disminucionPensar' ||
+          tag === 'p_muerte' ||
+          tag === 'malestar' ||
+          tag === 'bajaAutoestima' ||
+          tag === 'desesperanza' ||
+          tag === 'consumoAfeccion'
+        ) {
+          counters[i]++;
+        }
+        i++;
+      }
+    }
+
+    let results = [];
+    for (let i = 0; i < counters.length; i++) {
+      let result: boolean;
+      if (counters[i] >= 3) {
+        result = true;
+      } else {
+        result = false;
+      }
+      results.push({
+        criteria: criteria[i],
+        result,
+      });
+    }
+
+    const tdmResult = this.getTdmResult(results);
+    const tdpResult = false; //this.getTdpResult(results);
 
     let diagnostic1 = await this.diagnosticRepository.create({
       result: tdmResult,
@@ -148,33 +185,8 @@ export class DiagnosticsService {
     await this.diagnosticRepository.save(diagnostic1);
     await this.diagnosticRepository.save(diagnostic2);
 
-    for (let i = 1; i < criteriaTdm.length; i++) {
-      const criteria = await this.classificationCriteriaRepository.findOne({
-        where: { keyname: criteriaTdm[i]['keyname'] },
-      });
-
-      const diagnosticDetail = this.diagnosticDetailRepository.create({
-        classificationCriteria: criteria,
-        result: criteriaTdm[i]['result'],
-        diagnostic: diagnostic1,
-      });
-
-      await this.diagnosticDetailRepository.save(diagnosticDetail);
-    }
-
-    for (let i = 1; i < criteriaTdp.length; i++) {
-      const criteria = await this.classificationCriteriaRepository.findOne({
-        where: { keyname: criteriaTdp[i]['keyname'] },
-      });
-
-      const diagnosticDetail = this.diagnosticDetailRepository.create({
-        classificationCriteria: criteria,
-        result: criteriaTdp[i]['result'],
-        diagnostic: diagnostic2,
-      });
-
-      await this.diagnosticDetailRepository.save(diagnosticDetail);
-    }
+    await this.saveDiagnosticDetailsTdm(diagnostic1, results);
+    await this.saveDiagnosticDetailsTdp(diagnostic2, results);
 
     diagnostic1 = await this.diagnosticRepository.findOne({
       where: { id: diagnostic1.id },
@@ -207,6 +219,91 @@ export class DiagnosticsService {
     return [diagnostic1, diagnostic2].map(diagnostic =>
       this.diagnosticToResponseObject(diagnostic),
     );
+  }
+
+  async saveDiagnosticDetailsTdm(diagnostic: DiagnosticEntity, results: any) {
+    for (let i = 0; i < 8; i++) {
+      const criteria = await this.classificationCriteriaRepository.findOne({
+        where: { keyname: results[i].criteria },
+      });
+
+      const diagnosticDetail = this.diagnosticDetailRepository.create({
+        classificationCriteria: criteria,
+        result: results[i].result,
+        diagnostic,
+      });
+
+      await this.diagnosticDetailRepository.save(diagnosticDetail);
+    }
+
+    const criteria = await this.classificationCriteriaRepository.findOne({
+      where: { keyname: results[results.length - 1].criteria },
+    });
+    const diagnosticDetail = this.diagnosticDetailRepository.create({
+      classificationCriteria: criteria,
+      result: results[results.length - 1].result,
+      diagnostic,
+    });
+
+    await this.diagnosticDetailRepository.save(diagnosticDetail);
+  }
+
+  async saveDiagnosticDetailsTdp(diagnostic: DiagnosticEntity, results: any) {
+    for (let i = 1; i < 6; i++) {
+      const criteria = await this.classificationCriteriaRepository.findOne({
+        where: { keyname: results[i].criteria },
+      });
+
+      const diagnosticDetail = this.diagnosticDetailRepository.create({
+        classificationCriteria: criteria,
+        result: results[i].result,
+        diagnostic,
+      });
+
+      await this.diagnosticDetailRepository.save(diagnosticDetail);
+    }
+
+    for (let i = 7; i < results.length; i++) {
+      const criteria = await this.classificationCriteriaRepository.findOne({
+        where: { keyname: results[i].criteria },
+      });
+
+      const diagnosticDetail = this.diagnosticDetailRepository.create({
+        classificationCriteria: criteria,
+        result: results[i].result,
+        diagnostic,
+      });
+
+      await this.diagnosticDetailRepository.save(diagnosticDetail);
+    }
+  }
+
+  getTdmResult(criteriaResults: any) {
+    let mainCount = 0;
+
+    let tdmA = 0;
+    for (let i = 0; i < 7; i++) {
+      if (criteriaResults[i]['result']) {
+        tdmA++;
+      }
+    }
+
+    if (tdmA >= 5) {
+      mainCount++;
+    }
+
+    if (criteriaResults[7]['result']) {
+      mainCount++;
+    }
+
+    if (criteriaResults[10]['result']) {
+      mainCount--;
+    }
+
+    if (mainCount === 2) {
+      return true;
+    }
+    return false;
   }
 
   async addActivities(userId: string, id: string): Promise<any> {
