@@ -193,6 +193,31 @@ export class UsersService {
     return user.toResponseObject();
   }
 
+  async accountAccepted(id: string) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+    });
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
+    sgMail.setApiKey(process.env.API_KEY);
+    const body = fs.readFileSync('src/email/account-accepted.html');
+    let html = body
+      .toString()
+      .replace(':username', user.username)
+      .replace(':id', user.id);
+    const msg = {
+      to: user.email,
+      from: 'gabo.alejandro.huitron@gmail.com',
+      subject: 'DPa - Cuenta aceptada',
+      html: html,
+    };
+    sgMail.send(msg);
+
+    return user.toResponseObject();
+  }
+
   async updatePassword(id: string, data: Partial<UserDTO>) {
     let user = await this.userRepository.findOne({ where: { id } });
     if (!user) {

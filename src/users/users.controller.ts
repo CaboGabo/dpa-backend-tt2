@@ -55,6 +55,12 @@ export class UsersController {
     return this.usersService.resendEmail(data);
   }
 
+  @Post('auth/accept-account')
+  @UsePipes(new ValidationPipe())
+  acceptAccount(@Body() id: string) {
+    return this.usersService.accountAccepted(id);
+  }
+
   @Put('auth/user')
   @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
