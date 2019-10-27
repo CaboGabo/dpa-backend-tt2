@@ -115,6 +115,8 @@ export class DiagnosticsService {
       throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     }
 
+    const topWords = classifiedPosts.topWords.join();
+
     const criteria = [
       'A2',
       'A3',
@@ -173,12 +175,14 @@ export class DiagnosticsService {
     let diagnostic1 = await this.diagnosticRepository.create({
       result: tdmResult,
       depressionType: 'tdm',
+      topWords,
       student,
     });
 
     let diagnostic2 = await this.diagnosticRepository.create({
       result: tdpResult,
       depressionType: 'tdp',
+      topWords,
       student,
     });
 

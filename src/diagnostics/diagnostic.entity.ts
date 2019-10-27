@@ -25,6 +25,9 @@ export class DiagnosticEntity {
   @Column()
   depressionType: string;
 
+  @Column('text')
+  topWords: string;
+
   @ManyToOne(type => StudentEntity, student => student.diagnostics)
   student: StudentEntity;
 

@@ -16,5 +16,6 @@ export class DiagnosticRO {
   result: boolean;
   depressionType: string;
   student: StudentRO;
+  topWords: string;
   details?: DiagnosticDetailEntity[];
 }
