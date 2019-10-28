@@ -49,6 +49,12 @@ export class UsersController {
     return this.usersService.register(data, true);
   }
 
+  @Post('auth/register/facebook')
+  @UsePipes(new ValidationPipe())
+  registerFacebook(@Body() data: UserDTO) {
+    return this.usersService.register(data, false, true);
+  }
+
   @Post('auth/resend-email')
   @UsePipes(new ValidationPipe())
   resend(@Body() data: Partial<UserDTO>) {

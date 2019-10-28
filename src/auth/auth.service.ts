@@ -19,13 +19,11 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, pass: string): Promise<any> {
-    //console.log(username, pass);
     const user = await this.userRepository.findOne({
       where: { username },
       relations: ['student', 'psychologist'],
     });
-    //console.log(user);
-    if (user.google) {
+    if (user.google || user.facebook) {
       return user.toResponseObject();
     }
 
@@ -34,10 +32,8 @@ export class AuthService {
     }
 
     if (user && (await user.comparePassword(pass))) {
-      //console.log('fine');
       return user.toResponseObject();
     }
-    //console.log('Not fine');
     return null;
   }
 
@@ -49,28 +45,4 @@ export class AuthService {
       access_token: this.jwtService.sign(payload),
     };
   }
-
-  /*async validateOAuthLogin(profile: any, provider: Provider) {
-    let user = await this.userRepository.findOne({
-      where: { username: profile.id },
-    });
-
-    if (!user) {
-      user = await this.userRepository.create({
-        username: profile.id,
-        email: profile.getEmail(),
-      });
-
-      await this.userRepository.save(user);
-    }
-
-    const payload: any = {
-      username: user.username,
-      sub: user.id,
-    };
-
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
-  }*/
 }

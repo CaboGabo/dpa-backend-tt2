@@ -41,7 +41,7 @@ export class UsersService {
     return user;
   }
 
-  async register(data: UserDTO, google = false) {
+  async register(data: UserDTO, google = false, facebook = false) {
     const { username, email } = data;
 
     let user = await this.userRepository.findOne({ where: { username } });
@@ -62,13 +62,18 @@ export class UsersService {
         google: true,
         isValidated: true,
       });
+    } else if (facebook) {
+      user = await this.userRepository.create({
+        ...data,
+        facebook: true,
+        isValidated: true,
+      });
     } else {
       user = await this.userRepository.create({ ...data, google: false });
     }
-
     await this.userRepository.save(user);
 
-    if (!google) {
+    if (!google || !facebook) {
       sgMail.setApiKey(process.env.API_KEY);
 
       const template = fs.readFileSync('src/email/confirmation-email.html');
@@ -101,6 +106,13 @@ export class UsersService {
     if (user.google) {
       throw new HttpException(
         'User signed with Google',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    if (user.facebook) {
+      throw new HttpException(
+        'User signed with Facebook',
         HttpStatus.BAD_REQUEST,
       );
     }

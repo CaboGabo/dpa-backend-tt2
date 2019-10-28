@@ -42,6 +42,11 @@ export class UserEntity {
   })
   google: boolean;
 
+  @Column({
+    default: false,
+  })
+  facebook: boolean;
+
   @OneToOne(type => StudentEntity, student => student.user)
   student: StudentEntity;
 
