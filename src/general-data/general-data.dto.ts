@@ -9,14 +9,18 @@ export class GeneralDataDTO {
   content: string;
 
   @IsString()
+  title: string;
+
+  @IsString()
   image: string;
 }
 
 export class GeneralDataRO {
   id: string;
   created: Date;
-  url: string;
+  url?: string;
   content: string;
-  image: string;
+  image?: string;
+  title: string;
   savedBy: PsychologistRO;
 }

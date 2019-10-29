@@ -31,6 +31,9 @@ export class SuggestionEntity {
   rangeAge: string;
 
   @Column()
+  image: string;
+
+  @Column()
   depressionType: string;
 
   @ManyToOne(

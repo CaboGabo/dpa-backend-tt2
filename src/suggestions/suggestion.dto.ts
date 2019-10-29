@@ -13,6 +13,9 @@ export class SuggestionDTO {
   @IsString()
   rangeAge: string;
 
+  @IsString()
+  image: string;
+
   @Column()
   depressionType: string;
 }
@@ -23,6 +26,7 @@ export class SuggestionRO {
   content: string;
   gender: string;
   rangeAge: string;
+  image?: string;
   savedBy: PsychologistRO;
   classificationCriteria: ClassificationCriteriaEntity;
 }
