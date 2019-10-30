@@ -30,8 +30,11 @@ export class SpecialistEntity {
   @Column('text')
   suburb: string;
 
-  @Column('text')
-  state: string;
+  @Column()
+  postalCode: string;
+
+  @Column()
+  fullAddress: string;
 
   @Column({
     unique: true,

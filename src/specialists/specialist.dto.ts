@@ -37,6 +37,8 @@ export class SpecialistRO {
   suburb: string;
   state: string;
   phone: string;
+  postalCode: string;
+  fullAddress?: string;
   profession: string;
   savedBy: PsychologistRO;
 }
