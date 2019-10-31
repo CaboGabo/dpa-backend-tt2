@@ -15,13 +15,19 @@ export class GeneralDataEntity {
   @CreateDateColumn()
   created: Date;
 
-  @Column('text')
+  @Column({
+    default: null,
+    nullable: true,
+  })
   url: string;
 
   @Column('text')
   content: string;
 
-  @Column('text')
+  @Column({
+    default: null,
+    nullable: true,
+  })
   image: string;
 
   @Column('text')

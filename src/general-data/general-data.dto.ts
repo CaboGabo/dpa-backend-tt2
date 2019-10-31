@@ -1,8 +1,9 @@
 import { IsString } from 'class-validator';
 import { PsychologistRO } from '../psychologists/psychologist.dto';
+import { Column } from 'typeorm';
 
 export class GeneralDataDTO {
-  @IsString()
+  @Column()
   url: string;
 
   @IsString()
@@ -11,7 +12,7 @@ export class GeneralDataDTO {
   @IsString()
   title: string;
 
-  @IsString()
+  @Column()
   image: string;
 }
 

@@ -33,7 +33,10 @@ export class SpecialistEntity {
   @Column()
   postalCode: string;
 
-  @Column()
+  @Column({
+    default: null,
+    nullable: true,
+  })
   fullAddress: string;
 
   @Column({

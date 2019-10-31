@@ -1,5 +1,6 @@
 import { IsString } from 'class-validator';
 import { PsychologistRO } from '../psychologists/psychologist.dto';
+import { Column } from 'typeorm';
 
 export class SpecialistDTO {
   @IsString()
@@ -25,6 +26,9 @@ export class SpecialistDTO {
 
   @IsString()
   profession: string;
+
+  @Column()
+  fullAddress: string;
 }
 
 export class SpecialistRO {

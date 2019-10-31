@@ -13,7 +13,7 @@ export class SuggestionDTO {
   @IsString()
   rangeAge: string;
 
-  @IsString()
+  @Column()
   image: string;
 
   @Column()
