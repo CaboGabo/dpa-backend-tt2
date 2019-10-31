@@ -31,7 +31,6 @@ export class SuggestionEntity {
   rangeAge: string;
 
   @Column({
-    default: null,
     nullable: true,
   })
   image: string;

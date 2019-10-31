@@ -16,7 +16,6 @@ export class GeneralDataEntity {
   created: Date;
 
   @Column({
-    default: null,
     nullable: true,
   })
   url: string;
@@ -25,7 +24,6 @@ export class GeneralDataEntity {
   content: string;
 
   @Column({
-    default: null,
     nullable: true,
   })
   image: string;
