@@ -33,6 +33,9 @@ export class SpecialistEntity {
   @Column()
   postalCode: string;
 
+  @Column('text')
+  state: string;
+
   @Column({
     nullable: true,
   })
