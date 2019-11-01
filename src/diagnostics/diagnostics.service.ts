@@ -580,6 +580,12 @@ export class DiagnosticsService {
       B6: 0,
       C1: 0,
     };
+
+    for (const diagnosticDetailPositive of diagnosticDetailsPositive) {
+      criteria[`${diagnosticDetailPositive.classificationCriteria.keyname}`]++;
+    }
+
+    return criteria;
   }
 
   getSumAges(diagnostics: DiagnosticEntity[]): number {
