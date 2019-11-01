@@ -588,6 +588,23 @@ export class DiagnosticsService {
     return criteria;
   }
 
+  async getAllWords(): Promise<any> {
+    const diagnostics = await this.diagnosticRepository.find();
+    let topWordsArray = [];
+    for (const diagnostic of diagnostics) {
+      topWordsArray = [...topWordsArray, ...diagnostic.topWords.split(',')];
+    }
+
+    return this.countWords(topWordsArray);
+  }
+
+  countWords(original) {
+    return original.reduce(
+      (countsMap, item) => countsMap.set(item, countsMap.get(item) + 1 || 1),
+      new Map(),
+    );
+  }
+
   getSumAges(diagnostics: DiagnosticEntity[]): number {
     if (diagnostics.length === 0) {
       return 0;
