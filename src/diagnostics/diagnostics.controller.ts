@@ -66,6 +66,16 @@ export class DiagnosticsController {
     return this.diagnosticsService.getAllPosts(user);
   }
 
+  @Get('api/diagnostic-statistics')
+  async getDiagnosticStatistics() {
+    return this.diagnosticsService.getDiagnosticStatistics();
+  }
+
+  @Get('api/diagnostic-details-statistics')
+  async getDiagnosticDetailsStatistics() {
+    return this.diagnosticsService.getDiagnosticDetailsStatistics();
+  }
+
   @Post('diagnosticate')
   @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())

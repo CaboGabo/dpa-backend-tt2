@@ -527,4 +527,69 @@ export class DiagnosticsService {
 
     return this.diagnosticToResponseObject(diagnostic);
   }
+
+  async getDiagnosticStatistics(): Promise<any> {
+    const diagnostics = await this.diagnosticRepository.find({
+      relations: ['student', 'details'],
+    });
+
+    const diagnosticsTdm = diagnostics.filter(
+      diagnostic => diagnostic.depressionType === 'tdm' && diagnostic.result,
+    );
+    const diagnosticsTdp = diagnostics.filter(
+      diagnostic => diagnostic.depressionType === 'tdp' && diagnostic.result,
+    );
+
+    const peopleWithTdm = diagnosticsTdm.length;
+    const peopleWithTdp = diagnosticsTdp.length;
+
+    const peopleOk = diagnostics.length - peopleWithTdm - peopleWithTdp;
+
+    const averageAgeTdm = this.getSumAges(diagnosticsTdm);
+    const averageAgeTdp = this.getSumAges(diagnosticsTdp);
+
+    return {
+      totalPeople: diagnostics.length,
+      peopleWithTdm,
+      peopleWithTdp,
+      peopleOk,
+      averageAgeTdm,
+      averageAgeTdp,
+    };
+  }
+
+  async getDiagnosticDetailsStatistics(): Promise<any> {
+    const diagnosticDetails = await this.diagnosticDetailRepository.find({
+      relations: ['classification-criteria'],
+    });
+
+    const diagnosticDetailsPositive = diagnosticDetails.filter(
+      diagnosticDetail => diagnosticDetail.result,
+    );
+
+    let criteria = {
+      A2: 0,
+      A3: 0,
+      A4: 0,
+      A6: 0,
+      A7: 0,
+      A8: 0,
+      A9: 0,
+      B1: 0,
+      B4: 0,
+      B6: 0,
+      C1: 0,
+    };
+  }
+
+  getSumAges(diagnostics: DiagnosticEntity[]): number {
+    if (diagnostics.length === 0) {
+      return 0;
+    }
+    let count = 0;
+    for (const diagnostic of diagnostics) {
+      count += diagnostic.student.age;
+    }
+    return count / diagnostics.length;
+  }
 }

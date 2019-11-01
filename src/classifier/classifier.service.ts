@@ -69,19 +69,20 @@ export class ClassifierService {
   }
 
   async mainTdm(posts: string[]) {
-
-    let resultTdm = { globalResult: false,
-                      criteriaResults: [
-                        { keyname: "A2", result: resultA2 },
-                        { keyname: "A3", result: resultA3 },
-                        { keyname: "A4", result: resultA4 },
-                        { keyname: "A6", result: resultA6 },
-                        { keyname: "A7", result: resultA7 },
-                        { keyname: "A8", result: resultA8 },
-                        { keyname: "A9", result: resultA9 },
-                        { keyname: "B1", result: resultB1 },
-                        { keyname: "C1", result: resultC1 },
-                      ]}
+    let resultTdm = {
+      globalResult: false,
+      criteriaResults: [
+        { keyname: 'A2', result: resultA2 },
+        { keyname: 'A3', result: resultA3 },
+        { keyname: 'A4', result: resultA4 },
+        { keyname: 'A6', result: resultA6 },
+        { keyname: 'A7', result: resultA7 },
+        { keyname: 'A8', result: resultA8 },
+        { keyname: 'A9', result: resultA9 },
+        { keyname: 'B1', result: resultB1 },
+        { keyname: 'C1', result: resultC1 },
+      ],
+    };
 
     let mainCount = 0;
     let cBehaviour = false;
@@ -104,26 +105,26 @@ export class ClassifierService {
     } else console.log('El criterio TDM-C no está presente');
 
     //Mandamos la respuesta final sobre si presenta o no los sintomas del TDM
-    if (mainCount == 2 && !cBehaviour)
-      resultTdm.globalResult = true;
+    if (mainCount == 2 && !cBehaviour) resultTdm.globalResult = true;
 
     return resultTdm;
   }
 
   async mainTdp(posts: string[]) {
-    let resultTdp = { globalResult: false,
-                      criteriaResults: [
-                        { keyname: "A3", result: resultA3 },
-                        { keyname: "A4", result: resultA4 },
-                        { keyname: "A6", result: resultA6 },
-                        { keyname: "A7", result: resultA7 },
-                        { keyname: "A8", result: resultA8 },
-                        { keyname: "B4", result: resultB4 },
-                        { keyname: "B6", result: resultB6 },
-                        { keyname: "B1", result: resultB1 },
-                        { keyname: "C1", result: resultC1 },
-                      ]}
-                
+    let resultTdp = {
+      globalResult: false,
+      criteriaResults: [
+        { keyname: 'A3', result: resultA3 },
+        { keyname: 'A4', result: resultA4 },
+        { keyname: 'A6', result: resultA6 },
+        { keyname: 'A7', result: resultA7 },
+        { keyname: 'A8', result: resultA8 },
+        { keyname: 'B4', result: resultB4 },
+        { keyname: 'B6', result: resultB6 },
+        { keyname: 'B1', result: resultB1 },
+        { keyname: 'C1', result: resultC1 },
+      ],
+    };
 
     let mainCount = 0;
     let gBehaviour = false;
@@ -153,10 +154,8 @@ export class ClassifierService {
       mainCount++;
     } else console.log('El criterio TDP-H no está presente');
 
-    
     //Mandamos la respuesta final sobre si presenta o no los sintomas del TDM
-    if (mainCount == 4 && !gBehaviour)
-      resultTdp.globalResult = true;
+    if (mainCount == 4 && !gBehaviour) resultTdp.globalResult = true;
 
     return resultTdp;
   }
