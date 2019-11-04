@@ -170,7 +170,7 @@ export class DiagnosticsService {
     }
 
     const tdmResult = this.getTdmResult(results);
-    const tdpResult = false; //this.getTdpResult(results);
+    const tdpResult = this.getTdpResult(results);
 
     let diagnostic1 = await this.diagnosticRepository.create({
       result: tdmResult,
@@ -305,6 +305,65 @@ export class DiagnosticsService {
     }
 
     if (mainCount === 2) {
+      return true;
+    }
+    return false;
+  }
+
+  getTdpResult(criteriaResults: any) {
+    let mainCount = 0;
+
+    //Punto A, validación de los dos años de publicaciones
+
+    //Punto B, Cumple con al menos 2 criterios A3, A4, A6, B4, A8, B6
+    let tdpB = 0;
+
+    if (criteriaResults[1]['result']) {
+      tdpB++;
+    }
+
+    if (criteriaResults[2]['result']) {
+      tdpB++;
+    }
+
+    if (criteriaResults[3]['result']) {
+      tdpB++;
+    }
+
+    if (criteriaResults[5]['result']) {
+      tdpB++;
+    }
+
+    if (criteriaResults[8]['result']) {
+      tdpB++;
+    }
+
+    if (criteriaResults[9]['result']) {
+      tdpB++;
+    }
+
+    if (tdpB >= 2) {
+      mainCount++;
+    }
+
+    //Punto C, criterios del punto B presentes al menos cada 2 meses
+
+
+    //Punto D, segun yo estes es igual a punto A
+
+
+    //Punto G, C1
+
+    if (criteriaResults[10]['result']) {
+      mainCount--;
+    }
+
+    //Punto H, B1
+    if (criteriaResults[7]['result']) {
+      mainCount++;
+    }
+
+    if (mainCount === 5) {
       return true;
     }
     return false;
