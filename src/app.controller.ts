@@ -17,17 +17,6 @@ import { ClassificationCriteriaService } from './classification-criteria/classif
 export class AppController {
   constructor(private readonly authService: AuthService, private ccs: ClassificationCriteriaService) {
     this.ccs.populate();
-    try {
-      if (process.env.NODE_ENV === 'production') {
-        console.log('writing file');
-        const fs = require('fs');
-        console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
-        console.log(process.env.GOOGLE_CREDENTIALS);
-        fs.writeFile(process.env.GOOGLE_APPLICATION_CREDENTIALS, `/app/${process.env.GOOGLE_CREDENTIALS}`, (error) => console.log('error', error));
-      }
-    } catch (e) {
-      console.log('No GCP credentials');
-    }
   }
 
   @Post('auth/login')
