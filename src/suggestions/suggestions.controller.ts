@@ -40,7 +40,7 @@ export class SuggestionsController {
     return this.suggestionsService.showByActivationScore(activationScore);
   } */
 
-  @Get(':id')
+  @Get('api/suggestions/:id')
   readSuggestion(@Param('id') id: string) {
     this.logData({ id });
     return this.suggestionsService.read(id);
