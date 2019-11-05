@@ -40,6 +40,12 @@ export class SuggestionsController {
     return this.suggestionsService.showByActivationScore(activationScore);
   } */
 
+  @Get(':id')
+  readSuggestion(@Param('id') id: string) {
+    this.logData({ id });
+    return this.suggestionsService.read(id);
+  }
+
   @Post('api/classification-criteria/:keyname/suggestions')
   @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())

@@ -43,6 +43,19 @@ export class SuggestionsService {
     }
   }
 
+  async read(id: string): Promise<SuggestionRO> {
+    const specialist = await this.suggestionRepository.findOne({
+      where: { id },
+      relations: ['savedBy'],
+    });
+
+    if (!specialist) {
+      throw new HttpException('Specialist not found', HttpStatus.NOT_FOUND);
+    }
+
+    return this.suggestionToResponseObject(specialist);
+  }
+
   async showAll(): Promise<SuggestionEntity[]> {
     const suggestions = await this.suggestionRepository.find({
       relations: ['savedBy', 'classificationCriteria'],
