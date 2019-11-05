@@ -46,7 +46,7 @@ export class SuggestionsService {
   async read(id: string): Promise<SuggestionRO> {
     const specialist = await this.suggestionRepository.findOne({
       where: { id },
-      relations: ['savedBy'],
+      relations: ['savedBy', 'classificationCriteria'],
     });
 
     if (!specialist) {
