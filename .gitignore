@@ -38,7 +38,6 @@ lerna-debug.log*
 
 *~
 *.sw[mnpcod]
-*.log
 *.tmp
 *.tmp.*
 log.txt
@@ -55,13 +54,10 @@ coverage/
 www/
 # dist/
 node_modules/
-tmp/
 temp/
 $RECYCLE.BIN/
 
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-
-dpa-credentials.json
 
