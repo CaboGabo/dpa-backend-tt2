@@ -23,7 +23,7 @@ export class AppController {
         const fs = require('fs');
         console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
         console.log(process.env.GOOGLE_CREDENTIALS);
-        fs.writeFile(process.env.GOOGLE_APPLICATION_CREDENTIALS, `${process.env.GOOGLE_CREDENTIALS}`, (error) => console.log('error', error));
+        fs.writeFile(process.env.GOOGLE_APPLICATION_CREDENTIALS, `/app/${process.env.GOOGLE_CREDENTIALS}`, (error) => console.log('error', error));
       }
     } catch (e) {
       console.log('No GCP credentials');
