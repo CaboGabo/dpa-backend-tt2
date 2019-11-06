@@ -102,10 +102,7 @@ export class DiagnosticsService {
     return posts;
   }
 
-  async diagnostic(
-    userId: string,
-    classifiedPosts: any,
-  ): Promise<DiagnosticRO[]> {
+  async diagnostic(userId: string): Promise<DiagnosticRO[]> {
     const student = await this.studentRepository.findOne({
       where: { user: { id: userId } },
       relations: ['user', 'diagnostics'],
@@ -115,82 +112,64 @@ export class DiagnosticsService {
       throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     }
 
-    const topWords = classifiedPosts.topWords.join();
+    const posts = await this.postsService.showByUser(userId);
+    const insResult = await this.classifierService.classify(posts);
 
-    const criteria = [
-      'A2',
-      'A3',
-      'A4',
-      'A6',
-      'A7',
-      'A8',
-      'A9',
-      'B1',
-      'B4',
-      'B6',
-      'C1',
-    ];
+    const topWords = this.getTopWords(posts).join();
 
-    let counters = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-    for (const classifiedPost of classifiedPosts.classifiedPosts) {
-      let i = 0;
-      for (const tag of classifiedPost['tags']) {
-        if (
-          tag === 'perdidaInteres' ||
-          tag === 'modPeso' ||
-          tag === 'insomnio' ||
-          tag === 'fatiga' ||
-          tag === 'inutilidad' ||
-          tag === 'disminucionPensar' ||
-          tag === 'p_muerte' ||
-          tag === 'malestar' ||
-          tag === 'bajaAutoestima' ||
-          tag === 'desesperanza' ||
-          tag === 'consumoAfeccion'
-        ) {
-          counters[i]++;
-        }
-        i++;
-      }
-    }
-
-    let results = [];
-    for (let i = 0; i < counters.length; i++) {
-      let result: boolean;
-      if (counters[i] >= 3) {
-        result = true;
-      } else {
-        result = false;
-      }
-      results.push({
-        criteria: criteria[i],
-        result,
-      });
-    }
-
-    const tdmResult = this.getTdmResult(results);
-    const tdpResult = this.getTdpResult(results);
+    const {
+      globalResult: tdmResult,
+      criteriaResults: criteriaTdm,
+    } = insResult[0];
+    const {
+      globalResult: tdpResult,
+      criteriaResults: criteriaTdp,
+    } = insResult[1];
 
     let diagnostic1 = await this.diagnosticRepository.create({
       result: tdmResult,
       depressionType: 'tdm',
-      topWords,
       student,
+      topWords: topWords,
     });
 
     let diagnostic2 = await this.diagnosticRepository.create({
       result: tdpResult,
       depressionType: 'tdp',
-      topWords,
       student,
+      topWords: topWords,
     });
 
     await this.diagnosticRepository.save(diagnostic1);
     await this.diagnosticRepository.save(diagnostic2);
 
-    await this.saveDiagnosticDetailsTdm(diagnostic1, results);
-    await this.saveDiagnosticDetailsTdp(diagnostic2, results);
+    for (let i = 1; i < criteriaTdm.length; i++) {
+      const criteria = await this.classificationCriteriaRepository.findOne({
+        where: { keyname: criteriaTdm[i]['keyname'] },
+      });
+
+      const diagnosticDetail = this.diagnosticDetailRepository.create({
+        classificationCriteria: criteria,
+        result: criteriaTdm[i]['result'],
+        diagnostic: diagnostic1,
+      });
+
+      await this.diagnosticDetailRepository.save(diagnosticDetail);
+    }
+
+    for (let i = 1; i < criteriaTdp.length; i++) {
+      const criteria = await this.classificationCriteriaRepository.findOne({
+        where: { keyname: criteriaTdp[i]['keyname'] },
+      });
+
+      const diagnosticDetail = this.diagnosticDetailRepository.create({
+        classificationCriteria: criteria,
+        result: criteriaTdp[i]['result'],
+        diagnostic: diagnostic2,
+      });
+
+      await this.diagnosticDetailRepository.save(diagnosticDetail);
+    }
 
     diagnostic1 = await this.diagnosticRepository.findOne({
       where: { id: diagnostic1.id },
@@ -223,6 +202,38 @@ export class DiagnosticsService {
     return [diagnostic1, diagnostic2].map(diagnostic =>
       this.diagnosticToResponseObject(diagnostic),
     );
+  }
+
+  getTopWords(posts: PostRO[]): any {
+    let contents = [];
+
+    for (const post of posts) {
+      contents.push(post.content);
+    }
+
+    let wordsArray = contents.join(' ').split(/\s+/);
+    let wordsMap = {};
+    wordsArray.forEach(key => {
+      if (wordsMap.hasOwnProperty(key)) {
+        wordsMap[key]++;
+      } else {
+        wordsMap[key] = 1;
+      }
+    });
+
+    let finalWordsArray = [];
+    finalWordsArray = Object.keys(wordsMap).map(key => {
+      return {
+        name: key,
+        total: wordsMap[key],
+      };
+    });
+
+    finalWordsArray.sort((a, b) => {
+      return b.total - a.total;
+    });
+
+    return finalWordsArray;
   }
 
   async saveDiagnosticDetailsTdm(diagnostic: DiagnosticEntity, results: any) {
@@ -348,9 +359,7 @@ export class DiagnosticsService {
 
     //Punto C, criterios del punto B presentes al menos cada 2 meses
 
-
     //Punto D, segun yo estes es igual a punto A
-
 
     //Punto G, C1
 
@@ -615,7 +624,7 @@ export class DiagnosticsService {
       peopleOk,
       averageAgeTdm,
       averageAgeTdp,
-      averageAge
+      averageAge,
     };
   }
 
@@ -625,11 +634,15 @@ export class DiagnosticsService {
     });
 
     const tdmDetailsPositive = diagnosticDetails.filter(
-      diagnosticDetail => diagnosticDetail.result && diagnosticDetail.diagnostic.depressionType === 'tdm',
+      diagnosticDetail =>
+        diagnosticDetail.result &&
+        diagnosticDetail.diagnostic.depressionType === 'tdm',
     );
 
     const tdpDetailsPositive = diagnosticDetails.filter(
-      diagnosticDetail => diagnosticDetail.result && diagnosticDetail.diagnostic.depressionType === 'tdp',
+      diagnosticDetail =>
+        diagnosticDetail.result &&
+        diagnosticDetail.diagnostic.depressionType === 'tdp',
     );
 
     const criteriaTdm = {
@@ -670,7 +683,7 @@ export class DiagnosticsService {
 
     return {
       tdm: criteriaTdm,
-      tdp: criteriaTdp
+      tdp: criteriaTdp,
     };
   }
 

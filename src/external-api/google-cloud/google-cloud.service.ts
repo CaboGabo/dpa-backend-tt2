@@ -42,11 +42,6 @@ export class GoogleCloudService {
     );
 
     const params = {};
-
-    //const postb64 = Buffer.from(post).toString('base64');
-
-    //payload.image = { imageBytes: postb64 };
-
     const payload = {
       textSnippet: {
         content: post,
