@@ -619,14 +619,18 @@ export class DiagnosticsService {
 
   async getDiagnosticDetailsStatistics(): Promise<any> {
     const diagnosticDetails = await this.diagnosticDetailRepository.find({
-      relations: ['classificationCriteria'],
+      relations: ['classificationCriteria', 'diagnostic'],
     });
 
-    const diagnosticDetailsPositive = diagnosticDetails.filter(
-      diagnosticDetail => diagnosticDetail.result,
+    const tdmDetailsPositive = diagnosticDetails.filter(
+      diagnosticDetail => diagnosticDetail.result && diagnosticDetail.diagnostic.depressionType === 'tdm',
     );
 
-    let criteria = {
+    const tdpDetailsPositive = diagnosticDetails.filter(
+      diagnosticDetail => diagnosticDetail.result && diagnosticDetail.diagnostic.depressionType === 'tdp',
+    );
+
+    const criteriaTdm = {
       A2: 0,
       A3: 0,
       A4: 0,
@@ -640,11 +644,32 @@ export class DiagnosticsService {
       C1: 0,
     };
 
-    for (const diagnosticDetailPositive of diagnosticDetailsPositive) {
-      criteria[`${diagnosticDetailPositive.classificationCriteria.keyname}`]++;
+    const criteriaTdp = {
+      A2: 0,
+      A3: 0,
+      A4: 0,
+      A6: 0,
+      A7: 0,
+      A8: 0,
+      A9: 0,
+      B1: 0,
+      B4: 0,
+      B6: 0,
+      C1: 0,
+    };
+
+    for (const tdmDetailPositive of tdmDetailsPositive) {
+      criteriaTdm[`${tdmDetailPositive.classificationCriteria.keyname}`]++;
     }
 
-    return criteria;
+    for (const tdpDetailPositive of tdpDetailsPositive) {
+      criteriaTdp[`${tdpDetailPositive.classificationCriteria.keyname}`]++;
+    }
+
+    return {
+      tdm: criteriaTdm,
+      tdp: criteriaTdp
+    };
   }
 
   async getAllWords(): Promise<any> {
