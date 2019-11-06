@@ -604,6 +604,7 @@ export class DiagnosticsService {
 
     const peopleOk = diagnostics.length - peopleWithTdm - peopleWithTdp;
 
+    const averageAge = this.getSumAges(diagnostics);
     const averageAgeTdm = this.getSumAges(diagnosticsTdm);
     const averageAgeTdp = this.getSumAges(diagnosticsTdp);
 
@@ -614,6 +615,7 @@ export class DiagnosticsService {
       peopleOk,
       averageAgeTdm,
       averageAgeTdp,
+      averageAge
     };
   }
 
