@@ -619,7 +619,7 @@ export class DiagnosticsService {
 
   async getDiagnosticDetailsStatistics(): Promise<any> {
     const diagnosticDetails = await this.diagnosticDetailRepository.find({
-      relations: ['classification-criteria'],
+      relations: ['classificationCriteria'],
     });
 
     const diagnosticDetailsPositive = diagnosticDetails.filter(
