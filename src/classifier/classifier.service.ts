@@ -1,19 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PostRO } from '../posts/post.dto';
 
-import * as criteriaA2 from './criteria/criteriaA2';
-import * as criteriaA3 from './criteria/criteriaA3';
-import * as criteriaA4 from './criteria/criteriaA4';
-import * as criteriaA6 from './criteria/criteriaA6';
-import * as criteriaA7 from './criteria/criteriaA7';
-import * as criteriaA8 from './criteria/criteriaA8';
-import * as criteriaA9 from './criteria/criteriaA9';
-import * as criteriaB1 from './criteria/criteriaB1';
-import * as criteriaB4 from './criteria/criteriaB4';
-import * as criteriaB6 from './criteria/criteriaB6';
-import * as criteriaC1 from './criteria/criteriaC1';
+import * as classifier from './classifier';
 
-let resultA2,
+/*let resultA2,
   resultA3,
   resultA4,
   resultA6,
@@ -23,24 +13,22 @@ let resultA2,
   resultB1,
   resultB4,
   resultB6,
-  resultC1;
+  resultC1;*/
 
 @Injectable()
 export class ClassifierService {
   public async classify(posts: PostRO[]) {
-    let justPosts = [];
-    for (const post of posts) {
-      justPosts.push(post.content);
-    }
-    await this.allCriterias(justPosts);
+    const results = await classifier.main(posts);
+    console.log(results);
+    /*await this.allCriterias(justPosts);
     let result = [];
 
     result[0] = await this.mainTdm(justPosts);
     result[1] = await this.mainTdp(justPosts);
-    return result;
+    return result;*/
   }
 
-  async allCriterias(posts: string[]) {
+  /*async allCriterias(posts: string[]) {
     [
       resultA2,
       resultA3,
@@ -270,5 +258,5 @@ export class ClassifierService {
 
     if (presentSymptoms > 0) return true;
     return false;
-  }
+  }*/
 }
