@@ -9,19 +9,18 @@ export class ClassifierService {
     const criteriaResults = await classifier.main(posts);
     console.log(criteriaResults);
 
-    let result = []
-    result[0] = await this.mainTdm();
-    result[1] = await this.mainTdp();
+    let result = [];
+    result[0] = await this.mainTdm(criteriaResults);
+    result[1] = await this.mainTdp(criteriaResults);
     return result;
   }
 
-  
   //*************              ************//
   //*************    TDM       ************//
   //*************              ************//
   //*************              ************//
 
-  async mainTdm() {
+  async mainTdm(criteriaResults: any) {
     let resultTdm = {
       globalResult: false,
       criteriaResults: [
@@ -40,19 +39,19 @@ export class ClassifierService {
     let mainCount = 0;
     let cBehaviour = false;
 
-    if (await this.isTdmABehaviourPresent()) {
+    if (await this.isTdmABehaviourPresent(criteriaResults)) {
       console.log('El criterio TDM-A está presente');
       mainCount++;
     } else {
       console.log('El criterio TDM-A no está presente');
     }
 
-    if (await this.isTdmBBehaviourPresent()) {
+    if (await this.isTdmBBehaviourPresent(criteriaResults)) {
       console.log('El criterio TDM-B está presente');
       mainCount++;
     } else console.log('El criterio TDM-B no está presente');
 
-    if (await this.isTdmCBehaviourPresent()) {
+    if (await this.isTdmCBehaviourPresent(criteriaResults)) {
       console.log('El criterio TDM-C está presente');
       cBehaviour = true;
     } else console.log('El criterio TDM-C no está presente');
@@ -60,12 +59,12 @@ export class ClassifierService {
     //Mandamos la respuesta final sobre si presenta o no los sintomas del TDM
     if (mainCount == 2 && !cBehaviour) {
       resultTdm.globalResult = true;
-    } 
+    }
 
     return resultTdm;
   }
 
-  async isTdmABehaviourPresent() {
+  async isTdmABehaviourPresent(criteriaResults: any) {
     let presentSymptoms = 0;
 
     //****************
@@ -74,41 +73,65 @@ export class ClassifierService {
     //  presentSymptoms++
 
     //Criterios A2-A9
-    if (criteriaResults[0]) { presentSymptoms++; }
+    if (criteriaResults[0]) {
+      presentSymptoms++;
+    }
 
-    if (criteriaResults[1]) { presentSymptoms++; }
+    if (criteriaResults[1]) {
+      presentSymptoms++;
+    }
 
-    if (criteriaResults[2]) { presentSymptoms++; }
+    if (criteriaResults[2]) {
+      presentSymptoms++;
+    }
 
-    if (criteriaResults[3]) { presentSymptoms++; }
+    if (criteriaResults[3]) {
+      presentSymptoms++;
+    }
 
-    if (criteriaResults[4]) { presentSymptoms++; }
+    if (criteriaResults[4]) {
+      presentSymptoms++;
+    }
 
-    if (criteriaResults[5]) { presentSymptoms++; }
+    if (criteriaResults[5]) {
+      presentSymptoms++;
+    }
 
-    if (criteriaResults[6]) { presentSymptoms++; }
+    if (criteriaResults[6]) {
+      presentSymptoms++;
+    }
 
-    if (presentSymptoms >= 5) { return true; }
+    if (presentSymptoms >= 5) {
+      return true;
+    }
 
     return false;
   }
 
-  async isTdmBBehaviourPresent() {
+  async isTdmBBehaviourPresent(criteriaResults: any) {
     let presentSymptoms = 0;
 
-    if (criteriaResults[7]) { presentSymptoms++; }
+    if (criteriaResults[7]) {
+      presentSymptoms++;
+    }
 
-    if (presentSymptoms > 0) { return true; }
+    if (presentSymptoms > 0) {
+      return true;
+    }
 
     return false;
   }
 
-  async isTdmCBehaviourPresent() {
+  async isTdmCBehaviourPresent(criteriaResults: any) {
     let presentSymptoms = 0;
 
-    if (criteriaResults[10]) { presentSymptoms++; }
+    if (criteriaResults[10]) {
+      presentSymptoms++;
+    }
 
-    if (presentSymptoms > 0) { return true; }
+    if (presentSymptoms > 0) {
+      return true;
+    }
 
     return false;
   }
@@ -118,7 +141,7 @@ export class ClassifierService {
   //*************              ************//
   //*************              ************//
 
-  async mainTdp() {
+  async mainTdp(criteriaResults: any) {
     let resultTdp = {
       globalResult: false,
       criteriaResults: [
@@ -142,22 +165,22 @@ export class ClassifierService {
       mainCount++;
     } else console.log('El criterio TDP-A no está presente');
 
-    if (await this.isTdpBBehaviourPresent()) {
+    if (await this.isTdpBBehaviourPresent(criteriaResults)) {
       console.log('El criterio TDP-B está presente');
       mainCount++;
     } else console.log('El criterio TDP-B no está presente');
 
-    if (await this.isTdpCBehaviourPresent()) {
+    if (await this.isTdpCBehaviourPresent(criteriaResults)) {
       console.log('El criterio TDP-C está presente');
       mainCount++;
     } else console.log('El criterio TDP-C no está presente');
 
-    if (await this.isTdpGBehaviourPresent()) {
+    if (await this.isTdpGBehaviourPresent(criteriaResults)) {
       console.log('El criterio TDP-G está presente');
       gBehaviour = true;
     } else console.log('El criterio TDP-G no está presente');
 
-    if (await this.isTdpHBehaviourPresent()) {
+    if (await this.isTdpHBehaviourPresent(criteriaResults)) {
       console.log('El criterio TDP-H está presente');
       mainCount++;
     } else console.log('El criterio TDP-H no está presente');
@@ -175,66 +198,92 @@ export class ClassifierService {
 
     //Detección de pensamientos negativos durante dos años
     //****************
-    if (presentSymptoms >= 0) { return true; }
+    if (presentSymptoms >= 0) {
+      return true;
+    }
 
     return false;
   }
 
-  async isTdpBBehaviourPresent(posts: string[]) {
+  async isTdpBBehaviourPresent(criteriaResults) {
     let presentSymptoms = 0;
 
     //Pérdida o aumento de apetito
-    if (criteriaResults[1]) { presentSymptoms++; }
+    if (criteriaResults[1]) {
+      presentSymptoms++;
+    }
 
     //Insomnio
-    if (criteriaResults[2]) { presentSymptoms++; }
+    if (criteriaResults[2]) {
+      presentSymptoms++;
+    }
 
     //Fatiga
-    if (criteriaResults[3]) { presentSymptoms++; }
+    if (criteriaResults[3]) {
+      presentSymptoms++;
+    }
 
     //Baja autoestima / Involucra criterio A7 (Pensamientos de inutilidad)
-    if (criteriaResults[8] || criteriaResults[4]) { presentSymptoms++; }
+    if (criteriaResults[8] || criteriaResults[4]) {
+      presentSymptoms++;
+    }
 
     //Dificultad para concentrarse
-    if (criteriaResults[5]) { presentSymptoms++; }
+    if (criteriaResults[5]) {
+      presentSymptoms++;
+    }
 
     //Desesperanza
-    if (criteriaResults[9]) { presentSymptoms++; }
+    if (criteriaResults[9]) {
+      presentSymptoms++;
+    }
 
-    if (presentSymptoms >= 2) { return true; }
+    if (presentSymptoms >= 2) {
+      return true;
+    }
 
     return false;
   }
 
-  async isTdpCBehaviourPresent(posts: string[]) {
+  async isTdpCBehaviourPresent(criteriaResults) {
     //Checar fechas
     let presentSymptoms = 0;
 
     //****************
     //Deteccion de efectos presentes sin lapsos vacios de 2 meses
 
-    if (presentSymptoms > 0) { return true; }
+    if (presentSymptoms > 0) {
+      return true;
+    }
 
     return false;
   }
 
-  async isTdpGBehaviourPresent() {
+  async isTdpGBehaviourPresent(criteriaResults) {
     let presentSymptoms = 0;
 
     //Sustancia o enfermedad
-    if (criteriaResults[10]) { presentSymptoms++; }
+    if (criteriaResults[10]) {
+      presentSymptoms++;
+    }
 
-    if (presentSymptoms > 0) { return true; }
+    if (presentSymptoms > 0) {
+      return true;
+    }
     return false;
   }
 
-  async isTdpHBehaviourPresent() {
+  async isTdpHBehaviourPresent(criteriaResults) {
     let presentSymptoms = 0;
 
     //Malestar o Deterioro
-    if (criteriaResults[7]) { presentSymptoms++; }
+    if (criteriaResults[7]) {
+      presentSymptoms++;
+    }
 
-    if (presentSymptoms > 0) { return true; }
+    if (presentSymptoms > 0) {
+      return true;
+    }
     return false;
   }
 }
