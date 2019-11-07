@@ -4,6 +4,10 @@ import { Column } from 'typeorm';
 import { ClassificationCriteriaEntity } from '../classification-criteria/classification-criteria.entity';
 
 export class SuggestionDTO {
+
+  @IsString()
+  title: string;
+
   @IsString()
   content: string;
 
@@ -23,6 +27,7 @@ export class SuggestionDTO {
 export class SuggestionRO {
   id: string;
   created: Date;
+  title: string;
   content: string;
   gender: string;
   rangeAge: string;

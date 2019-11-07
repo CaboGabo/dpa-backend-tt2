@@ -19,6 +19,9 @@ export class SuggestionEntity {
   created: Date;
 
   @Column('text')
+  title: string;
+
+  @Column('text')
   content: string;
 
   @Column({
