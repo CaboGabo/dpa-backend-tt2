@@ -79,8 +79,8 @@ export class DiagnosticsController {
   @Post('diagnosticate')
   @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
-  async makeDiagnostic(@User('id') user, @Body() classifiedPosts: any) {
-    return this.diagnosticsService.diagnostic(user, classifiedPosts);
+  async makeDiagnostic(@User('id') user) {
+    return this.diagnosticsService.diagnostic(user);
   }
 
   @Put('diagnostics/:idDiagnostic/activities')

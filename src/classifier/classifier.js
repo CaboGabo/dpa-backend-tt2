@@ -11,41 +11,87 @@ const criteriaB6 = require('./classifiers/criteriaB6');
 const criteriaC1 = require('./classifiers/criteriaC1');
 
 async function main(posts) {
-    let classifiers = await Promise.all([criteriaA2.train(), criteriaA3.train(), criteriaA4.train(), criteriaA6.train(), criteriaA7.train(),
-        criteriaA8.train(), criteriaA9.train(), criteriaB1.train(), criteriaB4.train(), criteriaB6.train(), criteriaC1.train()
-    ]);
+  let classifiers = await Promise.all([
+    criteriaA2.train(),
+    criteriaA3.train(),
+    criteriaA4.train(),
+    criteriaA6.train(),
+    criteriaA7.train(),
+    criteriaA8.train(),
+    criteriaA9.train(),
+    criteriaB1.train(),
+    criteriaB4.train(),
+    criteriaB6.train(),
+    criteriaC1.train(),
+  ]);
 
-    let tags = ['perdidaInteres', 'modPeso', 'insomnio', 'fatiga', 'inutilidad', 'disminucion', 'p_muerte', 'malestar', 'bajaAutoestima', 'desesperanza', 'consumoAfeccion'];
-    let ocurrencias = {
-        perdidaInteres: 0,
-        modPeso: 0,
-        insomnio: 0,
-        fatiga: 0,
-        inutilidad: 0,
-        disminucion: 0,
-        p_muerte: 0,
-        malestar: 0,
-        bajaAutoestima: 0,
-        desesperanza: 0,
-        consumoAfeccion: 0,
-    };
-    let i = 0;
-    for (const classifier of classifiers) {
-        posts.forEach(post => {
-            const result = classifier.getBestClassification(post.content);
-            if (result.label === tags[i] && result.value > 0.95) {
-                //console.log(texto);
-                //console.log(result);
-                ocurrencias[`${result.label}`]++;
-            }
-        });
+  let tags = [
+    'perdidaInteres',
+    'modPeso',
+    'insomnio',
+    'fatiga',
+    'inutilidad',
+    'disminucionPensar',
+    'p_muerte',
+    'malestar',
+    'bajaAutoestima',
+    'desesperanza',
+    'consumoAfeccion',
+  ];
 
-        i++;
+  let ocurrences = {
+    perdidaInteres: 0,
+    modPeso: 0,
+    insomnio: 0,
+    fatiga: 0,
+    inutilidad: 0,
+    disminucion: 0,
+    p_muerte: 0,
+    malestar: 0,
+    bajaAutoestima: 0,
+    desesperanza: 0,
+    consumoAfeccion: 0,
+  };
+
+  let postOcurrences = {
+    perdidaInteres: [],
+    modPeso: [],
+    insomnio: [],
+    fatiga: [],
+    inutilidad: [],
+    disminucion: [],
+    p_muerte: [],
+    malestar: [],
+    bajaAutoestima: [],
+    desesperanza: [],
+    consumoAfeccion: [],
+  };
+
+  let i = 0;
+  for (const classifier of classifiers) {
+    posts.forEach(post => {
+      const result = classifier.getBestClassification(post.content);
+      if (result.label === tags[i] && result.value > 0.95) {
+        ocurrences[`${result.label}`]++;
+        postOcurrences[`${result.label}`].push(post.id);
+      }
+    });
+
+    i++;
+  }
+
+  let results = {};
+  for (criteria in ocurrences) {
+    if (ocurrences[criteria] >= 3) {
+      results[criteria] = true;
+    } else {
+      results[criteria] = false;
     }
+  }
 
-    return ocurrencias;
+  return [results, postOcurrences];
 }
 
 module.exports = {
-    main
-}
+  main,
+};

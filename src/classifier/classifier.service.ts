@@ -24,15 +24,51 @@ export class ClassifierService {
     let resultTdm = {
       globalResult: false,
       criteriaResults: [
-        { keyname: 'A2', result: criteriaResults[0] },
-        { keyname: 'A3', result: criteriaResults[1] },
-        { keyname: 'A4', result: criteriaResults[2] },
-        { keyname: 'A6', result: criteriaResults[3] },
-        { keyname: 'A7', result: criteriaResults[4] },
-        { keyname: 'A8', result: criteriaResults[5] },
-        { keyname: 'A9', result: criteriaResults[6] },
-        { keyname: 'B1', result: criteriaResults[7] },
-        { keyname: 'C1', result: criteriaResults[10] },
+        {
+          keyname: 'A2',
+          result: criteriaResults[0]['perdidaInteres'],
+          ocurrences: criteriaResults[1]['perdidaInteres'],
+        },
+        {
+          keyname: 'A3',
+          result: criteriaResults[0]['modPeso'],
+          ocurrences: criteriaResults[1]['modPeso'],
+        },
+        {
+          keyname: 'A4',
+          result: criteriaResults[0]['insomnio'],
+          ocurrences: criteriaResults[1]['insomnio'],
+        },
+        {
+          keyname: 'A6',
+          result: criteriaResults[0]['fatiga'],
+          ocurrences: criteriaResults[1]['fatiga'],
+        },
+        {
+          keyname: 'A7',
+          result: criteriaResults[0]['inutilidad'],
+          ocurrences: criteriaResults[1]['inutilidad'],
+        },
+        {
+          keyname: 'A8',
+          result: criteriaResults[0]['disminucionPensar'],
+          ocurrences: criteriaResults[1]['disminucionPensar'],
+        },
+        {
+          keyname: 'A9',
+          result: criteriaResults[0]['p_muerte'],
+          ocurrences: criteriaResults[1]['p_muerte'],
+        },
+        {
+          keyname: 'B1',
+          result: criteriaResults[0]['malestar'],
+          ocurrences: criteriaResults[1]['malestar'],
+        },
+        {
+          keyname: 'C1',
+          result: criteriaResults[0]['consumoAfeccion'],
+          ocurrences: criteriaResults[1]['consumoAfeccion'],
+        },
       ],
     };
 
@@ -145,15 +181,51 @@ export class ClassifierService {
     let resultTdp = {
       globalResult: false,
       criteriaResults: [
-        { keyname: 'A3', result: criteriaResults[1] },
-        { keyname: 'A4', result: criteriaResults[2] },
-        { keyname: 'A6', result: criteriaResults[3] },
-        { keyname: 'A7', result: criteriaResults[4] },
-        { keyname: 'A8', result: criteriaResults[5] },
-        { keyname: 'B4', result: criteriaResults[8] },
-        { keyname: 'B6', result: criteriaResults[9] },
-        { keyname: 'B1', result: criteriaResults[7] },
-        { keyname: 'C1', result: criteriaResults[10] },
+        {
+          keyname: 'A3',
+          result: criteriaResults[0]['modPeso'],
+          ocurrences: criteriaResults[1]['modPeso'],
+        },
+        {
+          keyname: 'A4',
+          result: criteriaResults[0]['insomnio'],
+          ocurrences: criteriaResults[1]['insomnio'],
+        },
+        {
+          keyname: 'A6',
+          result: criteriaResults[0]['fatiga'],
+          ocurrences: criteriaResults[1]['fatiga'],
+        },
+        {
+          keyname: 'A7',
+          result: criteriaResults[0]['inutilidad'],
+          ocurrences: criteriaResults[1]['inutilidad'],
+        },
+        {
+          keyname: 'A8',
+          result: criteriaResults[0]['disminucionPensar'],
+          ocurrences: criteriaResults[1]['disminucionPensar'],
+        },
+        {
+          keyname: 'B4',
+          result: criteriaResults[0]['bajaAutoestima'],
+          ocurrences: criteriaResults[1]['bajaAutoestima'],
+        },
+        {
+          keyname: 'B6',
+          result: criteriaResults[0]['desesperanza'],
+          ocurrences: criteriaResults[1]['desesperanza'],
+        },
+        {
+          keyname: 'B1',
+          result: criteriaResults[0]['malestar'],
+          ocurrences: criteriaResults[1]['malestar'],
+        },
+        {
+          keyname: 'C1',
+          result: criteriaResults[0]['consumoAfeccion'],
+          ocurrences: criteriaResults[1]['consumoAfeccion'],
+        },
       ],
     };
 
