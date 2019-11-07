@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DiagnosticEntity } from './diagnostic.entity';
@@ -18,6 +18,7 @@ import { DiagnosticDetailEntity } from '../diagnostic-details/diagnostic-detail.
 import { ClassificationCriteriaEntity } from '../classification-criteria/classification-criteria.entity';
 import { ActivitiesService } from '../activities/activities.service';
 import { ActivityEntity } from '../activities/activity.entity';
+import { PostEntity } from '../posts/post.entity';
 
 @Injectable()
 export class DiagnosticsService {
@@ -36,6 +37,8 @@ export class DiagnosticsService {
     >,
     @InjectRepository(ActivityEntity)
     private activityRepository: Repository<ActivityEntity>,
+    @InjectRepository(PostEntity)
+    private postRepository: Repository<PostEntity>,
 
     private twitterService: TwitterService,
     private redditService: RedditService,
@@ -102,7 +105,7 @@ export class DiagnosticsService {
     return posts;
   }
 
-  async diagnostic(userId: string): Promise<DiagnosticRO[]> {
+  async diagnostic(userId: string): Promise<any> /*Promise<DiagnosticRO[]>*/ {
     const student = await this.studentRepository.findOne({
       where: { user: { id: userId } },
       relations: ['user', 'diagnostics'],
@@ -112,10 +115,14 @@ export class DiagnosticsService {
       throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     }
 
-    const posts = await this.postsService.showByUser(userId);
+    const posts = await this.postRepository.find({
+      where: { author: student },
+    });
     const insResult = await this.classifierService.classify(posts);
 
-    const topWords = this.getTopWords(posts).join();
+    const topWords = this.getTopWords(posts)
+      .map(word => JSON.stringify(word))
+      .join();
 
     const {
       globalResult: tdmResult,
@@ -148,10 +155,20 @@ export class DiagnosticsService {
         where: { keyname: criteriaTdm[i]['keyname'] },
       });
 
+      let posts = [];
+      for (const id of criteriaTdm[i]['ocurrences']) {
+        const post = await this.postRepository.findOne({
+          where: { id },
+        });
+        posts.push(post);
+      }
+      console.log(posts);
+
       const diagnosticDetail = this.diagnosticDetailRepository.create({
         classificationCriteria: criteria,
         result: criteriaTdm[i]['result'],
         diagnostic: diagnostic1,
+        posts,
       });
 
       await this.diagnosticDetailRepository.save(diagnosticDetail);
@@ -162,10 +179,19 @@ export class DiagnosticsService {
         where: { keyname: criteriaTdp[i]['keyname'] },
       });
 
+      let posts = [];
+      for (const id of criteriaTdp[i]['ocurrences']) {
+        const post = await this.postRepository.findOne({
+          where: { id },
+        });
+        posts.push(post);
+      }
+      console.log(posts);
       const diagnosticDetail = this.diagnosticDetailRepository.create({
         classificationCriteria: criteria,
         result: criteriaTdp[i]['result'],
         diagnostic: diagnostic2,
+        posts,
       });
 
       await this.diagnosticDetailRepository.save(diagnosticDetail);
@@ -180,7 +206,7 @@ export class DiagnosticsService {
     for (const detail of diagnostic1.details) {
       diagnostic1.details[i] = await this.diagnosticDetailRepository.findOne({
         where: { id: detail.id },
-        relations: ['activities', 'classificationCriteria'],
+        relations: ['activities', 'classificationCriteria', 'posts'],
       });
       i++;
     }
@@ -194,7 +220,7 @@ export class DiagnosticsService {
     for (const detail of diagnostic2.details) {
       diagnostic2.details[i] = await this.diagnosticDetailRepository.findOne({
         where: { id: detail.id },
-        relations: ['activities', 'classificationCriteria'],
+        relations: ['activities', 'classificationCriteria', 'posts'],
       });
       i++;
     }
@@ -236,7 +262,7 @@ export class DiagnosticsService {
     return finalWordsArray;
   }
 
-  async saveDiagnosticDetailsTdm(diagnostic: DiagnosticEntity, results: any) {
+  /*async saveDiagnosticDetailsTdm(diagnostic: DiagnosticEntity, results: any) {
     for (let i = 0; i < 8; i++) {
       const criteria = await this.classificationCriteriaRepository.findOne({
         where: { keyname: results[i].criteria },
@@ -376,7 +402,7 @@ export class DiagnosticsService {
       return true;
     }
     return false;
-  }
+  }*/
 
   async addActivities(userId: string, id: string): Promise<any> {
     const student = await this.studentRepository.findOne({
@@ -410,7 +436,7 @@ export class DiagnosticsService {
     for (const detail of diagnostic.details) {
       diagnostic.details[i] = await this.diagnosticDetailRepository.findOne({
         where: { id: detail.id },
-        relations: ['activities', 'classificationCriteria'],
+        relations: ['activities', 'classificationCriteria', 'posts'],
       });
 
       let j = 0;
@@ -452,7 +478,7 @@ export class DiagnosticsService {
       for (const detail of diagnostic.details) {
         diagnostic.details[i] = await this.diagnosticDetailRepository.findOne({
           where: { id: detail.id },
-          relations: ['activities', 'classificationCriteria'],
+          relations: ['activities', 'classificationCriteria', 'posts'],
         });
         let j = 0;
         for (const activity of diagnostic.details[i].activities) {
@@ -490,7 +516,7 @@ export class DiagnosticsService {
       for (const detail of diagnostic.details) {
         diagnostic.details[i] = await this.diagnosticDetailRepository.findOne({
           where: { id: detail.id },
-          relations: ['activities', 'classificationCriteria'],
+          relations: ['activities', 'classificationCriteria', 'posts'],
         });
 
         let j = 0;
@@ -535,7 +561,7 @@ export class DiagnosticsService {
     for (const detail of diagnostic.details) {
       diagnostic.details[i] = await this.diagnosticDetailRepository.findOne({
         where: { id: detail.id },
-        relations: ['activities', 'classificationCriteria'],
+        relations: ['activities', 'classificationCriteria', 'posts'],
       });
 
       let j = 0;
@@ -577,7 +603,7 @@ export class DiagnosticsService {
     for (const detail of diagnostic.details) {
       diagnostic.details[i] = await this.diagnosticDetailRepository.findOne({
         where: { id: detail.id },
-        relations: ['activities', 'classificationCriteria'],
+        relations: ['activities', 'classificationCriteria', 'posts'],
       });
 
       let j = 0;

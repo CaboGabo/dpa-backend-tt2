@@ -5,10 +5,13 @@ import {
   Column,
   ManyToOne,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { DiagnosticEntity } from '../diagnostics/diagnostic.entity';
 import { ActivityEntity } from '../activities/activity.entity';
 import { ClassificationCriteriaEntity } from '../classification-criteria/classification-criteria.entity';
+import { PostEntity } from '../posts/post.entity';
 
 @Entity('diagnosticdetails')
 export class DiagnosticDetailEntity {
@@ -32,4 +35,10 @@ export class DiagnosticDetailEntity {
 
   @OneToMany(type => ActivityEntity, activity => activity.diagnosticDetail)
   activities: ActivityEntity[];
+
+  @ManyToMany(type => PostEntity, {
+    cascade: true,
+  })
+  @JoinTable()
+  posts: PostEntity[];
 }

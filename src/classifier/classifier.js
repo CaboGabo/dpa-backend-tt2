@@ -45,7 +45,7 @@ async function main(posts) {
     insomnio: 0,
     fatiga: 0,
     inutilidad: 0,
-    disminucion: 0,
+    disminucionPensar: 0,
     p_muerte: 0,
     malestar: 0,
     bajaAutoestima: 0,
@@ -59,7 +59,7 @@ async function main(posts) {
     insomnio: [],
     fatiga: [],
     inutilidad: [],
-    disminucion: [],
+    disminucionPensar: [],
     p_muerte: [],
     malestar: [],
     bajaAutoestima: [],
@@ -70,6 +70,7 @@ async function main(posts) {
   let i = 0;
   for (const classifier of classifiers) {
     posts.forEach(post => {
+      console.log(post);
       const result = classifier.getBestClassification(post.content);
       if (result.label === tags[i] && result.value > 0.95) {
         ocurrences[`${result.label}`]++;

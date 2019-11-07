@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { PostRO } from '../posts/post.dto';
+//import { PostRO } from '../posts/post.dto';
 
 import * as classifier from './classifier';
+import { PostEntity } from '../posts/post.entity';
 
 @Injectable()
 export class ClassifierService {
-  public async classify(posts: PostRO[]) {
+  public async classify(posts: PostEntity[]) {
     const criteriaResults = await classifier.main(posts);
     console.log(criteriaResults);
 
