@@ -93,10 +93,6 @@ export class ActivitiesService {
       throw new HttpException('Activity not found', HttpStatus.NOT_FOUND);
     }
 
-    if (activity.diagnosticDetail.diagnostic.student.user.id !== userId) {
-      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
-    }
-
     await this.activityRepository.update(
       { id },
       {
@@ -120,10 +116,6 @@ export class ActivitiesService {
 
     if (!activity) {
       throw new HttpException('Activity not found', HttpStatus.NOT_FOUND);
-    }
-
-    if (activity.diagnosticDetail.diagnostic.student.user.id !== userId) {
-      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
     }
 
     await this.activityRepository.update(
