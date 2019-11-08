@@ -10,8 +10,10 @@ const criteriaB4 = require('./classifiers/criteriaB4');
 const criteriaB6 = require('./classifiers/criteriaB6');
 const criteriaC1 = require('./classifiers/criteriaC1');
 
-async function main(posts) {
-  let classifiers = await Promise.all([
+let classifiers = [];
+
+async function getClassifiers() {
+  classifiers = await Promise.all([
     criteriaA2.train(),
     criteriaA3.train(),
     criteriaA4.train(),
@@ -25,6 +27,10 @@ async function main(posts) {
     criteriaC1.train(),
   ]);
 
+  console.log('Clasificadores entrenados');
+}
+
+async function main(posts) {
   let tags = [
     'perdidaInteres',
     'modPeso',
@@ -95,4 +101,5 @@ async function main(posts) {
 
 module.exports = {
   main,
+  getClassifiers
 };

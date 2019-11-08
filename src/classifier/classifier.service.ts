@@ -4,6 +4,8 @@ import { Injectable } from '@nestjs/common';
 import * as classifier from './classifier';
 import { PostEntity } from '../posts/post.entity';
 
+classifier.getClassifiers();
+
 @Injectable()
 export class ClassifierService {
   public async classify(posts: PostEntity[]) {
