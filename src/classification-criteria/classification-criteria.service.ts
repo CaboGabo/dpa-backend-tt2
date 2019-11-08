@@ -108,13 +108,13 @@ export class ClassificationCriteriaService {
   }
 
   async populate() {
-    /*for (const c of criteria) {
+    for (const c of criteria) {
       const dbc = await this.classificationCriteriaRepository.findOne({
         name: c.name,
       });
       if (!dbc) {
         await this.create(c);
       }
-    }*/
+    }
   }
 }
