@@ -112,31 +112,31 @@ export class ClassifierService {
     //  presentSymptoms++
 
     //Criterios A2-A9
-    if (criteriaResults[0]) {
+    if (criteriaResults[0]['perdidaInteres']) {
       presentSymptoms++;
     }
 
-    if (criteriaResults[1]) {
+    if (criteriaResults[0]['modPeso']) {
       presentSymptoms++;
     }
 
-    if (criteriaResults[2]) {
+    if (criteriaResults[0]['insomnio']) {
       presentSymptoms++;
     }
 
-    if (criteriaResults[3]) {
+    if (criteriaResults[0]['fatiga']) {
       presentSymptoms++;
     }
 
-    if (criteriaResults[4]) {
+    if (criteriaResults[0]['inutilidad']) {
       presentSymptoms++;
     }
 
-    if (criteriaResults[5]) {
+    if (criteriaResults[0]['disminucionPensar']) {
       presentSymptoms++;
     }
 
-    if (criteriaResults[6]) {
+    if (criteriaResults[0]['p_muerte']) {
       presentSymptoms++;
     }
 
@@ -150,7 +150,7 @@ export class ClassifierService {
   async isTdmBBehaviourPresent(criteriaResults: any) {
     let presentSymptoms = 0;
 
-    if (criteriaResults[7]) {
+    if (criteriaResults[0]['malestar']) {
       presentSymptoms++;
     }
 
@@ -164,7 +164,7 @@ export class ClassifierService {
   async isTdmCBehaviourPresent(criteriaResults: any) {
     let presentSymptoms = 0;
 
-    if (criteriaResults[10]) {
+    if (criteriaResults[0]['consumoAfeccion']) {
       presentSymptoms++;
     }
 
@@ -284,32 +284,35 @@ export class ClassifierService {
     let presentSymptoms = 0;
 
     //Pérdida o aumento de apetito
-    if (criteriaResults[1]) {
+    if (criteriaResults[0]['modPeso']) {
       presentSymptoms++;
     }
 
     //Insomnio
-    if (criteriaResults[2]) {
+    if (criteriaResults[0]['insomnio']) {
       presentSymptoms++;
     }
 
     //Fatiga
-    if (criteriaResults[3]) {
+    if (criteriaResults[0]['fatiga']) {
       presentSymptoms++;
     }
 
     //Baja autoestima / Involucra criterio A7 (Pensamientos de inutilidad)
-    if (criteriaResults[8] || criteriaResults[4]) {
+    if (
+      criteriaResults[0]['bajaAutoestima'] ||
+      criteriaResults[0]['inutilidad']
+    ) {
       presentSymptoms++;
     }
 
     //Dificultad para concentrarse
-    if (criteriaResults[5]) {
+    if (criteriaResults[0]['disminucionPensar']) {
       presentSymptoms++;
     }
 
     //Desesperanza
-    if (criteriaResults[9]) {
+    if (criteriaResults[0]['desesperanza']) {
       presentSymptoms++;
     }
 
@@ -338,7 +341,7 @@ export class ClassifierService {
     let presentSymptoms = 0;
 
     //Sustancia o enfermedad
-    if (criteriaResults[10]) {
+    if (criteriaResults[0]['consumoAfeccion']) {
       presentSymptoms++;
     }
 
@@ -352,7 +355,7 @@ export class ClassifierService {
     let presentSymptoms = 0;
 
     //Malestar o Deterioro
-    if (criteriaResults[7]) {
+    if (criteriaResults[0]['malestar']) {
       presentSymptoms++;
     }
 
