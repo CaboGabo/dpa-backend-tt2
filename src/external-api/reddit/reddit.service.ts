@@ -19,7 +19,7 @@ export class RedditService {
       scope: ['identity', 'mysubreddits', 'read', 'history'],
       clientId: process.env.CLIENT_ID_REDDIT,
       clientSecret: process.env.CLIENT_SECRET_REDDIT,
-      redirectUri: 'https://dpa-client.web.app/sign-up-networks',
+      redirectUri: 'http://dpa-client.web.app/sign-up-networks',
     };
 
     let posts = [];
