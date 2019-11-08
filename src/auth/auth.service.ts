@@ -23,6 +23,11 @@ export class AuthService {
       where: { username },
       relations: ['student', 'psychologist'],
     });
+
+    if (!user) {
+      throw new HttpException('User does not exist', HttpStatus.NOT_FOUND);
+    }
+
     if (user.google || user.facebook) {
       return user.toResponseObject();
     }
