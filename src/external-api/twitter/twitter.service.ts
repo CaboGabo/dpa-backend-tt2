@@ -35,19 +35,19 @@ export class TwitterService {
       const tweets = await twitterClient.get('statuses/user_timeline', options);
       for (const tweet of tweets) {
         const formatedTweet = this.formatTweet(tweet.full_text);
-        const processedTweet = await this.googleCloud.analyzePost(
+        /*const processedTweet = await this.googleCloud.analyzePost(
           formatedTweet,
         );
         const content = `"Publicación: ${formatedTweet}, Sentimiento: ${
           processedTweet.score
         }, Magnitud: ${processedTweet.magnitude}"`;
-        const tag = await this.googleCloud.predictPost(content);
+        const tag = await this.googleCloud.predictPost(content);*/
 
         const post = {
           content: formatedTweet,
-          sentiment: processedTweet.score,
+          /*sentiment: processedTweet.score,
           magnitude: processedTweet.magnitude,
-          tag,
+          tag,*/
           type: 'text',
           postdate: this.formatDate(tweet.created_at),
         };

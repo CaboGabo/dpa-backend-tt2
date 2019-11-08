@@ -51,17 +51,17 @@ export class RedditService {
 
   async buildPost(p: any) {
     const formatedPost = this.formatPost(`${p.title}: ${p.selftext}`);
-    const processedPost = await this.googleCloud.analyzePost(formatedPost);
+    /* const processedPost = await this.googleCloud.analyzePost(formatedPost);
     const content = `"Publicación: ${formatedPost}, Sentimiento: ${
       processedPost.score
     }, Magnitud: ${processedPost.magnitude}"`;
     const tag = await this.googleCloud.predictPost(content);
-
+*/
     const post = {
       content: formatedPost,
-      sentiment: processedPost.score,
+      /*sentiment: processedPost.score,
       magnitude: processedPost.magnitude,
-      tag,
+      tag,*/
       type: 'text',
       postdate: this.formatDate(this.toDate(p.created)),
     };
@@ -77,19 +77,19 @@ export class RedditService {
 
   async buildComment(c: any) {
     const formatedComment = this.formatPost(c.body);
-    const processedComment = await this.googleCloud.analyzePost(
+    /* const processedComment = await this.googleCloud.analyzePost(
       formatedComment,
     );
     const content = `"Publicación: ${formatedComment}, Sentimiento: ${
       processedComment.score
     }, Magnitud: ${processedComment.magnitude}`;
     const tag = await this.googleCloud.predictPost(content);
-
+*/
     const post = {
       content: formatedComment,
-      sentiment: processedComment.score,
+      /*sentiment: processedComment.score,
       magnitude: processedComment.magnitude,
-      tag,
+      tag,*/
       type: 'text',
       postdate: this.formatDate(this.toDate(c.created)),
     };
@@ -101,7 +101,6 @@ export class RedditService {
     const formatedText = [];
 
     const arrText = text.split('');
-    let j = 0;
     for (let i = 0; i < arrText.length; i++) {
       if (arrText[i] === '"') {
         formatedText.push('"');

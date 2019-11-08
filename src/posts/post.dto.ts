@@ -5,15 +5,6 @@ export class PostDTO {
   @IsString()
   content: string;
 
-  @IsNumber()
-  sentiment: number;
-
-  @IsNumber()
-  magnitude: number;
-
-  @IsString()
-  tag: string;
-
   @IsString()
   type: string;
 
