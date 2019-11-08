@@ -97,7 +97,7 @@ export class UsersController {
   @UsePipes(new ValidationPipe())
   validateEmail(@Param('id') id: string, @Res() res) {
     if (this.usersService.validateUser(id)) {
-      return res.redirect('http://localhost:4200/finish-sign-up');
+      return res.redirect('https://dpa-client.web.app/finish-sign-up');
     }
   }
 }
