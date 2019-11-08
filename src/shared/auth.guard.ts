@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
 
   async validateToken(auth: string) {
     if (auth.split(' ')[0] !== 'Bearer') {
-      throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('Token inválido', HttpStatus.UNAUTHORIZED);
     }
     const token = auth.split(' ')[1];
 

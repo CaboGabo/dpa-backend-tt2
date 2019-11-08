@@ -37,7 +37,7 @@ export class SuggestionsService {
   ) {
     if (suggestion.savedBy.id !== psychologistId) {
       throw new HttpException(
-        'Incorrect psychologist',
+        'No estás autorizado para realizar esta acción',
         HttpStatus.UNAUTHORIZED,
       );
     }
@@ -50,7 +50,10 @@ export class SuggestionsService {
     });
 
     if (!specialist) {
-      throw new HttpException('Specialist not found', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'Especialista no encontrado',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     return this.suggestionToResponseObject(specialist);
@@ -74,7 +77,7 @@ export class SuggestionsService {
       relations: ['user'],
     });
     if (!psychologist) {
-      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
     const criteria = await this.classificationCriteriaRepository.findOne({
@@ -83,7 +86,7 @@ export class SuggestionsService {
 
     if (!criteria) {
       throw new HttpException(
-        'Classification criteria not found',
+        'Criterio de clasificación no encontrado',
         HttpStatus.NOT_FOUND,
       );
     }
@@ -109,7 +112,7 @@ export class SuggestionsService {
     });
 
     if (!psychologist) {
-      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
     let suggestion = await this.suggestionRepository.findOne({
@@ -118,7 +121,7 @@ export class SuggestionsService {
     });
 
     if (!suggestion) {
-      throw new HttpException('Suggestion not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Sugerencia no encontrada', HttpStatus.NOT_FOUND);
     }
 
     this.ensureOwnership(suggestion, psychologist.id);
@@ -139,7 +142,7 @@ export class SuggestionsService {
     });
 
     if (!psychologist) {
-      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
     let suggestion = await this.suggestionRepository.findOne({
@@ -148,7 +151,7 @@ export class SuggestionsService {
     });
 
     if (!suggestion) {
-      throw new HttpException('Suggestion not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Sugerencia no encontrada', HttpStatus.NOT_FOUND);
     }
 
     this.ensureOwnership(suggestion, psychologist.id);

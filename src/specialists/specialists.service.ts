@@ -31,7 +31,7 @@ export class SpecialistsService {
   ) {
     if (specialist.savedBy.id !== psychologistId) {
       throw new HttpException(
-        'Incorrect psychologist',
+        'No estás autorizado para realizar esta acción',
         HttpStatus.UNAUTHORIZED,
       );
     }
@@ -56,7 +56,10 @@ export class SpecialistsService {
     });
 
     if (!specialist) {
-      throw new HttpException('Specialist not found', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'Especialista no encontrado',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     return this.specialistToResponseObject(specialist);
@@ -68,7 +71,7 @@ export class SpecialistsService {
       relations: ['user'],
     });
     if (!psychologist) {
-      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
     let specialist = await this.specialistRepository.findOne({
@@ -78,7 +81,7 @@ export class SpecialistsService {
 
     if (specialist) {
       throw new HttpException(
-        'phone number already exists',
+        'El número telefónico ya existe',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -103,7 +106,7 @@ export class SpecialistsService {
     });
 
     if (!psychologist) {
-      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
     let specialist = await this.specialistRepository.findOne({
@@ -112,7 +115,10 @@ export class SpecialistsService {
     });
 
     if (!specialist) {
-      throw new HttpException('Specialist not found', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'Especialista no encontrado',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     if (data.phone) {
@@ -121,7 +127,7 @@ export class SpecialistsService {
       });
       if (specialistByPhone && specialist.id !== specialistByPhone.id) {
         throw new HttpException(
-          'Phone number already exists',
+          'El número telefónico ya existe',
           HttpStatus.BAD_REQUEST,
         );
       }
@@ -145,7 +151,7 @@ export class SpecialistsService {
     });
 
     if (!psychologist) {
-      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
     let specialist = await this.specialistRepository.findOne({
@@ -154,7 +160,10 @@ export class SpecialistsService {
     });
 
     if (!specialist) {
-      throw new HttpException('Specialist not found', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'Especialista no encontrado',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     this.ensureOwnership(specialist, psychologist.id);

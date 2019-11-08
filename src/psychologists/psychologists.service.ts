@@ -30,7 +30,10 @@ export class PsychologistsService {
 
   private ensureOwnership(psychologist: PsychologistEntity, userId: string) {
     if (psychologist.user.id !== userId) {
-      throw new HttpException('Incorrect user', HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        'No estás autorizado para realizar esta acción',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
   }
 
@@ -53,7 +56,7 @@ export class PsychologistsService {
     });
 
     if (!psychologist) {
-      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
     return this.psychologistToResponseObject(psychologist);
@@ -67,10 +70,7 @@ export class PsychologistsService {
     });
 
     if (psychologist) {
-      throw new HttpException(
-        'Psychologist already exists',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('El psicólogo ya existe', HttpStatus.BAD_REQUEST);
     }
 
     psychologist = await this.psychologistRepository.findOne({
@@ -79,7 +79,7 @@ export class PsychologistsService {
     });
 
     if (psychologist) {
-      throw new HttpException('rfc already exists', HttpStatus.BAD_REQUEST);
+      throw new HttpException('El RFC ya existe', HttpStatus.BAD_REQUEST);
     }
 
     psychologist = await this.psychologistRepository.create({
@@ -102,7 +102,7 @@ export class PsychologistsService {
     });
 
     if (!psychologist) {
-      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
     if (data.rfc) {
@@ -110,7 +110,7 @@ export class PsychologistsService {
         where: { rfc: psychologist.rfc },
       });
       if (psychologistByRfc && psychologist.id !== psychologistByRfc.id) {
-        throw new HttpException('rfc already exists', HttpStatus.BAD_REQUEST);
+        throw new HttpException('El RFC ya existe', HttpStatus.BAD_REQUEST);
       }
     }
 

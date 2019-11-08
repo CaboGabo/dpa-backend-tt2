@@ -30,7 +30,10 @@ export class PostsService {
     });
 
     if (!student) {
-      throw new HttpException('Incorrect user', HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        'No estás autorizado para realizar esta acción',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
 
     const posts = await this.postRepository.find({
@@ -48,7 +51,10 @@ export class PostsService {
     });
 
     if (!student) {
-      throw new HttpException('Incorrect user', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'No estás autorizado para realizar esta acción',
+        HttpStatus.NOT_FOUND,
+      );
     }
     let postsResponse = [];
     for (let i = 0; i < posts.length; i++) {

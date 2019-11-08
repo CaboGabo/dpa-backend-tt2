@@ -112,7 +112,7 @@ export class DiagnosticsService {
     });
 
     if (!student) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Estudiante no encontrado', HttpStatus.NOT_FOUND);
     }
 
     const posts = await this.postRepository.find({
@@ -411,7 +411,7 @@ export class DiagnosticsService {
     });
 
     if (!student) {
-      throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Estudiante no encontrado', HttpStatus.NOT_FOUND);
     }
 
     let diagnostic = await this.diagnosticRepository.findOne({
@@ -420,7 +420,10 @@ export class DiagnosticsService {
     });
 
     if (!diagnostic) {
-      throw new HttpException('Diagnostic not found', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'Diagnóstico no encontrado',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     const {
@@ -465,7 +468,7 @@ export class DiagnosticsService {
     });
 
     if (!student) {
-      throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Estudiante no encontrado', HttpStatus.NOT_FOUND);
     }
 
     let diagnostics = await this.diagnosticRepository.find({
@@ -506,7 +509,7 @@ export class DiagnosticsService {
     });
 
     if (!psychologist) {
-      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
     const diagnostics = await this.diagnosticRepository.find();
@@ -545,7 +548,7 @@ export class DiagnosticsService {
     });
 
     if (!psychologist) {
-      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
     const diagnostic = await this.diagnosticRepository.findOne({
@@ -554,7 +557,10 @@ export class DiagnosticsService {
     });
 
     if (!diagnostic) {
-      throw new HttpException('Diagnostic not found', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'Diagnóstico no encontrado',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     let i = 0;
@@ -587,7 +593,7 @@ export class DiagnosticsService {
     });
 
     if (!student) {
-      throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Estudiante no encontrado', HttpStatus.NOT_FOUND);
     }
 
     let diagnostic = await this.diagnosticRepository.findOne({
@@ -596,7 +602,10 @@ export class DiagnosticsService {
     });
 
     if (!diagnostic) {
-      throw new HttpException('Diagnostic not found', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'Diagnóstico no encontrado',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     let i = 0;

@@ -30,7 +30,7 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
     }
 
     return user.toResponseObject();
@@ -46,14 +46,14 @@ export class UsersService {
 
     let user = await this.userRepository.findOne({ where: { username } });
     if (user) {
-      throw new HttpException(
-        'Username already exists',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('El usuario ya existe', HttpStatus.BAD_REQUEST);
     }
     user = await this.userRepository.findOne({ where: { email } });
     if (user) {
-      throw new HttpException('Email already exists', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'El correo electrónico ya existe',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     if (google) {
@@ -100,19 +100,19 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
     }
 
     if (user.google) {
       throw new HttpException(
-        'User signed with Google',
+        'Usuario registrado con Google',
         HttpStatus.BAD_REQUEST,
       );
     }
 
     if (user.facebook) {
       throw new HttpException(
-        'User signed with Facebook',
+        'Usuario registrado con Facebook',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -142,7 +142,10 @@ export class UsersService {
         where: { email: data.email },
       });
       if (userByEmail && user.id !== userByEmail.id) {
-        throw new HttpException('Email already exists', HttpStatus.BAD_REQUEST);
+        throw new HttpException(
+          'El correo electrónico ya existe',
+          HttpStatus.BAD_REQUEST,
+        );
       }
     }
 
@@ -151,10 +154,7 @@ export class UsersService {
         where: { username: data.username },
       });
       if (userByUsername && user.id !== userByUsername.id) {
-        throw new HttpException(
-          'Username already exists',
-          HttpStatus.BAD_REQUEST,
-        );
+        throw new HttpException('El usuario ya existe', HttpStatus.BAD_REQUEST);
       }
     }
 
@@ -178,12 +178,19 @@ export class UsersService {
       where: { email: data.email },
     });
     if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
     }
 
     if (user.google) {
       throw new HttpException(
-        'User signed with Google',
+        'Usuario registrado con Google',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    if (user.facebook) {
+      throw new HttpException(
+        'Usuario registrado con Facebook',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -210,7 +217,7 @@ export class UsersService {
       where: { id },
     });
     if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
     }
 
     sgMail.setApiKey(process.env.API_KEY);
@@ -233,7 +240,7 @@ export class UsersService {
   async updatePassword(id: string, data: Partial<UserDTO>) {
     let user = await this.userRepository.findOne({ where: { id } });
     if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
     }
 
     await this.userRepository.update({ id: user.id }, data);
@@ -248,7 +255,7 @@ export class UsersService {
   async validateUser(id: string) {
     let user = await this.userRepository.findOne({ where: { id } });
     if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
     }
 
     await this.userRepository.update(

@@ -25,7 +25,10 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new HttpException('User does not exist', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'Ups! Parece que no existe una cuenta registrada, por favor, ¡regístrate!',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     if (user.google || user.facebook) {
@@ -33,7 +36,10 @@ export class AuthService {
     }
 
     if (!user.isValidated) {
-      throw new HttpException('Email is not validated', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'El correo electrónico no ha sido validado',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     if (user && (await user.comparePassword(pass))) {

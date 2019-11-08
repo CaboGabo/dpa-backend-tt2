@@ -31,7 +31,7 @@ export class GeneralDataService {
   ) {
     if (generalData.savedBy.id !== psychologistId) {
       throw new HttpException(
-        'Incorrect psychologist',
+        'No estás autorizado para realizar esta acción',
         HttpStatus.UNAUTHORIZED,
       );
     }
@@ -54,7 +54,10 @@ export class GeneralDataService {
     });
 
     if (!generalData) {
-      throw new HttpException('General data not found', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'Información general no encontrada',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     return this.generalDataToResponseObject(generalData);
@@ -66,7 +69,7 @@ export class GeneralDataService {
       relations: ['user'],
     });
     if (!psychologist) {
-      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
     const generalData = await this.generalDataRepository.create({
@@ -89,7 +92,7 @@ export class GeneralDataService {
     });
 
     if (!psychologist) {
-      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
     let generalData = await this.generalDataRepository.findOne({
@@ -98,7 +101,10 @@ export class GeneralDataService {
     });
 
     if (!generalData) {
-      throw new HttpException('General data not found', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'Información general no encontrada',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     this.ensureOwnership(generalData, psychologist.id);
@@ -119,7 +125,7 @@ export class GeneralDataService {
     });
 
     if (!psychologist) {
-      throw new HttpException('Psychologist not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
     let generalData = await this.generalDataRepository.findOne({
@@ -128,7 +134,10 @@ export class GeneralDataService {
     });
 
     if (!generalData) {
-      throw new HttpException('General data not found', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'Información general no encontrada',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     this.ensureOwnership(generalData, psychologist.id);

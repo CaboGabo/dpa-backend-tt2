@@ -36,7 +36,7 @@ export class KeyPhrasesService {
     );
     if (!classificationCriteria) {
       throw new HttpException(
-        'Classification criteria not found',
+        'Criterio de clasificación no encontrado',
         HttpStatus.NOT_FOUND,
       );
     }

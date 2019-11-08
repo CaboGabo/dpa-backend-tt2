@@ -27,7 +27,10 @@ export class StudentsService {
 
   private ensureOwnership(student: StudentEntity, userId: string) {
     if (student.user.id !== userId) {
-      throw new HttpException('Incorrect user', HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        'No estás autorizado para realizar esta acción',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
   }
 
@@ -48,7 +51,7 @@ export class StudentsService {
     });
 
     if (!student) {
-      throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Estudiante no encontrado', HttpStatus.NOT_FOUND);
     }
 
     return this.studentToResponseObject(student);
@@ -61,7 +64,10 @@ export class StudentsService {
       relations: ['user', 'posts', 'diagnostics'],
     });
     if (student) {
-      throw new HttpException('Student already exists', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'El estudiante ya existe',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     student = await this.studentRepository.findOne({
@@ -71,7 +77,7 @@ export class StudentsService {
 
     if (student) {
       throw new HttpException(
-        'Enrollment already exists',
+        'El número de boleta ya existe',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -92,7 +98,7 @@ export class StudentsService {
     });
 
     if (!student) {
-      throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Estudiante no encontrado', HttpStatus.NOT_FOUND);
     }
 
     if (data.enrollment) {
@@ -101,7 +107,7 @@ export class StudentsService {
       });
       if (studentByEnrollment && student.id !== studentByEnrollment.id) {
         throw new HttpException(
-          'Enrollment already exists',
+          'El número de boleta ya existe',
           HttpStatus.BAD_REQUEST,
         );
       }

@@ -90,7 +90,7 @@ export class ActivitiesService {
     });
 
     if (!activity) {
-      throw new HttpException('Activity not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Actividad no encontrada', HttpStatus.NOT_FOUND);
     }
 
     await this.activityRepository.update(
@@ -115,7 +115,7 @@ export class ActivitiesService {
     });
 
     if (!activity) {
-      throw new HttpException('Activity not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Actividad no encontrada', HttpStatus.NOT_FOUND);
     }
 
     await this.activityRepository.update(

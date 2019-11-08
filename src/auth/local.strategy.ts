@@ -18,7 +18,10 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     const user = await this.authService.validateUser(username, password);
 
     if (!user) {
-      throw new HttpException('User does not exist', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'Usuario o contraseña incorrectos',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     return user;

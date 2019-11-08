@@ -73,7 +73,7 @@ export class ClassificationCriteriaService {
     );
 
     if (!classificationCriteria) {
-      throw new HttpException('Criteria not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Criterio no encontrado', HttpStatus.NOT_FOUND);
     }
 
     await this.classificationCriteriaRepository.update(
@@ -99,7 +99,7 @@ export class ClassificationCriteriaService {
     );
 
     if (!classificationCriteria) {
-      throw new HttpException('Criteria not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Criterio no encontrado', HttpStatus.NOT_FOUND);
     }
 
     await this.classificationCriteriaRepository.remove(classificationCriteria);
