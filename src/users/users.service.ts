@@ -73,7 +73,7 @@ export class UsersService {
     }
     await this.userRepository.save(user);
 
-    if (!google || !facebook) {
+    if (!google && !facebook) {
       sgMail.setApiKey(process.env.API_KEY);
 
       const template = fs.readFileSync('src/email/confirmation-email.html');
