@@ -103,7 +103,7 @@ export class CamirTestsService {
     }
 
     const camirTest = await this.camirTestRepository.create({
-      ...data,
+      result: JSON.stringify(data.result),
       student,
     });
 

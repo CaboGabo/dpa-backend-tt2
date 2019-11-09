@@ -2,8 +2,7 @@ import { IsString } from 'class-validator';
 import { StudentRO } from '../students/student.dto';
 
 export class CamirTestDTO {
-  @IsString()
-  result: string;
+  result: any;
 }
 
 export class CamirTestRO {
