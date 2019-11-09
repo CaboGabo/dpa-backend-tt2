@@ -18,7 +18,7 @@ export class PostEntity {
   @Column('text')
   content: string;
 
-  @Column({
+  /*@Column({
     type: 'float',
     default: 0,
   })
@@ -34,7 +34,7 @@ export class PostEntity {
     type: 'text',
     default: '-',
   })
-  tag: string;
+  tag: string;*/
 
   @Column('text')
   type: string;
