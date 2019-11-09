@@ -32,7 +32,7 @@ export class PostEntity {
 
   @Column({
     type: 'text',
-    default: '',
+    default: '-',
   })
   tag: string;
 

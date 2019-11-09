@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { PostEntity } from '../posts/post.entity';
 import { DiagnosticEntity } from '../diagnostics/diagnostic.entity';
+import { CamirTestEntity } from '../camir-tests/camir-test.entity';
 
 @Entity('students')
 export class StudentEntity {
@@ -54,4 +55,7 @@ export class StudentEntity {
     cascade: true,
   })
   diagnostics: DiagnosticEntity[];
+
+  @OneToOne(type => CamirTestEntity, camirTest => camirTest.student)
+  camirTest: CamirTestEntity;
 }

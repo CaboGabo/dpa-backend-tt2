@@ -18,6 +18,7 @@ import { DiagnosticsModule } from './diagnostics/diagnostics.module';
 import { AuthModule } from './auth/auth.module';
 import { ActivitiesModule } from './activities/activities.module';
 import { DiagnosticDetailsModule } from './diagnostic-details/diagnostic-details.module';
+import { CamirTestsModule } from './camir-tests/camir-tests.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { DiagnosticDetailsModule } from './diagnostic-details/diagnostic-details
     AuthModule,
     ActivitiesModule,
     DiagnosticDetailsModule,
+    CamirTestsModule,
   ],
   controllers: [AppController],
   providers: [

@@ -2,6 +2,7 @@ import { IsString, IsNumber } from 'class-validator';
 import { UserRO } from '../users/user.dto';
 import { PostRO } from '../posts/post.dto';
 import { DiagnosticRO } from '../diagnostics/diagnostic.dto';
+import { CamirTestRO } from '../camir-tests/camir-test.dto';
 
 export class StudentDTO {
   @IsString()
@@ -35,4 +36,5 @@ export class StudentRO {
   user: UserRO;
   posts?: PostRO[];
   diagnostics?: DiagnosticRO[];
+  camirTest?: CamirTestRO;
 }
