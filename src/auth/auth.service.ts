@@ -42,6 +42,13 @@ export class AuthService {
       );
     }
 
+    if (user.psychologist && !user.psychologist.isValidated) {
+      throw new HttpException(
+        'Lo sentimos, esta cuenta aún no ha sido verificada, intenta de nuevo más tarde',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     if (user && (await user.comparePassword(pass))) {
       return user.toResponseObject();
     }

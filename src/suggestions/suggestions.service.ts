@@ -80,6 +80,10 @@ export class SuggestionsService {
       throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
+    if (!psychologist.isValidated) {
+      throw new HttpException('Psicólogo no validado', HttpStatus.NOT_FOUND);
+    }
+
     const criteria = await this.classificationCriteriaRepository.findOne({
       where: { keyname },
     });
@@ -115,6 +119,10 @@ export class SuggestionsService {
       throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
+    if (!psychologist.isValidated) {
+      throw new HttpException('Psicólogo no validado', HttpStatus.NOT_FOUND);
+    }
+
     let suggestion = await this.suggestionRepository.findOne({
       where: { savedBy: { id: psychologist.id }, id },
       relations: ['savedBy', 'classificationCriteria'],
@@ -143,6 +151,10 @@ export class SuggestionsService {
 
     if (!psychologist) {
       throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
+    }
+
+    if (!psychologist.isValidated) {
+      throw new HttpException('Psicólogo no validado', HttpStatus.NOT_FOUND);
     }
 
     let suggestion = await this.suggestionRepository.findOne({

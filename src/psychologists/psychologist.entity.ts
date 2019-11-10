@@ -32,6 +32,12 @@ export class PsychologistEntity {
   @Column('text')
   lastName: string;
 
+  @Column({
+    type: 'boolean',
+    default: false,
+  })
+  isValidated: boolean;
+
   @OneToOne(type => UserEntity, user => user.psychologist)
   @JoinColumn()
   user: UserEntity;

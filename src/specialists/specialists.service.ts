@@ -74,6 +74,10 @@ export class SpecialistsService {
       throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
+    if (!psychologist.isValidated) {
+      throw new HttpException('Psicólogo no validado', HttpStatus.NOT_FOUND);
+    }
+
     let specialist = await this.specialistRepository.findOne({
       where: { phone: data.phone },
       relations: ['savedBy'],
@@ -107,6 +111,10 @@ export class SpecialistsService {
 
     if (!psychologist) {
       throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
+    }
+
+    if (!psychologist.isValidated) {
+      throw new HttpException('Psicólogo no validado', HttpStatus.NOT_FOUND);
     }
 
     let specialist = await this.specialistRepository.findOne({
@@ -152,6 +160,10 @@ export class SpecialistsService {
 
     if (!psychologist) {
       throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
+    }
+
+    if (!psychologist.isValidated) {
+      throw new HttpException('Psicólogo no validado', HttpStatus.NOT_FOUND);
     }
 
     let specialist = await this.specialistRepository.findOne({

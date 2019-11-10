@@ -230,7 +230,7 @@ export class DiagnosticsService {
     );
   }
 
-  getTopWords(posts: PostRO[]): any {
+  getTopWords(posts: PostEntity[]): any {
     let contents = [];
 
     for (const post of posts) {
@@ -512,6 +512,10 @@ export class DiagnosticsService {
       throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
+    if (!psychologist.isValidated) {
+      throw new HttpException('Psicólogo no validado', HttpStatus.NOT_FOUND);
+    }
+
     const diagnostics = await this.diagnosticRepository.find();
 
     for (const diagnostic of diagnostics) {
@@ -549,6 +553,10 @@ export class DiagnosticsService {
 
     if (!psychologist) {
       throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
+    }
+
+    if (!psychologist.isValidated) {
+      throw new HttpException('Psicólogo no validado', HttpStatus.NOT_FOUND);
     }
 
     const diagnostic = await this.diagnosticRepository.findOne({

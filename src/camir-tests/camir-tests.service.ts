@@ -61,6 +61,10 @@ export class CamirTestsService {
       throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
+    if (!psychologist.isValidated) {
+      throw new HttpException('Psicólogo no validado', HttpStatus.NOT_FOUND);
+    }
+
     const camirTests = await this.camirTestRepository.find({
       relations: ['student'],
     });
@@ -72,12 +76,16 @@ export class CamirTestsService {
 
   async showOne(idUser: string, id: string): Promise<CamirTestRO> {
     const psychologist = await this.psychologistRepository.findOne({
-      where: { user: { id } },
+      where: { user: { idUser } },
       relations: ['user'],
     });
 
     if (!psychologist) {
       throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
+    }
+
+    if (!psychologist.isValidated) {
+      throw new HttpException('Psicólogo no validado', HttpStatus.NOT_FOUND);
     }
 
     const camirTest = await this.camirTestRepository.findOne({

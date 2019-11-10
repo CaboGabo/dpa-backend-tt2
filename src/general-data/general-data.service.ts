@@ -72,6 +72,10 @@ export class GeneralDataService {
       throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
     }
 
+    if (!psychologist.isValidated) {
+      throw new HttpException('Psicólogo no validado', HttpStatus.NOT_FOUND);
+    }
+
     const generalData = await this.generalDataRepository.create({
       ...data,
       savedBy: psychologist,
@@ -93,6 +97,10 @@ export class GeneralDataService {
 
     if (!psychologist) {
       throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
+    }
+
+    if (!psychologist.isValidated) {
+      throw new HttpException('Psicólogo no validado', HttpStatus.NOT_FOUND);
     }
 
     let generalData = await this.generalDataRepository.findOne({
@@ -126,6 +134,10 @@ export class GeneralDataService {
 
     if (!psychologist) {
       throw new HttpException('Psicólogo no encontrado', HttpStatus.NOT_FOUND);
+    }
+
+    if (!psychologist.isValidated) {
+      throw new HttpException('Psicólogo no validado', HttpStatus.NOT_FOUND);
     }
 
     let generalData = await this.generalDataRepository.findOne({

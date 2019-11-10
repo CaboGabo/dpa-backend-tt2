@@ -5,13 +5,16 @@ import { Repository } from 'typeorm';
 import { UserDTO } from './user.dto';
 import * as sgMail from '@sendgrid/mail';
 import * as fs from 'fs';
+import { PsychologistEntity } from '../psychologists/psychologist.entity';
 //import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>, // private authService: AuthService,
+    private userRepository: Repository<UserEntity>,
+    @InjectRepository(PsychologistEntity)
+    private psychologistRepository: Repository<PsychologistEntity>, // private authService: AuthService,
   ) {}
 
   async showAll(page: number = 1) {
@@ -215,10 +218,20 @@ export class UsersService {
   async accountAccepted(id: string) {
     const user = await this.userRepository.findOne({
       where: { id },
+      relations: ['psychologist'],
     });
     if (!user) {
       throw new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
     }
+
+    let psychologist = await this.psychologistRepository.findOne({
+      where: { user: { id } },
+    });
+
+    await this.psychologistRepository.update(
+      { id: psychologist.id },
+      { isValidated: true },
+    );
 
     sgMail.setApiKey(process.env.API_KEY);
     const body = fs.readFileSync('src/email/account-accepted.html');
