@@ -63,8 +63,8 @@ export class UsersController {
 
   @Post('auth/accept-account')
   @UsePipes(new ValidationPipe())
-  acceptAccount(@Body() id: string) {
-    return this.usersService.accountAccepted(id);
+  acceptAccount(@Body() body: {id: string}) {
+    return this.usersService.accountAccepted(body.id);
   }
 
   @Put('auth/user')

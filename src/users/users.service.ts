@@ -216,16 +216,18 @@ export class UsersService {
   }
 
   async accountAccepted(id: string) {
+
     const user = await this.userRepository.findOne({
       where: { psychologist: {id} },
       relations: ['psychologist'],
     });
+
     if (!user) {
       throw new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
     }
 
     let psychologist = await this.psychologistRepository.findOne({
-      where: { user: { id } },
+      where: { id },
     });
 
     await this.psychologistRepository.update(
