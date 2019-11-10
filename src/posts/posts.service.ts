@@ -68,4 +68,29 @@ export class PostsService {
 
     return postsResponse;
   }
+
+  async destroyByUser(userId: string): Promise<boolean> {
+    const student = await this.studentRepository.findOne({
+      where: { user: { id: userId } },
+      relations: ['user'],
+    });
+
+    if (!student) {
+      throw new HttpException(
+        'No estás autorizado para realizar esta acción',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    const posts = await this.postRepository.find({
+      where: { student: { id: student.id } },
+      relations: ['author'],
+    });
+
+    for (const post of posts) {
+      await this.postRepository.remove(post);
+    }
+
+    return true;
+  }
 }

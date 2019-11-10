@@ -1,5 +1,7 @@
-import { Controller, Logger, Get, UseGuards } from '@nestjs/common';
+import { Controller, Logger, Get, UseGuards, Delete } from '@nestjs/common';
 import { PostsService } from './posts.service';
+import { AuthGuard } from '@nestjs/passport';
+import { User } from '../users/user.decorator';
 
 @Controller()
 export class PostsController {
@@ -13,10 +15,10 @@ export class PostsController {
     options.id && this.logger.log('POST ' + JSON.stringify(options.id));
   }
 
-  /*@Get('api/posts')
+  @Delete('api/posts')
   @UseGuards(AuthGuard('jwt'))
   showPostsByUser(@User('id') user) {
     this.logData({ user });
-    return this.postsService.showByUser(user);
-  }*/
+    return this.postsService.destroyByUser(user);
+  }
 }
