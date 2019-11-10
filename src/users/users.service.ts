@@ -87,7 +87,7 @@ export class UsersService {
         .replace(':id', user.id);
       const msg = {
         to: user.email,
-        from: 'gabo.alejandro.huitron@gmail.com',
+        from: 'dpa.app.contact@gmail.com',
         subject: 'DPa - Confirmación de email',
         html: html,
       };
@@ -129,7 +129,7 @@ export class UsersService {
       .replace(':id', user.id);
     const msg = {
       to: user.email,
-      from: 'gabo.alejandro.huitron@gmail.com',
+      from: 'dpa.app.contact@gmail.com',
       subject: 'DPa - Confirmación de email',
       html: html,
     };
@@ -206,7 +206,7 @@ export class UsersService {
       .replace(':id', user.id);
     const msg = {
       to: user.email,
-      from: 'gabo.alejandro.huitron@gmail.com',
+      from: 'dpa.app.contact@gmail.com.',
       subject: 'DPa - Restablecer contraseña',
       html: html,
     };
@@ -245,7 +245,7 @@ export class UsersService {
       .replace(':id', user.id);
     const msg = {
       to: user.email,
-      from: 'gabo.alejandro.huitron@gmail.com',
+      from: 'dpa.app.contact@gmail.com',
       subject: 'DPa - Cuenta aceptada',
       html: html,
     };
