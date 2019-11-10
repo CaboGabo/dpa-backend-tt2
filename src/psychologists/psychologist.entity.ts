@@ -38,7 +38,7 @@ export class PsychologistEntity {
   })
   isValidated: boolean;
 
-  @OneToOne(type => UserEntity, user => user.psychologist)
+  @OneToOne(type => UserEntity, user => user.psychologist, { onDelete: 'CASCADE' })
   @JoinColumn()
   user: UserEntity;
 
