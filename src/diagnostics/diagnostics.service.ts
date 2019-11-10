@@ -654,14 +654,14 @@ export class DiagnosticsService {
     const peopleWithTdm = diagnosticsTdm.length;
     const peopleWithTdp = diagnosticsTdp.length;
 
-    const peopleOk = diagnostics.length - peopleWithTdm - peopleWithTdp;
+    const peopleOk = diagnostics.length / 2 - peopleWithTdm - peopleWithTdp;
 
     const averageAge = this.getSumAges(diagnostics);
     const averageAgeTdm = this.getSumAges(diagnosticsTdm);
     const averageAgeTdp = this.getSumAges(diagnosticsTdp);
 
     return {
-      totalPeople: diagnostics.length,
+      totalPeople: diagnostics.length / 2,
       peopleWithTdm,
       peopleWithTdp,
       peopleOk,
