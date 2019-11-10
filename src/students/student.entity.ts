@@ -44,15 +44,16 @@ export class StudentEntity {
   })
   gender: string;
 
-  @OneToOne(type => UserEntity, user => user.student)
+  @OneToOne(type => UserEntity, user => user.student, { onDelete: 'CASCADE' })
   @JoinColumn()
   user: UserEntity;
 
-  @OneToMany(type => PostEntity, post => post.author, { cascade: true })
+  @OneToMany(type => PostEntity, post => post.author, { cascade: true, onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   posts: PostEntity[];
 
   @OneToMany(type => DiagnosticEntity, diagnostic => diagnostic.student, {
     cascade: true,
+    onDelete: 'CASCADE'
   })
   diagnostics: DiagnosticEntity[];
 

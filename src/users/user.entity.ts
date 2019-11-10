@@ -47,10 +47,10 @@ export class UserEntity {
   })
   facebook: boolean;
 
-  @OneToOne(type => StudentEntity, student => student.user)
+  @OneToOne(type => StudentEntity, student => student.user, { onDelete: 'CASCADE', onUpdate: 'CASCADE', cascade: true })
   student: StudentEntity;
 
-  @OneToOne(type => PsychologistEntity, psychologist => psychologist.user)
+  @OneToOne(type => PsychologistEntity, psychologist => psychologist.user, { onDelete: 'CASCADE', onUpdate: 'CASCADE', cascade: true })
   psychologist: PsychologistEntity;
 
   @BeforeInsert()

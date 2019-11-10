@@ -28,7 +28,7 @@ export class DiagnosticEntity {
   @Column('text')
   topWords: string;
 
-  @ManyToOne(type => StudentEntity, student => student.diagnostics)
+  @ManyToOne(type => StudentEntity, student => student.diagnostics, { onDelete: 'CASCADE' })
   student: StudentEntity;
 
   /*@OneToMany(type => ActivityEntity, activity => activity.diagnostic)
@@ -37,6 +37,7 @@ export class DiagnosticEntity {
   @OneToMany(
     type => DiagnosticDetailEntity,
     diagnosticDetail => diagnosticDetail.diagnostic,
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE', cascade: true }
   )
   details: DiagnosticDetailEntity[];
 }

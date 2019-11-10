@@ -25,6 +25,7 @@ export class ActivityEntity {
   @ManyToOne(
     type => DiagnosticDetailEntity,
     diagnosticDetail => diagnosticDetail.activities,
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE' }
   )
   diagnosticDetail: DiagnosticDetailEntity;
 

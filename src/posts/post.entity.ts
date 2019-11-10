@@ -42,6 +42,6 @@ export class PostEntity {
   @Column('date')
   postdate: Date;
 
-  @ManyToOne(type => StudentEntity, author => author.posts)
+  @ManyToOne(type => StudentEntity, author => author.posts, { onDelete: 'CASCADE' })
   author: StudentEntity;
 }

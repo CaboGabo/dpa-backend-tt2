@@ -24,7 +24,7 @@ export class DiagnosticDetailEntity {
   @Column()
   result: boolean;
 
-  @ManyToOne(type => DiagnosticEntity, diagnostic => diagnostic.details)
+  @ManyToOne(type => DiagnosticEntity, diagnostic => diagnostic.details, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   diagnostic: DiagnosticEntity;
 
   @ManyToOne(
