@@ -216,9 +216,8 @@ export class UsersService {
   }
 
   async accountAccepted(id: string) {
-
     const user = await this.userRepository.findOne({
-      where: { psychologist: {id} },
+      where: { psychologist: { id } },
       relations: ['psychologist'],
     });
 
@@ -239,7 +238,10 @@ export class UsersService {
     const body = fs.readFileSync('src/email/account-accepted.html');
     let html = body
       .toString()
-      .replace(':username', user.username)
+      .replace(
+        ':fullname',
+        `${psychologist.firstName} ${psychologist.lastName}`,
+      )
       .replace(':id', user.id);
     const msg = {
       to: user.email,
