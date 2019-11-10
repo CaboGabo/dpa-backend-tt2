@@ -42,12 +42,12 @@ export class PsychologistEntity {
   @JoinColumn()
   user: UserEntity;
 
-  @OneToMany(type => SpecialistEntity, specialist => specialist.savedBy)
+  @OneToMany(type => SpecialistEntity, specialist => specialist.savedBy, { onDelete: 'CASCADE', onUpdate: 'CASCADE', cascade: true })
   recommendations: SpecialistEntity[];
 
-  @OneToMany(type => GeneralDataEntity, generalData => generalData.savedBy)
+  @OneToMany(type => GeneralDataEntity, generalData => generalData.savedBy, { onDelete: 'CASCADE', onUpdate: 'CASCADE', cascade: true })
   generalData: GeneralDataEntity[];
 
-  @OneToMany(type => SuggestionEntity, suggestion => suggestion.savedBy)
+  @OneToMany(type => SuggestionEntity, suggestion => suggestion.savedBy, { onDelete: 'CASCADE', onUpdate: 'CASCADE', cascade: true })
   suggestions: SuggestionEntity[];
 }

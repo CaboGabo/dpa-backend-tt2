@@ -44,6 +44,7 @@ export class SuggestionEntity {
   @ManyToOne(
     type => PsychologistEntity,
     psychologist => psychologist.suggestions,
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE' }
   )
   savedBy: PsychologistEntity;
 
