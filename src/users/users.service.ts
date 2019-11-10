@@ -217,7 +217,7 @@ export class UsersService {
 
   async accountAccepted(id: string) {
     const user = await this.userRepository.findOne({
-      where: { id },
+      where: { psychologist: {id} },
       relations: ['psychologist'],
     });
     if (!user) {
