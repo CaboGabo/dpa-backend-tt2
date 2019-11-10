@@ -34,6 +34,11 @@ export class PsychologistsController {
     return this.psychologistsService.showAll(page);
   }
 
+  @Get('/notValidated')
+  showAllNotValidated() {
+    return this.psychologistsService.showAllNotValidated();
+  }
+
   @Post()
   @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())

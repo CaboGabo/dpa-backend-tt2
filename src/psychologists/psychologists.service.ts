@@ -49,6 +49,13 @@ export class PsychologistsService {
     );
   }
 
+  async showAllNotValidated(): Promise<PsychologistRO[]> {
+    const psychologists = await this.psychologistRepository.find();
+    return psychologists
+      .filter(psychologist => !psychologist.isValidated)
+      .map(psychologist => this.psychologistToResponseObject(psychologist));
+  }
+
   async read(id: string): Promise<PsychologistRO> {
     const psychologist = await this.psychologistRepository.findOne({
       where: { id },
