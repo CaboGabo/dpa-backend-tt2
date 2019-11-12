@@ -20,7 +20,7 @@ export class StudentsService {
       user: student.user ? student.user.toResponseObject() : null,
       posts: student.posts || null,
       diagnostics: student.diagnostics || null,
-      camirTest: student.camirTest || null,
+      camirTests: student.camirTests || null,
     };
 
     return responseObject;
