@@ -41,7 +41,7 @@ export class CamirTestsService {
       relations: ['student'],
     });
 
-    if (!camirTest) {
+    if (!camirTest || camirTest.length === 0) {
       throw new HttpException(
         'No hay tests asignados a este estudiante',
         HttpStatus.NOT_FOUND,
