@@ -48,15 +48,19 @@ export class StudentEntity {
   @JoinColumn()
   user: UserEntity;
 
-  @OneToMany(type => PostEntity, post => post.author, { cascade: true, onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  @OneToMany(type => PostEntity, post => post.author, {
+    cascade: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   posts: PostEntity[];
 
   @OneToMany(type => DiagnosticEntity, diagnostic => diagnostic.student, {
     cascade: true,
-    onDelete: 'CASCADE'
+    onDelete: 'CASCADE',
   })
   diagnostics: DiagnosticEntity[];
 
-  @OneToOne(type => CamirTestEntity, camirTest => camirTest.student)
-  camirTest: CamirTestEntity;
+  @OneToMany(type => CamirTestEntity, camirTest => camirTest.student)
+  camirTests: CamirTestEntity[];
 }

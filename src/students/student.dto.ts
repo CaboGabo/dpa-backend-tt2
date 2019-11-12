@@ -36,5 +36,5 @@ export class StudentRO {
   user: UserRO;
   posts?: PostRO[];
   diagnostics?: DiagnosticRO[];
-  camirTest?: CamirTestRO;
+  camirTests?: CamirTestRO[];
 }

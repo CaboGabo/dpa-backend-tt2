@@ -114,7 +114,6 @@ export class CamirTestsService {
       result: JSON.stringify(data.result),
       student,
     });
-
     await this.camirTestRepository.save(camirTest);
 
     return this.camirTestToResponseObject(camirTest);

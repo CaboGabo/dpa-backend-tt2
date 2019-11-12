@@ -14,7 +14,7 @@ export class ClassifierService {
 
     let result = [];
     result[0] = await this.mainTdm(criteriaResults);
-    result[1] = await this.mainTdp(criteriaResults);
+    result[1] = await this.mainTdp(criteriaResults, posts);
     return result;
   }
 
@@ -180,7 +180,7 @@ export class ClassifierService {
   //*************              ************//
   //*************              ************//
 
-  async mainTdp(criteriaResults: any) {
+  async mainTdp(criteriaResults: any, posts: any) {
     let resultTdp = {
       globalResult: false,
       criteriaResults: [
@@ -235,7 +235,7 @@ export class ClassifierService {
     let mainCount = 0;
     let gBehaviour = false;
 
-    if (await this.isTdpABehaviourPresent()) {
+    if (await this.isTdpABehaviourPresent(criteriaResults, posts)) {
       console.log('El criterio TDP-A está presente');
       mainCount++;
     } else console.log('El criterio TDP-A no está presente');
@@ -245,7 +245,7 @@ export class ClassifierService {
       mainCount++;
     } else console.log('El criterio TDP-B no está presente');
 
-    if (await this.isTdpCBehaviourPresent(criteriaResults)) {
+    if (await this.isTdpCBehaviourPresent(criteriaResults, posts)) {
       console.log('El criterio TDP-C está presente');
       mainCount++;
     } else console.log('El criterio TDP-C no está presente');
@@ -268,15 +268,17 @@ export class ClassifierService {
     return resultTdp;
   }
 
-  async isTdpABehaviourPresent() {
-    let presentSymptoms = 0;
+  async isTdpABehaviourPresent(criteriaResults, posts) {
+    let datesArray = await this.getOcurrencesDatesArray(criteriaResults, posts);
 
     //Detección de pensamientos negativos durante dos años
-    //****************
-    if (presentSymptoms >= 0) {
+    let firstDate = new Date(datesArray[0]);
+    let lastDate = new Date(datesArray[datesArray.length - 1]);
+    const diffTime = Math.abs(lastDate - firstDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    if (diffDays > 730) {
       return true;
     }
-
     return false;
   }
 
@@ -323,18 +325,24 @@ export class ClassifierService {
     return false;
   }
 
-  async isTdpCBehaviourPresent(criteriaResults) {
-    //Checar fechas
-    let presentSymptoms = 0;
+  async isTdpCBehaviourPresent(criteriaResults, posts) {
+    let datesArray = await this.getOcurrencesDatesArray(criteriaResults, posts);
 
-    //****************
     //Deteccion de efectos presentes sin lapsos vacios de 2 meses
-
-    if (presentSymptoms > 0) {
-      return true;
+    for (let i = 0; i < datesArray.length; i++) {
+      if (i === datesArray.length - 1) {
+        break;
+      } else {
+        let date1 = new Date(datesArray[i]);
+        let date2 = new Date(datesArray[i + 1]);
+        const diffTime = Math.abs(date2 - date1);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        if (diffDays > 62) {
+          return false;
+        }
+      }
     }
-
-    return false;
+    return true;
   }
 
   async isTdpGBehaviourPresent(criteriaResults) {
@@ -363,5 +371,28 @@ export class ClassifierService {
       return true;
     }
     return false;
+  }
+
+  async getOcurrencesDatesArray(criteriaResults, posts) {
+    var ocurrencesArray = [];
+    for (const prop in criteriaResults[1]) {
+      for (let i = 0; i < criteriaResults[1][prop].length; i++) {
+        ocurrencesArray.push(criteriaResults[1][prop][i]);
+      }
+    }
+
+    var datesArray = [];
+    for (const ocurrence in ocurrencesArray) {
+      datesArray.push(posts[ocurrence].postdate);
+    }
+    //datesArray.push('2017-05-02');
+
+    //Ordenamos de menor a mayor las fechas de las ocurrencias
+    datesArray.sort((a: any, b: any) => {
+      let c = new Date(a);
+      let d = new Date(b);
+      return c.getTime() - d.getTime();
+    });
+    return datesArray;
   }
 }

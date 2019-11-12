@@ -4,6 +4,7 @@ import {
   CreateDateColumn,
   Column,
   OneToOne,
+  ManyToOne,
 } from 'typeorm';
 import { StudentEntity } from '../students/student.entity';
 
@@ -18,6 +19,6 @@ export class CamirTestEntity {
   @Column('text')
   result: string;
 
-  @OneToOne(type => StudentEntity, student => student.camirTest)
+  @ManyToOne(type => StudentEntity, student => student.camirTests)
   student: StudentEntity;
 }
