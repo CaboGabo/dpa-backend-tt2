@@ -124,7 +124,7 @@ export class DiagnosticsService {
       .map(word => JSON.stringify(word))
       .join();
 
-    topWords = `[${topWords}]`
+    topWords = `[${topWords}]`;
 
     const {
       globalResult: tdmResult,
@@ -233,19 +233,34 @@ export class DiagnosticsService {
   }
 
   getTopWords(posts: PostEntity[]): any {
+    const garbageWords = [
+      'de',
+      'en',
+      'que',
+      'la',
+      'y',
+      'es',
+      'por',
+      'le',
+      'he',
+      'has',
+    ];
+
     let contents = [];
 
     for (const post of posts) {
-      contents.push(post.content);
+      contents.push(post.content.toLowerCase());
     }
 
     let wordsArray = contents.join(' ').split(/\s+/);
     let wordsMap = {};
     wordsArray.forEach(key => {
-      if (wordsMap.hasOwnProperty(key)) {
-        wordsMap[key]++;
-      } else {
-        wordsMap[key] = 1;
+      if (!garbageWords.includes(key)) {
+        if (wordsMap.hasOwnProperty(key)) {
+          wordsMap[key]++;
+        } else {
+          wordsMap[key] = 1;
+        }
       }
     });
 
