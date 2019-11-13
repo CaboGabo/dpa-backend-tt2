@@ -120,9 +120,11 @@ export class DiagnosticsService {
     });
     const insResult = await this.classifierService.classify(posts);
 
-    const topWords = this.getTopWords(posts)
+    let topWords = this.getTopWords(posts)
       .map(word => JSON.stringify(word))
       .join();
+
+    topWords = `[${topWords}]`
 
     const {
       globalResult: tdmResult,
