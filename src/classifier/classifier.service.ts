@@ -279,7 +279,7 @@ export class ClassifierService {
     //Detección de pensamientos negativos durante dos años
     let firstDate = new Date(datesArray[0]);
     let lastDate = new Date(datesArray[datesArray.length - 1]);
-    const diffTime = Math.abs(lastDate - firstDate);
+    const diffTime = Math.abs(lastDate.getTime() - firstDate.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     if (diffDays > 730 && averageSentiment < 0.70) {
       return true;
@@ -340,7 +340,7 @@ export class ClassifierService {
       } else {
         let date1 = new Date(datesArray[i]);
         let date2 = new Date(datesArray[i + 1]);
-        const diffTime = Math.abs(date2 - date1);
+        const diffTime = Math.abs(date2.getTime() - date1.getTime());
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         if (diffDays > 62) {
           return false;
