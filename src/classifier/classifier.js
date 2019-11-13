@@ -12,6 +12,8 @@ const criteriaC1 = require('./classifiers/criteriaC1');
 
 let classifiers = [];
 
+let tokensDel = ['.', ';', ',', '?', '¿', '!', '¡', ' y ', ' e ', ' o ', ' u ', ' ni '];
+
 async function getClassifiers() {
   classifiers = await Promise.all([
     criteriaA2.train(),
@@ -73,19 +75,35 @@ async function main(posts) {
     consumoAfeccion: [],
   };
 
+  //Dividmos los posts en oraciones
+  let sentences = [];
+  let cont = 0;
+  for (const post of posts){
+    sentences[cont] = await splitMulti(post.content, tokensDel);
+    cont++;
+  }
+
+  console.log('*********');
   let i = 0;
   for (const classifier of classifiers) {
-    posts.forEach(post => {
-      console.log(post);
-      const result = classifier.getBestClassification(post.content);
-      if (result.label === tags[i] && result.value > 0.95) {
-        ocurrences[`${result.label}`]++;
-        postOcurrences[`${result.label}`].push(post.id);
+    let k = 0;
+    for (const sentence of sentences) {
+      for (let j = 0; j < sentence.length; j++) {
+        const result = classifier.getBestClassification(sentence[j]);
+        console.log('SentenceLoca: ' + sentence[j]);
+        if (result.label === tags[i] && result.value > 0.95) {
+          console.log('SentenceLoca: ' + sentence[j]);
+          console.log(result);
+          ocurrences[`${result.label}`]++;
+          postOcurrences[`${result.label}`].push(posts[k].id);
+          break;
+        }
       }
-    });
-
+      k++;
+    }
     i++;
   }
+  
 
   let results = {};
   for (criteria in ocurrences) {
@@ -97,6 +115,15 @@ async function main(posts) {
   }
 
   return [results, postOcurrences];
+}
+
+async function splitMulti(str, tokens) {
+  let tempChar = tokens[0];
+  for (let i = 1; i < tokens.length; i++) {
+    str = str.split(tokens[i]).join(tempChar);
+  }
+  str = str.split(tempChar);
+  return str;
 }
 
 module.exports = {

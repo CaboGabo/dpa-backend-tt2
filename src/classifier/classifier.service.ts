@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 
 import * as classifier from './classifier';
 import { PostEntity } from '../posts/post.entity';
+const { SentimentAnalyzer } = require('node-nlp');
+const sentiment = new SentimentAnalyzer({ language: 'es' });
 
 classifier.getClassifiers();
 
@@ -13,7 +15,7 @@ export class ClassifierService {
     console.log(criteriaResults);
 
     let result = [];
-    result[0] = await this.mainTdm(criteriaResults);
+    result[0] = await this.mainTdm(criteriaResults, posts);
     result[1] = await this.mainTdp(criteriaResults, posts);
     return result;
   }
@@ -23,7 +25,7 @@ export class ClassifierService {
   //*************              ************//
   //*************              ************//
 
-  async mainTdm(criteriaResults: any) {
+  async mainTdm(criteriaResults: any, posts: any) {
     let resultTdm = {
       globalResult: false,
       criteriaResults: [
@@ -78,7 +80,7 @@ export class ClassifierService {
     let mainCount = 0;
     let cBehaviour = false;
 
-    if (await this.isTdmABehaviourPresent(criteriaResults)) {
+    if (await this.isTdmABehaviourPresent(criteriaResults, posts)) {
       console.log('El criterio TDM-A está presente');
       mainCount++;
     } else {
@@ -103,13 +105,16 @@ export class ClassifierService {
     return resultTdm;
   }
 
-  async isTdmABehaviourPresent(criteriaResults: any) {
+  async isTdmABehaviourPresent(criteriaResults: any, posts: any) {
     let presentSymptoms = 0;
 
     //****************
     //Verificamos que el porcentaje de publicaciones es en su mayoría depresivo
-    //if(depPercentage > 50)
-    //  presentSymptoms++
+    let averageSentiment = await this.getAverageSentimentScore(posts);
+    console.log('Average Sentiment: ' + averageSentiment);
+    if (averageSentiment < 0.70) {
+      presentSymptoms++;
+    }
 
     //Criterios A2-A9
     if (criteriaResults[0]['perdidaInteres']) {
@@ -269,6 +274,7 @@ export class ClassifierService {
   }
 
   async isTdpABehaviourPresent(criteriaResults, posts) {
+    let averageSentiment = await this.getAverageSentimentScore(posts);
     let datesArray = await this.getOcurrencesDatesArray(criteriaResults, posts);
 
     //Detección de pensamientos negativos durante dos años
@@ -276,7 +282,7 @@ export class ClassifierService {
     let lastDate = new Date(datesArray[datesArray.length - 1]);
     const diffTime = Math.abs(lastDate - firstDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    if (diffDays > 730) {
+    if (diffDays > 730 && averageSentiment < 0.70) {
       return true;
     }
     return false;
@@ -394,5 +400,14 @@ export class ClassifierService {
       return c.getTime() - d.getTime();
     });
     return datesArray;
+  }
+
+  async getAverageSentimentScore(posts){
+    var scoreSum = 0;
+    for (let i = 0; i < posts.length; i++) {
+      const result = sentiment.getSentiment(posts[i].content);
+      scoreSum += result.score;
+    }
+    return scoreSum / posts.length;
   }
 }
