@@ -111,7 +111,6 @@ export class ClassifierService {
     //****************
     //Verificamos que el porcentaje de publicaciones es en su mayoría depresivo
     let averageSentiment = await this.getAverageSentimentScore(posts);
-    console.log('Average Sentiment: ' + averageSentiment);
     if (averageSentiment < 0.70) {
       presentSymptoms++;
     }

@@ -83,16 +83,14 @@ async function main(posts) {
     cont++;
   }
 
-  console.log('*********');
   let i = 0;
   for (const classifier of classifiers) {
     let k = 0;
     for (const sentence of sentences) {
       for (let j = 0; j < sentence.length; j++) {
         const result = classifier.getBestClassification(sentence[j]);
-        console.log('SentenceLoca: ' + sentence[j]);
         if (result.label === tags[i] && result.value > 0.95) {
-          console.log('SentenceLoca: ' + sentence[j]);
+          console.log(sentence[j]);
           console.log(result);
           ocurrences[`${result.label}`]++;
           postOcurrences[`${result.label}`].push(posts[k].id);
