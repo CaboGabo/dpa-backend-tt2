@@ -717,39 +717,98 @@ export class DiagnosticsService {
     );
 
     const criteriaTdm = {
-      A2: 0,
-      A3: 0,
-      A4: 0,
-      A6: 0,
-      A7: 0,
-      A8: 0,
-      A9: 0,
-      B1: 0,
-      B4: 0,
-      B6: 0,
-      C1: 0,
+      A2: {
+        description:
+          'Disminución acusada del interés o de la capacidad para el placer en todas o casi todas las actividades',
+        count: 0,
+      },
+      A3: {
+        description: 'Pérdida/aumento de peso/apetito',
+        count: 0,
+      },
+      A4: {
+        description: 'Insomnio',
+        count: 0,
+      },
+      A6: {
+        description: 'Fatiga o pérdida de energía',
+        count: 0,
+      },
+      A7: {
+        description: 'Sentimientos de inutilidad y culpa',
+        count: 0,
+      },
+      A8: {
+        description:
+          'Disminución de la capacidad para concentrarse o indecisión',
+        count: 0,
+      },
+      A9: {
+        description: 'Pensamientos recurrentes de muerte',
+        count: 0,
+      },
+      B1: {
+        description:
+          'Malestar clínicamente significativo o deterioro en lo social, laboral',
+        count: 0,
+      },
+      C1: {
+        description:
+          'Efectos fisiológicos de una sustancia o de otra afección médica',
+        count: 0,
+      },
     };
 
     const criteriaTdp = {
-      A2: 0,
-      A3: 0,
-      A4: 0,
-      A6: 0,
-      A7: 0,
-      A8: 0,
-      A9: 0,
-      B1: 0,
-      B4: 0,
-      B6: 0,
-      C1: 0,
+      A3: {
+        description: 'Pérdida/aumento de peso/apetito',
+        count: 0,
+      },
+      A4: {
+        description: 'Insomnio',
+        count: 0,
+      },
+      A6: {
+        description: 'Fatiga o pérdida de energía',
+        count: 0,
+      },
+      A7: {
+        description: 'Sentimientos de inutilidad y culpa',
+        count: 0,
+      },
+      A8: {
+        description:
+          'Disminución de la capacidad para concentrarse o indecisión',
+        count: 0,
+      },
+      B1: {
+        description:
+          'Malestar clínicamente significativo o deterioro en lo social, laboral',
+        count: 0,
+      },
+      B4: {
+        description: 'Baja autoestima',
+        count: 0,
+      },
+      B6: {
+        description: 'Sentimientos de desesperanza',
+        count: 0,
+      },
+      C1: {
+        description:
+          'Efectos fisiológicos de una sustancia o de otra afección médica',
+        count: 0,
+      },
     };
 
     for (const tdmDetailPositive of tdmDetailsPositive) {
-      criteriaTdm[`${tdmDetailPositive.classificationCriteria.keyname}`]++;
+      criteriaTdm[`${tdmDetailPositive.classificationCriteria.keyname}`]
+        .count++;
     }
 
     for (const tdpDetailPositive of tdpDetailsPositive) {
-      criteriaTdp[`${tdpDetailPositive.classificationCriteria.keyname}`]++;
+      criteriaTdp[`${tdpDetailPositive.classificationCriteria.keyname}`]
+        .count++;
     }
 
     return {
