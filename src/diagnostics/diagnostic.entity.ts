@@ -7,9 +7,12 @@ import {
   ManyToMany,
   JoinTable,
   OneToMany,
+  BeforeInsert,
+  AfterLoad,
 } from 'typeorm';
 import { StudentEntity } from '../students/student.entity';
 import { DiagnosticDetailEntity } from '../diagnostic-details/diagnostic-detail.entity';
+import * as CryptoJS from 'crypto-js';
 
 @Entity('diagnostics')
 export class DiagnosticEntity {
@@ -20,7 +23,7 @@ export class DiagnosticEntity {
   created: Date;
 
   @Column()
-  result: boolean;
+  result: string;
 
   @Column()
   depressionType: string;
@@ -28,16 +31,31 @@ export class DiagnosticEntity {
   @Column('text')
   topWords: string;
 
-  @ManyToOne(type => StudentEntity, student => student.diagnostics, { onDelete: 'CASCADE' })
-  student: StudentEntity;
+  @BeforeInsert()
+  encryptResult() {
+    this.result = CryptoJS.AES.encrypt(
+      this.result,
+      process.env.SECRET,
+    ).toString();
+  }
 
-  /*@OneToMany(type => ActivityEntity, activity => activity.diagnostic)
-  activities: ActivityEntity[];*/
+  @AfterLoad()
+  decryptResult() {
+    this.result = CryptoJS.AES.decrypt(
+      this.result,
+      process.env.SECRET,
+    ).toString(CryptoJS.enc.Utf8);
+  }
+
+  @ManyToOne(type => StudentEntity, student => student.diagnostics, {
+    onDelete: 'CASCADE',
+  })
+  student: StudentEntity;
 
   @OneToMany(
     type => DiagnosticDetailEntity,
     diagnosticDetail => diagnosticDetail.diagnostic,
-    { onDelete: 'CASCADE', onUpdate: 'CASCADE', cascade: true }
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE', cascade: true },
   )
   details: DiagnosticDetailEntity[];
 }

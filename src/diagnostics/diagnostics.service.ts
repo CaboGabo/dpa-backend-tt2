@@ -50,15 +50,11 @@ export class DiagnosticsService {
   private diagnosticToResponseObject(
     diagnostic: DiagnosticEntity,
   ): DiagnosticRO {
-    /*  const bytes = CryptoJS.AES.decrypt(diagnostic.result, process.env.SECRET);
-    bytes.toString(CryptoJS.enc.Utf8).then(console.log);
-    const result = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-    //const result = 'true';
-    console.log('RESULT', result); */
     const responseObject: any = {
       ...diagnostic,
       student: diagnostic.student || null,
       details: diagnostic.details || null,
+      result: diagnostic.result === 'true' ? true : false,
     };
 
     return responseObject;
@@ -126,14 +122,26 @@ export class DiagnosticsService {
 
     topWords = `[${topWords}]`;
 
-    const {
+    let {
       globalResult: tdmResult,
       criteriaResults: criteriaTdm,
     } = insResult[0];
-    const {
+    let {
       globalResult: tdpResult,
       criteriaResults: criteriaTdp,
     } = insResult[1];
+
+    if (tdmResult) {
+      tdmResult = 'true';
+    } else {
+      tdmResult = 'false';
+    }
+
+    if (tdpResult) {
+      tdpResult = 'true';
+    } else {
+      tdpResult = 'false';
+    }
 
     let diagnostic1 = await this.diagnosticRepository.create({
       result: tdmResult,
@@ -662,10 +670,12 @@ export class DiagnosticsService {
     });
 
     const diagnosticsTdm = diagnostics.filter(
-      diagnostic => diagnostic.depressionType === 'tdm' && diagnostic.result,
+      diagnostic =>
+        diagnostic.depressionType === 'tdm' && diagnostic.result === 'true',
     );
     const diagnosticsTdp = diagnostics.filter(
-      diagnostic => diagnostic.depressionType === 'tdp' && diagnostic.result,
+      diagnostic =>
+        diagnostic.depressionType === 'tdp' && diagnostic.result === 'true',
     );
 
     const peopleWithTdm = diagnosticsTdm.length;
