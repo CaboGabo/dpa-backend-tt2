@@ -4,8 +4,6 @@ import {
   CreateDateColumn,
   Column,
   ManyToOne,
-  ManyToMany,
-  JoinTable,
   OneToMany,
   BeforeInsert,
   AfterLoad,

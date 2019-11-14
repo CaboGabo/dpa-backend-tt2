@@ -12,7 +12,7 @@ export class DiagnosticDetailDTO {
 export class DiagnosticDetailRO {
   id: string;
   created: Date;
-  result: string;
+  result: boolean;
   diagnostic: DiagnosticRO;
   activities: ActivityRO[];
   classificationCriteria: ClassificationCriteriaRO;

@@ -172,8 +172,8 @@ export class DiagnosticsService {
         });
         posts.push(post);
       }
-      console.log(posts);
 
+      criteriaTdm[i]['result'] = criteriaTdm[i]['result'] ? 'true' : 'false';
       const diagnosticDetail = this.diagnosticDetailRepository.create({
         classificationCriteria: criteria,
         result: criteriaTdm[i]['result'],
@@ -196,7 +196,8 @@ export class DiagnosticsService {
         });
         posts.push(post);
       }
-      console.log(posts);
+
+      criteriaTdp[i]['result'] = criteriaTdp[i]['result'] ? 'true' : 'false';
       const diagnosticDetail = this.diagnosticDetailRepository.create({
         classificationCriteria: criteria,
         result: criteriaTdp[i]['result'],
@@ -705,13 +706,13 @@ export class DiagnosticsService {
 
     const tdmDetailsPositive = diagnosticDetails.filter(
       diagnosticDetail =>
-        diagnosticDetail.result &&
+        diagnosticDetail.result === 'true' &&
         diagnosticDetail.diagnostic.depressionType === 'tdm',
     );
 
     const tdpDetailsPositive = diagnosticDetails.filter(
       diagnosticDetail =>
-        diagnosticDetail.result &&
+        diagnosticDetail.result === 'true' &&
         diagnosticDetail.diagnostic.depressionType === 'tdp',
     );
 
