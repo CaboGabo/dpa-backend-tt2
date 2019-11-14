@@ -90,6 +90,13 @@ export class SpecialistsService {
       );
     }
 
+    if (!/^\d+$/.test(data.phone)) {
+      throw new HttpException(
+        'El número telefónico debe contener únicamente dígitos',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     specialist = await this.specialistRepository.create({
       ...data,
       savedBy: psychologist,
@@ -136,6 +143,13 @@ export class SpecialistsService {
       if (specialistByPhone && specialist.id !== specialistByPhone.id) {
         throw new HttpException(
           'El número telefónico ya existe',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+
+      if (!/^\d+$/.test(data.phone)) {
+        throw new HttpException(
+          'El número telefónico debe contener únicamente dígitos',
           HttpStatus.BAD_REQUEST,
         );
       }

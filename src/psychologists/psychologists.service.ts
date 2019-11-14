@@ -89,6 +89,13 @@ export class PsychologistsService {
       throw new HttpException('El RFC ya existe', HttpStatus.BAD_REQUEST);
     }
 
+    if (data.rfc.length !== 13) {
+      throw new HttpException(
+        'El RFC debe ser de 13 caracteres',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     psychologist = await this.psychologistRepository.create({
       ...data,
       user,
@@ -118,6 +125,13 @@ export class PsychologistsService {
       });
       if (psychologistByRfc && psychologist.id !== psychologistByRfc.id) {
         throw new HttpException('El RFC ya existe', HttpStatus.BAD_REQUEST);
+      }
+
+      if (data.rfc.length !== 13) {
+        throw new HttpException(
+          'El RFC debe ser de 13 caracteres',
+          HttpStatus.BAD_REQUEST,
+        );
       }
     }
 

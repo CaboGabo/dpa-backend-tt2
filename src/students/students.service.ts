@@ -83,6 +83,13 @@ export class StudentsService {
       );
     }
 
+    if (data.enrollment.length != 10 || !/^\d+$/.test(data.enrollment)) {
+      throw new HttpException(
+        'El número de boleta debe ser de 10 dígitos',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     student = await this.studentRepository.create({ ...data, user });
     await this.studentRepository.save(student);
     return this.studentToResponseObject(student);
@@ -109,6 +116,13 @@ export class StudentsService {
       if (studentByEnrollment && student.id !== studentByEnrollment.id) {
         throw new HttpException(
           'El número de boleta ya existe',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+
+      if (data.enrollment.length !== 10 || /^\d+$/.test(data.enrollment)) {
+        throw new HttpException(
+          'El número de boleta debe ser de 10 dígitos',
           HttpStatus.BAD_REQUEST,
         );
       }
