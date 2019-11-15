@@ -39,9 +39,13 @@ export class PostEntity {
   @Column('text')
   type: string;
 
-  @Column('date')
+  @Column({
+    type: 'datetime',
+  })
   postdate: Date;
 
-  @ManyToOne(type => StudentEntity, author => author.posts, { onDelete: 'CASCADE' })
+  @ManyToOne(type => StudentEntity, author => author.posts, {
+    onDelete: 'CASCADE',
+  })
   author: StudentEntity;
 }
