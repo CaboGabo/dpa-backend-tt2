@@ -63,11 +63,11 @@ export class TwitterService {
     }
   }
 
-  formatDate(text: string): string {
+  formatDate(text: string): Date {
     const date = new Date(text);
-    const stringDate = `${date.getFullYear()}-${date.getMonth() +
-      1}-${date.getDate()}`;
-    return stringDate;
+    /*const stringDate = `${date.getFullYear()}-${date.getMonth() +
+      1}-${date.getDate()}`;*/
+    return date;
   }
 
   formatTweet(text: string): string {

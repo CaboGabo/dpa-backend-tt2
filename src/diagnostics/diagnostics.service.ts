@@ -50,15 +50,11 @@ export class DiagnosticsService {
   private diagnosticToResponseObject(
     diagnostic: DiagnosticEntity,
   ): DiagnosticRO {
-    /*  const bytes = CryptoJS.AES.decrypt(diagnostic.result, process.env.SECRET);
-    bytes.toString(CryptoJS.enc.Utf8).then(console.log);
-    const result = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-    //const result = 'true';
-    console.log('RESULT', result); */
     const responseObject: any = {
       ...diagnostic,
       student: diagnostic.student || null,
       details: diagnostic.details || null,
+      result: diagnostic.result === 'true' ? true : false,
     };
 
     return responseObject;
@@ -126,14 +122,26 @@ export class DiagnosticsService {
 
     topWords = `[${topWords}]`;
 
-    const {
+    let {
       globalResult: tdmResult,
       criteriaResults: criteriaTdm,
     } = insResult[0];
-    const {
+    let {
       globalResult: tdpResult,
       criteriaResults: criteriaTdp,
     } = insResult[1];
+
+    if (tdmResult) {
+      tdmResult = 'true';
+    } else {
+      tdmResult = 'false';
+    }
+
+    if (tdpResult) {
+      tdpResult = 'true';
+    } else {
+      tdpResult = 'false';
+    }
 
     let diagnostic1 = await this.diagnosticRepository.create({
       result: tdmResult,
@@ -164,8 +172,8 @@ export class DiagnosticsService {
         });
         posts.push(post);
       }
-      console.log(posts);
 
+      criteriaTdm[i]['result'] = criteriaTdm[i]['result'] ? 'true' : 'false';
       const diagnosticDetail = this.diagnosticDetailRepository.create({
         classificationCriteria: criteria,
         result: criteriaTdm[i]['result'],
@@ -188,7 +196,8 @@ export class DiagnosticsService {
         });
         posts.push(post);
       }
-      console.log(posts);
+
+      criteriaTdp[i]['result'] = criteriaTdp[i]['result'] ? 'true' : 'false';
       const diagnosticDetail = this.diagnosticDetailRepository.create({
         classificationCriteria: criteria,
         result: criteriaTdp[i]['result'],
@@ -662,10 +671,12 @@ export class DiagnosticsService {
     });
 
     const diagnosticsTdm = diagnostics.filter(
-      diagnostic => diagnostic.depressionType === 'tdm' && diagnostic.result,
+      diagnostic =>
+        diagnostic.depressionType === 'tdm' && diagnostic.result === 'true',
     );
     const diagnosticsTdp = diagnostics.filter(
-      diagnostic => diagnostic.depressionType === 'tdp' && diagnostic.result,
+      diagnostic =>
+        diagnostic.depressionType === 'tdp' && diagnostic.result === 'true',
     );
 
     const peopleWithTdm = diagnosticsTdm.length;
@@ -695,50 +706,109 @@ export class DiagnosticsService {
 
     const tdmDetailsPositive = diagnosticDetails.filter(
       diagnosticDetail =>
-        diagnosticDetail.result &&
+        diagnosticDetail.result === 'true' &&
         diagnosticDetail.diagnostic.depressionType === 'tdm',
     );
 
     const tdpDetailsPositive = diagnosticDetails.filter(
       diagnosticDetail =>
-        diagnosticDetail.result &&
+        diagnosticDetail.result === 'true' &&
         diagnosticDetail.diagnostic.depressionType === 'tdp',
     );
 
     const criteriaTdm = {
-      A2: 0,
-      A3: 0,
-      A4: 0,
-      A6: 0,
-      A7: 0,
-      A8: 0,
-      A9: 0,
-      B1: 0,
-      B4: 0,
-      B6: 0,
-      C1: 0,
+      A2: {
+        description:
+          'Disminución acusada del interés o de la capacidad para el placer en todas o casi todas las actividades',
+        count: 0,
+      },
+      A3: {
+        description: 'Pérdida/aumento de peso/apetito',
+        count: 0,
+      },
+      A4: {
+        description: 'Insomnio',
+        count: 0,
+      },
+      A6: {
+        description: 'Fatiga o pérdida de energía',
+        count: 0,
+      },
+      A7: {
+        description: 'Sentimientos de inutilidad y culpa',
+        count: 0,
+      },
+      A8: {
+        description:
+          'Disminución de la capacidad para concentrarse o indecisión',
+        count: 0,
+      },
+      A9: {
+        description: 'Pensamientos recurrentes de muerte',
+        count: 0,
+      },
+      B1: {
+        description:
+          'Malestar clínicamente significativo o deterioro en lo social, laboral',
+        count: 0,
+      },
+      C1: {
+        description:
+          'Efectos fisiológicos de una sustancia o de otra afección médica',
+        count: 0,
+      },
     };
 
     const criteriaTdp = {
-      A2: 0,
-      A3: 0,
-      A4: 0,
-      A6: 0,
-      A7: 0,
-      A8: 0,
-      A9: 0,
-      B1: 0,
-      B4: 0,
-      B6: 0,
-      C1: 0,
+      A3: {
+        description: 'Pérdida/aumento de peso/apetito',
+        count: 0,
+      },
+      A4: {
+        description: 'Insomnio',
+        count: 0,
+      },
+      A6: {
+        description: 'Fatiga o pérdida de energía',
+        count: 0,
+      },
+      A7: {
+        description: 'Sentimientos de inutilidad y culpa',
+        count: 0,
+      },
+      A8: {
+        description:
+          'Disminución de la capacidad para concentrarse o indecisión',
+        count: 0,
+      },
+      B1: {
+        description:
+          'Malestar clínicamente significativo o deterioro en lo social, laboral',
+        count: 0,
+      },
+      B4: {
+        description: 'Baja autoestima',
+        count: 0,
+      },
+      B6: {
+        description: 'Sentimientos de desesperanza',
+        count: 0,
+      },
+      C1: {
+        description:
+          'Efectos fisiológicos de una sustancia o de otra afección médica',
+        count: 0,
+      },
     };
 
     for (const tdmDetailPositive of tdmDetailsPositive) {
-      criteriaTdm[`${tdmDetailPositive.classificationCriteria.keyname}`]++;
+      criteriaTdm[`${tdmDetailPositive.classificationCriteria.keyname}`]
+        .count++;
     }
 
     for (const tdpDetailPositive of tdpDetailsPositive) {
-      criteriaTdp[`${tdpDetailPositive.classificationCriteria.keyname}`]++;
+      criteriaTdp[`${tdpDetailPositive.classificationCriteria.keyname}`]
+        .count++;
     }
 
     return {

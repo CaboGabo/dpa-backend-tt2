@@ -1,4 +1,4 @@
-import { IsString, IsNumber } from 'class-validator';
+import { IsString, IsNumber, IsDate } from 'class-validator';
 import { StudentRO } from '../students/student.dto';
 
 export class PostDTO {
@@ -8,8 +8,8 @@ export class PostDTO {
   @IsString()
   type: string;
 
-  @IsString()
-  postdate: string;
+  @IsDate()
+  postdate: Date;
 }
 
 export class PostRO {
