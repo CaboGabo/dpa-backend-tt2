@@ -393,8 +393,8 @@ export class ClassifierService {
     }
 
     var datesArray = [];
-    for (const ocurrence in ocurrencesArray) {
-      datesArray.push(posts[ocurrence].postdate);
+    for (const ocurrence of ocurrencesArray) {
+      datesArray.push(posts.find(x => x.id === ocurrence).postdate);
     }
     //let testDate = new Date('2015-11-05T19:55:46.000Z');
     //datesArray.push(testDate);
