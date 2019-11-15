@@ -42,7 +42,7 @@ export class ClassifierService {
         {
           keyname: 'A4',
           result: criteriaResults[0]['insomnio'],
-          ocurrences: criteriaResults[1]['insomnio'],
+          ocurrences: [...criteriaResults[1]['insomnio'], criteriaResults[2]],
         },
         {
           keyname: 'A6',
@@ -111,7 +111,7 @@ export class ClassifierService {
     //****************
     //Verificamos que el porcentaje de publicaciones es en su mayoría depresivo
     let averageSentiment = await this.getAverageSentimentScore(posts);
-    if (averageSentiment < 0.70) {
+    if (averageSentiment < 0.7) {
       presentSymptoms++;
     }
 
@@ -196,7 +196,7 @@ export class ClassifierService {
         {
           keyname: 'A4',
           result: criteriaResults[0]['insomnio'],
-          ocurrences: criteriaResults[1]['insomnio'],
+          ocurrences: [...criteriaResults[1]['insomnio'], criteriaResults[2]],
         },
         {
           keyname: 'A6',
@@ -278,11 +278,11 @@ export class ClassifierService {
     //Detección de pensamientos negativos durante dos años
     let firstDate = datesArray[0];
     let lastDate = datesArray[datesArray.length - 1];
-    console.log('First Date: ' + firstDate)
-    console.log('Last Date: ' + lastDate)
+    console.log('First Date: ' + firstDate);
+    console.log('Last Date: ' + lastDate);
     const diffTime = Math.abs(lastDate.getTime() - firstDate.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    if (diffDays > 730 && averageSentiment < 0.70) {
+    if (diffDays > 730 && averageSentiment < 0.7) {
       return true;
     }
     return false;
@@ -400,7 +400,7 @@ export class ClassifierService {
     return datesArray;
   }
 
-  async getAverageSentimentScore(posts){
+  async getAverageSentimentScore(posts) {
     var scoreSum = 0;
     for (let i = 0; i < posts.length; i++) {
       const result = sentiment.getSentiment(posts[i].content);
