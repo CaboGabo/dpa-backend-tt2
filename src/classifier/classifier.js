@@ -75,6 +75,8 @@ async function main(posts) {
     consumoAfeccion: [],
   };
 
+  let insomniaOccurrences = [];
+
   //Dividmos los posts en oraciones
   let sentences = [];
   let cont = 0;
@@ -87,6 +89,13 @@ async function main(posts) {
   for (const classifier of classifiers) {
     let k = 0;
     for (const sentence of sentences) {
+      if ( i == 2 ) {
+        let date = posts[k].postdate;
+        let hours = date.getHours();
+        if (hours >= 2 && hours <= 5) {
+          insomniaOccurrences.push(posts[k].id);
+        }
+      }
       for (let j = 0; j < sentence.length; j++) {
         const result = classifier.getBestClassification(sentence[j]);
         if (result.label === tags[i] && result.value > 0.95) {
@@ -112,7 +121,7 @@ async function main(posts) {
     }
   }
 
-  return [results, postOcurrences];
+  return [results, postOcurrences, insomniaOccurrences];
 }
 
 async function splitMulti(str, tokens) {

@@ -275,10 +275,11 @@ export class ClassifierService {
   async isTdpABehaviourPresent(criteriaResults, posts) {
     let averageSentiment = await this.getAverageSentimentScore(posts);
     let datesArray = await this.getOcurrencesDatesArray(criteriaResults, posts);
-
     //Detección de pensamientos negativos durante dos años
-    let firstDate = new Date(datesArray[0]);
-    let lastDate = new Date(datesArray[datesArray.length - 1]);
+    let firstDate = datesArray[0];
+    let lastDate = datesArray[datesArray.length - 1];
+    console.log('First Date: ' + firstDate)
+    console.log('Last Date: ' + lastDate)
     const diffTime = Math.abs(lastDate.getTime() - firstDate.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     if (diffDays > 730 && averageSentiment < 0.70) {
@@ -332,14 +333,13 @@ export class ClassifierService {
 
   async isTdpCBehaviourPresent(criteriaResults, posts) {
     let datesArray = await this.getOcurrencesDatesArray(criteriaResults, posts);
-
     //Deteccion de efectos presentes sin lapsos vacios de 2 meses
     for (let i = 0; i < datesArray.length; i++) {
       if (i === datesArray.length - 1) {
         break;
       } else {
-        let date1 = new Date(datesArray[i]);
-        let date2 = new Date(datesArray[i + 1]);
+        let date1 = datesArray[i];
+        let date2 = datesArray[i + 1];
         const diffTime = Math.abs(date2.getTime() - date1.getTime());
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         if (diffDays > 62) {
@@ -390,13 +390,12 @@ export class ClassifierService {
     for (const ocurrence in ocurrencesArray) {
       datesArray.push(posts[ocurrence].postdate);
     }
-    //datesArray.push('2017-05-02');
+    //let testDate = new Date('2015-11-05T19:55:46.000Z');
+    //datesArray.push(testDate);
 
     //Ordenamos de menor a mayor las fechas de las ocurrencias
     datesArray.sort((a: any, b: any) => {
-      let c = new Date(a);
-      let d = new Date(b);
-      return c.getTime() - d.getTime();
+      return a.getTime() - b.getTime();
     });
     return datesArray;
   }
