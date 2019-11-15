@@ -42,7 +42,10 @@ export class ClassifierService {
         {
           keyname: 'A4',
           result: criteriaResults[0]['insomnio'],
-          ocurrences: [...criteriaResults[1]['insomnio'], criteriaResults[2]],
+          ocurrences: [
+            ...criteriaResults[1]['insomnio'],
+            ...criteriaResults[2],
+          ],
         },
         {
           keyname: 'A6',
@@ -196,7 +199,10 @@ export class ClassifierService {
         {
           keyname: 'A4',
           result: criteriaResults[0]['insomnio'],
-          ocurrences: [...criteriaResults[1]['insomnio'], criteriaResults[2]],
+          ocurrences: [
+            ...criteriaResults[1]['insomnio'],
+            ...criteriaResults[2],
+          ],
         },
         {
           keyname: 'A6',
