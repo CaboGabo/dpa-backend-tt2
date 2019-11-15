@@ -63,7 +63,7 @@ export class RedditService {
       magnitude: processedPost.magnitude,
       tag,*/
       type: 'text',
-      postdate: this.formatDate(this.toDate(p.created)),
+      postdate: this.toDate(p.created),
     };
     console.log(post);
     return post;
