@@ -9,6 +9,17 @@ async function train() {
     });
 
 //Malestar clínicamente significativo
+    classifier.add('Tengo un malestar','malestar');
+    classifier.add('Tengo un malestar que no se quita','malestar');
+    classifier.add('Este malestar','malestar');
+    classifier.add('Este malestar que no me deja','malestar');
+    classifier.add('Mucho malestar','malestar');
+    classifier.add('Bastante malestar','malestar');
+    classifier.add('Siento malestar','malestar');
+    classifier.add('Siento un malestar','malestar');
+    classifier.add('Siento un malestar en mi estómago','malestar');
+    classifier.add('Siento un malestar en mi ser','malestar');
+
     classifier.add('Me siento mal','malestar');
     classifier.add('Me siento raro','malestar');
     classifier.add('Me siento estresado','malestar');
@@ -75,17 +86,43 @@ async function train() {
     classifier.add('Deterioro en mis actividades diarias', 'malestar');
 
     //Dolores
+    classifier.add('Dolor de cabeza','malestar');
+    classifier.add('Dolor de cabeza y pecho','malestar');
+    classifier.add('Dolor de espalda y pecho','malestar');
+    classifier.add('Dolor de espalda y cabeza','malestar');
     classifier.add('Me duele la cabeza','malestar');
     classifier.add('Me duele el pecho','malestar');
     classifier.add('Me duele la espalda','malestar');
+    classifier.add('Me duele el cuerpo','malestar');
+    classifier.add('Me duele todo','malestar');
     classifier.add('Tengo dolor de cabeza','malestar');
+    classifier.add('Tengo dolor de pecho','malestar');
+    classifier.add('Tengo dolor de espalda','malestar');
+    classifier.add('Tengo el cuerpo cortado','malestar');
     classifier.add('Tengo un dolor en el pecho','malestar');
     classifier.add('Tengo migraña','malestar');
     classifier.add('No soporto el dolor','malestar');
     classifier.add('No soporto el dolor de cabeza','malestar');
+   
+    classifier.add('Tengo escalofríos','malestar');
+    classifier.add('A veces tengo escalofríos','malestar');
+    classifier.add('He estado con escalofríos','malestar');
+    classifier.add('Siento escalofríos','malestar');
+    classifier.add('Estoy temblando','malestar');
+    classifier.add('Todo el tiempo estoy temblando','malestar');
+    classifier.add('Tiemblo todo el tiempo','malestar');
+    classifier.add('Me tiembla mi cuerpo','malestar');
+    classifier.add('Mi mandíbula se pone rígida','malestar');  
 
-
-    
+    classifier.add('Estoy mareado','malestar');    
+    classifier.add('Me siento mareado','malestar');    
+    classifier.add('Tengo ganas de vomitar','malestar');    
+    classifier.add('Tengo nauseas','malestar');    
+    classifier.add('Tengo muchas nauseas','malestar');    
+    classifier.add('Tengo muchos mareos','malestar');    
+    classifier.add('mareos','malestar');    
+    classifier.add('nauseas','malestar');    
+    classifier.add('vomito','malestar');    
 
 
 //Deterioro social
@@ -257,6 +294,13 @@ async function train() {
     classifier.add('Estos días me he sentido bastante bien','sinMalestar');
     classifier.add('Ultimamente me siento muy bien','sinMalestar');
     classifier.add('Hay veces que me siento bastante normal','sinMalestar');
+    classifier.add('Me siento bien', 'sinMalestar');
+    classifier.add('Me siento contento', 'sinMalestar');
+    classifier.add('Me siento feliz', 'sinMalestar');
+    classifier.add('Siento que no voy a poder', 'sinMalestar');
+    classifier.add('Me siento feliz de estar en casa', 'sinMalestar');
+    classifier.add('Ultimamente siento que todo va bien', 'sinMalestar');
+    classifier.add('Me siento bastante bien', 'sinMalestar');
 
     classifier.add('Me he sentido bien','sinMalestar');
     classifier.add('Me he sentido relajado estos días','sinMalestar');
@@ -279,7 +323,10 @@ async function train() {
     classifier.add('Así que llegando tarde al trabajo', 'sinMalestar');
     classifier.add('Comienza el juego', 'sinMalestar');
     classifier.add('Comienza el partido', 'sinMalestar');
-    classifier.add('Comienza el partido', 'sinMalestar');
+    classifier.add('Que tiene en la cabeza ese sujeto?', 'sinMalestar');
+    classifier.add('Me pegué en la cabeza', 'sinMalestar');
+
+    
 
     await classifier.train();
     console.log('Clasificador B1 entrenado')

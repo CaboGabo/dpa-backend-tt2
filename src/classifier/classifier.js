@@ -77,40 +77,26 @@ async function main(posts) {
 
   let insomniaOccurrences = [];
 
-  //Dividmos los posts en oraciones
-  let sentences = [];
-  let cont = 0;
-  for (const post of posts){
-    sentences[cont] = await splitMulti(post.content, tokensDel);
-    cont++;
-  }
-
   let i = 0;
   for (const classifier of classifiers) {
-    let k = 0;
-    for (const sentence of sentences) {
-      if ( i == 2 ) {
-        let date = posts[k].postdate;
+    posts.forEach(post => {
+      if (i == 2) {
+        let date = post.postdate;
         let hours = date.getHours();
         if (hours >= 2 && hours <= 5) {
-          insomniaOccurrences.push(posts[k].id);
+          insomniaOccurrences.push(post.id);
         }
       }
-      for (let j = 0; j < sentence.length; j++) {
-        const result = classifier.getBestClassification(sentence[j]);
-        if (result.label === tags[i] && result.value > 0.95) {
-          console.log(sentence[j]);
-          console.log(result);
-          ocurrences[`${result.label}`]++;
-          postOcurrences[`${result.label}`].push(posts[k].id);
-          break;
-        }
+
+      const result = classifier.getBestClassification(post.content);
+      if (result.label === tags[i] && result.value > 0.95) {
+        ocurrences[`${result.label}`]++;
+        postOcurrences[`${result.label}`].push(post.id);
       }
-      k++;
-    }
+    });
+
     i++;
   }
-  
 
   let results = {};
   for (criteria in ocurrences) {
@@ -122,15 +108,6 @@ async function main(posts) {
   }
 
   return [results, postOcurrences, insomniaOccurrences];
-}
-
-async function splitMulti(str, tokens) {
-  let tempChar = tokens[0];
-  for (let i = 1; i < tokens.length; i++) {
-    str = str.split(tokens[i]).join(tempChar);
-  }
-  str = str.split(tempChar);
-  return str;
 }
 
 module.exports = {
