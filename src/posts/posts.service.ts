@@ -83,7 +83,7 @@ export class PostsService {
     }
 
     const posts = await this.postRepository.find({
-      where: { student: { id: student.id } },
+      where: { author: { id: student.id } },
       relations: ['author'],
     });
 
