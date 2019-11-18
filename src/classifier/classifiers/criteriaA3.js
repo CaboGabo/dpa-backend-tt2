@@ -245,6 +245,20 @@ async function train() {
     classifier.add('No quiero saber nada de nadie', 'sinModPeso');
     classifier.add('Estoy bien de animo, pero no tengo ganas de nada', 'sinModPeso');
     classifier.add('Por eso me llena de rabia que otros tengan algo que yo quiero', 'sinModPeso');
+    classifier.add('Noticias de ultimo minuto: América ganó el juicio contra [@Independiente](https://twitter.com/Independiente) y el rojo debe pagar cerca de 2MDD. Los argentinos no quieren y van a apelar la sanción.', 'sinModPeso');
+    classifier.add('Eres mexicano? Trabaja con Nosotros!: EMPLEO DESDE CASA! En LIONBRIDGE una de las empresas mas prestigiosas según FORBES, estamos buscando colaboradores para un proyecto de traducción y transcripción de contenido, las tareas son sumamente sencillas, 100% desde casa y flexible. Es simple, nada mas debes aplicar acá: [http://datacollectiones-MX.register-lionbridge.com](http://datacollection_es-mx.register-lionbridge.com/)', 'sinModPeso');
+    classifier.add('¿Ya listos para tomar las armas ahora que Estados Unidos invada México?: ¿Y como serían los niños héroes del siglo XXI? Van a hacer Facebook Live de enredarse en la bandera para caer desde la Estela de Luz?', 'sinModPeso');
+    //classifier.add('', 'sinModPeso');
+    //classifier.add('', 'sinModPeso');
+    //classifier.add('', 'sinModPeso');
+    //classifier.add('', 'sinModPeso');
+    //classifier.add('', 'sinModPeso');
+    //classifier.add('', 'sinModPeso');
+    
+
+
+
+
 
     await classifier.train();
     console.log('Clasificador A3 entrenado');

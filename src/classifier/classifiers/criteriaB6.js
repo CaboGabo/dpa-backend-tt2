@@ -308,12 +308,16 @@ async function train() {
     classifier.add('no solo en mi mente', 'esperanza');
     classifier.add('mi madre no hacia nada porque decia que no podia ver a su pareja asi', 'esperanza');
     classifier.add('estuve 3 veces en terapia las cuales nunca termine', 'esperanza');
-    //classifier.add( '', 'esperanza');
-    //classifier.add( '', 'esperanza');
-    //classifier.add( '', 'esperanza');
-    //classifier.add( '', 'esperanza');
-    //classifier.add( '', 'esperanza');
-    //classifier.add( '', 'esperanza');
+    classifier.add('rant hacia las señoras que hacen quesadillas: yo que estudie la prepa se que en todos putos lados la quesadilla lleva queso o no lleva queso (no hay de otra, por si no lo sabían); asi que me atrevo preguntar amablemente si la quesadilla lleva queso, en vez de pedir una quesadilla a ciegas y esperar como joto a que me den algo que no quiero. Pero siempre me pasa que la señora responde con el tono mas jodido ""la quesadilla siempre lleva queso!"", como si fuera un pendejo.', 'esperanza');
+    classifier.add('DAE Cartilla Militar?: Rolen la info que me da hueva buscar en google, ya llevo 5 post y todavia no entiendo', 'esperanza');
+    classifier.add('¿Qué chingado dijiste de mí, chairo jodido? Para que sepas yo estudie en la Universidad Nacional Autónoma de México y tengo un récord de 50 becas, obtuve la medalla Gabino Barreda de todas las generaciones. ¿Sabes que significa eso? Que puedo volar tu pinche cabecita hueca con mi habilidad de calcular el porcentaje de impuestos que debo pagar y no solo eso, también soy experto en el manejo de CETES y AFORE, y tengo acceso a toda la información de la BMV y NASDAQ, si tan solo hubieras pensado un poco más y no hubieras abierto el hocico de chairo mugroso que tienes, no tendrías que rezarle a Maduro. En estos momentos estoy rastreando tu expediente del SAT para ubicar tu domicilio, te vas a cagar cuando veas a mis amigos protestando a favor de Texcoco, mis amigos son intelectuales y de tez clara, saben hacer muy bien su trabajo y están dispuestos a exterminar la última puta célula más chaira e insignificante de tu puta miserable existencia, escucha bien mis palabras AMLOver, ya no hay vuelta atrás, despídete de tu miserable vida cabrón. Voy a convertir tus ultimas consultas en un auténtico infierno', 'esperanza');
+    classifier.add('Me quedé dormido el sábado en la tarde y apenas desperté: en que canal van a pasar a la seleccion mexicana, la mas buena de todas, vs colombia? :)))', 'esperanza');
+    classifier.add('¿Nevó en el Norte? Como que hace frío, ¿no?: Pinches norteños, siempre presumiendo su blancura.', 'esperanza');
+    classifier.add('El gobierno ahora te puede quitar tus bienes, venderlos y repartirse el dinero entre ellos. No necesitan de juicio, nisiquiera una demanda formal. Asi lo dicta la Ley de Extinción de Dominio.: La extinción de dominio es la ley que te puede quitar bienes por el simple hecho de ser SOSPECHOSO, puedes ser completamente inocente y el gobierno ya te haya quitado tus propiedades e incluso subastarlas. Pueden hacerlo sin ni siquiera tener una demanda formal, pueden hacerlo sin ir a juicio. El dinero ganado de la subasta de tus propiedades no se utilizara para el presupuesto ni para el Congreso, sino que serán parte de un fondo del gobierno federal. Repito: tus propiedades siendo subastadas sin siquiera ser demandado formalmente de algún crimen. Esta ley se publico en el Diario Oficial de la Federacion el 9 de agosto del 2019.', 'esperanza');
+    //classifier.add('', 'esperanza');
+    //classifier.add('', 'esperanza');
+    //classifier.add('', 'esperanza');
+    //classifier.add('', 'esperanza');
 
     await classifier.train();
     console.log('Clasificador B6 entrenado');

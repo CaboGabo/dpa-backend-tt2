@@ -326,7 +326,16 @@ async function train() {
     classifier.add('Que tiene en la cabeza ese sujeto?', 'sinMalestar');
     classifier.add('Me pegué en la cabeza', 'sinMalestar');
 
-    
+    classifier.add('Consejos basicos 1: Nutrirnos a nosotros mismos de vez en cuando con instantes de soledad, ocio y bienestar es sinónimo de salud.', 'sinMalestar');
+    classifier.add('¿Ya listos para tomar las armas ahora que Estados Unidos invada México?: ¿Y como serían los niños héroes del siglo XXI? Van a hacer Facebook Live de enredarse en la bandera para caer desde la Estela de Luz?', 'sinMalestar');
+    classifier.add('Ya no me quedó claro, entonces, Donar a los Topos es bueno o malo? Frida Sofía fue un invento de Televisa, o del Estado? Donar y tomar selfies inspira a otros, o es nomás presumir?: Por favor ayúdenme a decidirme qué pensar de todas estas controversias que trajo el sismo, porque quiero ocupar mi tiempo en criticar en vez de ayudar a los damnificados...', 'sinMalestar');
+    //classifier.add('', 'sinMalestar');
+    //classifier.add('', 'sinMalestar');
+    //classifier.add('', 'sinMalestar');
+    //classifier.add('', 'sinMalestar');
+    //classifier.add('', 'sinMalestar');
+
+
 
     await classifier.train();
     console.log('Clasificador B1 entrenado')

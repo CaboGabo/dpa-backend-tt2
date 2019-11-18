@@ -229,8 +229,8 @@ async function train() {
     classifier.add('obviamente se que no soy la unica pasando por esto', 'sinDisminucion');
     classifier.add('No sé porque tengo tanto sueño', 'sinDisminucion');
     classifier.add('la ansiedad aún no inicia', 'sinDisminucion');
-    //classifier.add( '', 'sinDisminucion');
-    //classifier.add( '', 'sinDisminucion');
+    classifier.add('¿Qué chingado dijiste de mí, chairo jodido? Para que sepas yo estudie en la Universidad Nacional Autónoma de México y tengo un récord de 50 becas, obtuve la medalla Gabino Barreda de todas las generaciones. ¿Sabes que significa eso? Que puedo volar tu pinche cabecita hueca con mi habilidad de calcular el porcentaje de impuestos que debo pagar y no solo eso, también soy experto en el manejo de CETES y AFORE, y tengo acceso a toda la información de la BMV y NASDAQ, si tan solo hubieras pensado un poco más y no hubieras abierto el hocico de chairo mugroso que tienes, no tendrías que rezarle a Maduro. En estos momentos estoy rastreando tu expediente del SAT para ubicar tu domicilio, te vas a cagar cuando veas a mis amigos protestando a favor de Texcoco, mis amigos son intelectuales y de tez clara, saben hacer muy bien su trabajo y están dispuestos a exterminar la última puta célula más chaira e insignificante de tu puta miserable existencia, escucha bien mis palabras AMLOver, ya no hay vuelta atrás, despídete de tu miserable vida cabrón. Voy a convertir tus ultimas consultas en un auténtico infierno', 'sinDisminucion');
+    classifier.add('Bienvenidos a Pejezuela: Bienvenidos a la República Bananera de Pejezuela. Pasen para tramitar su ciudadanía. No se admiten burgueses.', 'sinDisminucion');
     //classifier.add( '', 'sinDisminucion');
     await classifier.train();
     console.log('Clasificador A8 entrenado')

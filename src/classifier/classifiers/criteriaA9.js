@@ -194,11 +194,18 @@ async function train() {
     classifier.add('No espero nada de la vida ', 'p_vida');
     classifier.add('Me he sentido mal ultimamente', 'p_vida');
     classifier.add('Soy la persona más inutil que existe', 'p_vida');
-    //classifier.add( '', 'p_vida');
-    //classifier.add( '', 'p_vida');
-    //classifier.add( '', 'p_vida');
-    //classifier.add( '', 'p_vida');
-    //classifier.add( '', 'p_vida');
+    classifier.add('DAE Cartilla Militar?: Rolen la info que me da hueva buscar en google, ya llevo 5 post y todavia no entiendo', 'p_vida');
+    classifier.add('El gobierno ahora te puede quitar tus bienes, venderlos y repartirse el dinero entre ellos. No necesitan de juicio, nisiquiera una demanda formal. Asi lo dicta la Ley de Extinción de Dominio.: La extinción de dominio es la ley que te puede quitar bienes por el simple hecho de ser SOSPECHOSO, puedes ser completamente inocente y el gobierno ya te haya quitado tus propiedades e incluso subastarlas. Pueden hacerlo sin ni siquiera tener una demanda formal, pueden hacerlo sin ir a juicio. El dinero ganado de la subasta de tus propiedades no se utilizara para el presupuesto ni para el Congreso, sino que serán parte de un fondo del gobierno federal. Repito: tus propiedades siendo subastadas sin siquiera ser demandado formalmente de algún crimen. Esta ley se publico en el Diario Oficial de la Federacion el 9 de agosto del 2019.', 'p_vida');
+    //classifier.add('', 'p_vida');
+    //classifier.add('', 'p_vida');
+    //classifier.add('', 'p_vida');
+    //classifier.add('', 'p_vida');
+    //classifier.add('', 'p_vida');
+    //classifier.add('', 'p_vida');
+    //classifier.add('', 'p_vida');
+    //classifier.add('', 'p_vida');
+    //classifier.add('', 'p_vida');
+
 
     await classifier.train();
     console.log('Clasificador A9 entrenado')
