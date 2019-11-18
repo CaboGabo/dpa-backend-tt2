@@ -41,9 +41,7 @@ export class SpecialistEntity {
   })
   fullAddress: string;
 
-  @Column({
-    unique: true,
-  })
+  @Column()
   phone: string;
 
   @Column('text')
