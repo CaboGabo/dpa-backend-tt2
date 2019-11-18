@@ -122,6 +122,10 @@ async function train() {
     classifier.add('ya no tengo pilas para nada', 'sin_ConsumoAfeccion');
     classifier.add('Estoy exahusto', 'sin_ConsumoAfeccion');
 
+    classifier.add('Soy Peña Nieto: Y en mi calidad de presidente constitucional de la república de tangamandapio por medio de este decreto, declaro ilegal el uso de la palabra ""ocupar"" para referirse a ""necesitar"" así como la obligatoriedad de ponerle queso a las quesadillas. Si se habla de Tangamandapio, que se hable más mejor. Gracias!', 'sin_ConsumoAfeccion');
+
+
+
     await classifier.train();
     console.log('Clasificador C1 entrenado')
     return classifier;

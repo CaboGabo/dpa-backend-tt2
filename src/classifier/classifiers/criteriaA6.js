@@ -279,6 +279,16 @@ async function train() {
     classifier.add('El agotamiento incrementa', 'fatiga');
     classifier.add('Mi agotamiento incrementa', 'fatiga');
 
+    classifier.add('Tengo mucha flojera', 'fatiga');
+    classifier.add('Soy muy flojo', 'fatiga');
+    classifier.add('Tengo hueva', 'fatiga');
+
+    classifier.add('No descanso', 'fatiga');
+    classifier.add('No he podido descansar', 'fatiga');
+    classifier.add('Estos ultimos días no he podido descansar', 'fatiga');
+    classifier.add('Quiero descansar', 'fatiga');
+    classifier.add('Necesito descansar', 'fatiga');
+
     //Otros
     classifier.add('Estoy modo zombie', 'fatiga');
     classifier.add('Estoy como zombie', 'fatiga');
