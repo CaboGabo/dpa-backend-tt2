@@ -78,18 +78,6 @@ export class SpecialistsService {
       throw new HttpException('Psicólogo no validado', HttpStatus.NOT_FOUND);
     }
 
-    let specialist = await this.specialistRepository.findOne({
-      where: { phone: data.phone },
-      relations: ['savedBy'],
-    });
-
-    if (specialist) {
-      throw new HttpException(
-        'El número telefónico ya existe',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
     if (!/^\d+$/.test(data.phone)) {
       throw new HttpException(
         'El número telefónico debe contener únicamente dígitos',
@@ -97,7 +85,7 @@ export class SpecialistsService {
       );
     }
 
-    specialist = await this.specialistRepository.create({
+    let specialist = await this.specialistRepository.create({
       ...data,
       savedBy: psychologist,
     });
