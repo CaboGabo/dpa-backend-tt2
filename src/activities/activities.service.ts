@@ -41,7 +41,7 @@ export class ActivitiesService {
 
     let saved = 0;
     for (let i = 0; i < diagnostic.details.length; i++) {
-      if (diagnostic.details[i].result) {
+      if (diagnostic.details[i].result === 'true') {
         const filteredSuggestions = suggestions
           .filter(
             suggestion =>
