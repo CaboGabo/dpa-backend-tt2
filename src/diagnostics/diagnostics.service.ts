@@ -115,7 +115,6 @@ export class DiagnosticsService {
       where: { author: student },
     });
     const insResult = await this.classifierService.classify(posts);
-
     let topWords = this.getTopWords(posts)
       .map(word => JSON.stringify(word))
       .join();
@@ -130,6 +129,9 @@ export class DiagnosticsService {
       globalResult: tdpResult,
       criteriaResults: criteriaTdp,
     } = insResult[1];
+
+    console.log(criteriaTdm);
+    console.log(criteriaTdp);
 
     if (tdmResult) {
       tdmResult = 'true';
@@ -160,10 +162,12 @@ export class DiagnosticsService {
     await this.diagnosticRepository.save(diagnostic1);
     await this.diagnosticRepository.save(diagnostic2);
 
-    for (let i = 1; i < criteriaTdm.length; i++) {
+    for (let i = 0; i < criteriaTdm.length; i++) {
       const criteria = await this.classificationCriteriaRepository.findOne({
         where: { keyname: criteriaTdm[i]['keyname'] },
       });
+      console.log('KEYNAME', criteriaTdm[i]['keyname']);
+      /* console.log(criteria); */
 
       let posts = [];
       for (const id of criteriaTdm[i]['ocurrences']) {
@@ -184,7 +188,7 @@ export class DiagnosticsService {
       await this.diagnosticDetailRepository.save(diagnosticDetail);
     }
 
-    for (let i = 1; i < criteriaTdp.length; i++) {
+    for (let i = 0; i < criteriaTdp.length; i++) {
       const criteria = await this.classificationCriteriaRepository.findOne({
         where: { keyname: criteriaTdp[i]['keyname'] },
       });
