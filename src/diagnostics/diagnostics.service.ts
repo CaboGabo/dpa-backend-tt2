@@ -731,7 +731,7 @@ export class DiagnosticsService {
         count: 0,
       },
       A4: {
-        description: 'Insomnio',
+        description: 'Insomnio o hipersomnia',
         count: 0,
       },
       A6: {
@@ -769,7 +769,7 @@ export class DiagnosticsService {
         count: 0,
       },
       A4: {
-        description: 'Insomnio',
+        description: 'Insomnio o hipersomnia',
         count: 0,
       },
       A6: {

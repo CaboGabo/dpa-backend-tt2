@@ -12,7 +12,7 @@ export const criteria: any[] = [
   },
   {
     name: 'criteriaA4',
-    description: 'Insomnio',
+    description: 'Insomnio o hipersomnia',
     keyname: 'A4',
   },
   {
