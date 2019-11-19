@@ -282,14 +282,17 @@ export class ClassifierService {
     let averageSentiment = await this.getAverageSentimentScore(posts);
     let datesArray = await this.getOcurrencesDatesArray(criteriaResults, posts);
     //Detección de pensamientos negativos durante dos años
-    let firstDate = datesArray[0];
-    let lastDate = datesArray[datesArray.length - 1];
-    console.log('First Date: ' + firstDate);
-    console.log('Last Date: ' + lastDate);
-    const diffTime = Math.abs(lastDate.getTime() - firstDate.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    if (diffDays > 730 && averageSentiment < 0.7) {
-      return true;
+    if (datesArray.length > 2) {
+      let firstDate = datesArray[0];
+      let lastDate = datesArray[datesArray.length - 1];
+      console.log('First Date: ' + firstDate);
+      console.log('Last Date: ' + lastDate);
+      const diffTime = Math.abs(lastDate.getTime() - firstDate.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      if (diffDays > 730 && averageSentiment < 0.7) {
+        return true;
+      }
+      return false;
     }
     return false;
   }
