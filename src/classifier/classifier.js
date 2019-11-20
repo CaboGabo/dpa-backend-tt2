@@ -75,19 +75,9 @@ async function main(posts) {
     consumoAfeccion: [],
   };
 
-  let insomniaOccurrences = [];
-
   let i = 0;
   for (const classifier of classifiers) {
     posts.forEach(post => {
-      if (i == 2) {
-        let date = post.postdate;
-        let hours = date.getHours();
-        if (hours >= 2 && hours <= 5) {
-          insomniaOccurrences.push(post.id);
-        }
-      }
-
       const result = classifier.getBestClassification(post.content);
       if (result.label === tags[i] && result.value > 0.95) {
         ocurrences[`${result.label}`]++;
@@ -107,7 +97,7 @@ async function main(posts) {
     }
   }
 
-  return [results, postOcurrences, insomniaOccurrences];
+  return [results, postOcurrences];
 }
 
 module.exports = {
