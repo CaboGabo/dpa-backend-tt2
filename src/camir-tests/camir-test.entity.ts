@@ -19,6 +19,8 @@ export class CamirTestEntity {
   @Column('text')
   result: string;
 
-  @ManyToOne(type => StudentEntity, student => student.camirTests)
+  @ManyToOne(type => StudentEntity, student => student.camirTests, {
+    onDelete: 'CASCADE',
+  })
   student: StudentEntity;
 }

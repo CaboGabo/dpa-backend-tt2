@@ -61,6 +61,9 @@ export class StudentEntity {
   })
   diagnostics: DiagnosticEntity[];
 
-  @OneToMany(type => CamirTestEntity, camirTest => camirTest.student)
+  @OneToMany(type => CamirTestEntity, camirTest => camirTest.student, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   camirTests: CamirTestEntity[];
 }
